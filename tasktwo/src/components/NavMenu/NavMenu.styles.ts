@@ -4,14 +4,11 @@ import {
   createStyles,
 } from "@material-ui/core/styles";
 
-//import React from "react";
-//import clsx from "clsx";
-
 
 
 const drawerWidth = 200;
 
-const useNavMenuStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       display: "flex",
@@ -47,8 +44,7 @@ const useNavMenuStyles = makeStyles((theme: Theme) =>
       display: "flex",
       alignItems: "center",
       padding: theme.spacing(0, 1),
-      // necessary for content to be below app bar
-      ...theme.mixins.toolbar,
+            ...theme.mixins.toolbar,
       justifyContent: "flex-end",
     },
     content: {
@@ -71,4 +67,4 @@ const useNavMenuStyles = makeStyles((theme: Theme) =>
 );
 
 
-export default useNavMenuStyles
+export default useStyles

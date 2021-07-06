@@ -4,7 +4,6 @@ import React from "react";
 import clsx from "clsx";
 
 import Drawer from "@material-ui/core/Drawer";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import List from "@material-ui/core/List";
@@ -24,10 +23,10 @@ import SupervisorAccountIcon from "@material-ui/icons/SupervisorAccount";
 import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
 
-import useNavMenuStyles from "./NavMenu.styles";
+import useStyles from "./NavMenu.styles";
 
 export default function NavMenu() {
-  const classes = useNavMenuStyles();
+  const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
@@ -41,8 +40,7 @@ export default function NavMenu() {
 
   return (
     <div className={classes.root}>
-      <CssBaseline />
-      <AppBar
+        <AppBar
         position="fixed"
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
