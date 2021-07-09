@@ -62,16 +62,22 @@ export default function NavMenu() {
 
           <Box mr={20} />
           <Box mr={3} alignSelf="right">
-            <Button color="inherit" variant="outlined">
+            <Button
+            className={classes.menubutton}
+            color="inherit" 
+            variant="outlined">
               log in
             </Button>
           </Box>
-          <Button color="inherit" variant="contained">
+          <Button
+          className={classes.menubutton}
+          color="inherit"
+          variant="contained">
             Sign in
           </Button>
         </Toolbar>
       </AppBar>
-
+      
       <Drawer
         className={classes.drawer}
         variant="persistent"

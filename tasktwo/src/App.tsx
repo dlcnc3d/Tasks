@@ -3,13 +3,22 @@ import { defaultTheme } from "./themes/default";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import NavMenu from "./components/NavMenu/NavMenu";
 import { Footer } from "./components/Footer/Footer";
+import { Box } from "@material-ui/core";
+
+import { SidePanel } from "./components/SidePanel/SidePanel";
 
 function App() {
   return (
     <MuiThemeProvider theme={defaultTheme}>
       <CssBaseline />
       <NavMenu />
-      <main> </main>
+
+      <Box p={7} />
+
+      <main>
+        <SidePanel/> 
+
+      </main>
 
       <Footer year={new Date().getFullYear()}> </Footer>
     </MuiThemeProvider>

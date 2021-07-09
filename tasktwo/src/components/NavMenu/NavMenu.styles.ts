@@ -63,6 +63,10 @@ const useStyles = makeStyles((theme: Theme) =>
       }),
       marginLeft: 0,
     },
+    menubutton: {
+      marginRight: theme.spacing(1)
+
+    },
   })
 );
 
