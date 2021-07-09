@@ -11,12 +11,12 @@ import {
       root: {
         flexGrow: 1,
         display: "flex",
-        flexDirection: "row",    
-        //flexDirection: "column",            
+        //flexDirection: "row",    
+        flexDirection: "column",            
         marginleft: "5px",
         padding: "5px",
         justifyContent: "center",
-        alignItems: "center",
+        //alignItems: "center",
 
 
                 width: "100%",

@@ -5,6 +5,7 @@ import { Tooltip } from "@material-ui/core";
 import PlacesAutocomplete, {
   geocodeByAddress
 } from "react-places-autocomplete";
+import { BorderAll } from "@material-ui/icons";
 
 
 type Props = {
@@ -65,8 +66,9 @@ export const Autocomplete: React.FC<Props> = (props) => {
           
                    {suggestions.map(suggestion=>{
                      const style = {
-                       backgroundColor:suggestion.active ? "#a1dffb90": "#a1dffb40",
-                       borderRadius:5
+                       backgroundColor:suggestion.active ? "#596F8730": "#596F8720",
+                       borderRadius:5,
+                       
 
                      };
                      

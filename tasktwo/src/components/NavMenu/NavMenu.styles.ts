@@ -12,16 +12,19 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       display: "flex",
+      
     },
     appBar: {      
+      backgroundColor:"#596F87",
       transition: theme.transitions.create(["margin", "width"], {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,
+        
       }),
     },
     appBarShift: {
       width: `calc(500% - ${drawerWidth}px)`,
-      marginLeft: drawerWidth,
+            marginLeft: drawerWidth,
       transition: theme.transitions.create(["margin", "width"], {
         easing: theme.transitions.easing.easeOut,
         duration: theme.transitions.duration.enteringScreen,
@@ -64,7 +67,9 @@ const useStyles = makeStyles((theme: Theme) =>
       marginLeft: 0,
     },
     menubutton: {
-      marginRight: theme.spacing(1)
+      marginRight: theme.spacing(1),
+      
+      
 
     },
   })

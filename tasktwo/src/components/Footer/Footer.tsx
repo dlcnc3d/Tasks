@@ -17,10 +17,6 @@ export const Footer: React.FC<Props> = (props) => {
     
 
       <Typography
-        align="center"
-        color="textSecondary"
-        component="p"
-        variant="subtitle2"
       >
         Copyright (C) CDM Ukraine. {year}
       </Typography>
