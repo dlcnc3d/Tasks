@@ -14,19 +14,13 @@ export const Footer: React.FC<Props> = (props) => {
 
   return (
     <div className={classes.root}>
-      <BottomNavigation>
-        <BottomNavigationAction
-          label="Recents"
-          value="recents"
-          icon={<HomeIcon />}
-        ></BottomNavigationAction>
-      </BottomNavigation>
+    
 
       <Typography
         align="center"
         color="textSecondary"
         component="p"
-        variant="subtitle1"
+        variant="subtitle2"
       >
         Copyright (C) CDM Ukraine. {year}
       </Typography>

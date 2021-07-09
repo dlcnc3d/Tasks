@@ -13,9 +13,11 @@ function App() {
       <CssBaseline />
       <NavMenu />
 
-      <Box p={7} />
+      <Box p={4} />
 
-      <main>
+      <main
+      
+      >
         <SidePanel/> 
 
       </main>

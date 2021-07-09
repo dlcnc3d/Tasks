@@ -44,7 +44,7 @@ return (
       </Paper>
     </Grid>
 
-    <Grid item xs={8}>
+    <Grid item xs={9}>
 
       <Paper className={classes.mainForm}       
       >

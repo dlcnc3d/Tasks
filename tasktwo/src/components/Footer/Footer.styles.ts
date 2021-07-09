@@ -9,11 +9,16 @@ import {
   const useStyles = makeStyles((theme: Theme) =>
     createStyles({
       root: {
-        position: "fixed",
-        left: "0px",
-        bottom: "0px",
-        height: "80px",
+        display: "flex",
+        //position: "center",
+        //left: "0px",
+        //bottom: "0px",
+        //height: "5px",
         width: "100%",
+        
+        flexDirection: "column",        
+        marginleft: "5px",
+        padding: "5px",
       }
     }
   ));
