@@ -10,12 +10,13 @@ import { SidePanel } from "./components/SidePanel/SidePanel";
 function App() {
   return (
     <MuiThemeProvider theme={defaultTheme}>
-      <CssBaseline />
+      
       <NavMenu />
+      
+      <Box p={0} />
+      <CssBaseline />
 
-      <Box p={4} />
-
-      <main
+      <main 
       
       >
         <SidePanel/> 

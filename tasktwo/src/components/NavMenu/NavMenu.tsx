@@ -40,7 +40,7 @@ export default function NavMenu() {
 
   return (
     <div className={classes.root}>
-        <AppBar
+      <AppBar
         position="fixed"
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
@@ -63,21 +63,19 @@ export default function NavMenu() {
           <Box mr={20} />
           <Box mr={3} alignSelf="right">
             <Button
-            className={classes.menubutton}
-            color="inherit" 
-            variant="outlined">
+              className={classes.menubutton}
+              color="inherit"
+              variant="outlined"
+            >
               log in
             </Button>
           </Box>
-          <Button
-          className={classes.menubutton}
-          color="inherit"
-          variant="contained">
+          <Button className={classes.menubutton} variant="contained">
             Sign in
           </Button>
         </Toolbar>
       </AppBar>
-      
+
       <Drawer
         className={classes.drawer}
         variant="persistent"
