@@ -1,16 +1,12 @@
-import CssBaseline from "@material-ui/core/CssBaseline";
 import { Grid } from "@material-ui/core";
 import { Paper } from "@material-ui/core";
-import { Box } from "@material-ui/core";
 import useStyles from "./SidePanel.styles";
-import FormHelperText from "@material-ui/core/FormHelperText";
-import OutlinedInput from "@material-ui/core/OutlinedInput";
-import { Autocomplete } from "../Gmap/Autocomplete/Autocomplete";
+import MapWrapper from "../Gmap/MapWrapper/MapWrapper";
+import { CalculateDistanceForm } from "../CalculateDistanceForm/CalculateDistanceForm";
 
 type Props = {};
 
 export const SidePanel: React.FC<Props> = (props) => {
-  //const { someprops } = props;
   const classes = useStyles();
 
   return (
@@ -18,21 +14,14 @@ export const SidePanel: React.FC<Props> = (props) => {
       <div>
         <Grid container spacing={0}>
           <Grid item xs={3}>
-            <Paper className={classes.leftPanel}>
-              <Box p={1} />
-
-              <Autocomplete />
-
-              <FormHelperText id="StartPosition">Start Position</FormHelperText>
-              <Box p={1} />
-              <Autocomplete />
-              <FormHelperText id="EndPosition">End Position</FormHelperText>
+            <Paper className={classes.LeftPanel}>
+              <CalculateDistanceForm />
             </Paper>
           </Grid>
 
           <Grid item xs={9}>
             <Paper className={classes.mainForm}>
-              <Box p={50}> </Box>
+              <MapWrapper></MapWrapper>
             </Paper>
           </Grid>
         </Grid>

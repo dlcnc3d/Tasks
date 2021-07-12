@@ -5,33 +5,24 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       flexGrow: 1,
       display: "flex",
-      //flexDirection: "row",
       flexDirection: "column",
-      //marginleft: "5%",
-      //padding: "5px",
       justifyContent: "center",
-      //alignItems: "center",
-      paddingTop: "7vh",
-      //containerSpacing:"0",
+      paddingTop: "62px",
       width: "100%",
+      minWidth:"800px",
     },
-    leftPanel: {
+    LeftPanel: {
       height: "86vh",
       backgroundColor: "#a1dffb30",
       elevation: "100",
       paddingLeft: "20px",
-    },
-    InputElement: {
-      variant: "outlined",
-      label: "outlined",
-      height: "5vh",
-      fullWidth: "true",
-    },
+      paddingRigt: "20px",      
+      
+    },    
     mainForm: {
       height: "86vh",
       display: "flex",
       flexDirection: "column",
-      backgroundImage: "url(https://source.unsplash.com/random)",
       elevation: "0",
     },
   })

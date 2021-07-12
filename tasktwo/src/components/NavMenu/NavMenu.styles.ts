@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
     },
     appBar: {
-      height: "7vh",
+      height: "60px",
       backgroundColor: "#596F87",
       transition: theme.transitions.create(["margin", "width"], {
         easing: theme.transitions.easing.sharp,
@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme: Theme) =>
       }),
     },
     menuButton: {
-      marginRight: theme.spacing(2),
+      marginRight: theme.spacing(1),
     },
     hide: {
       display: "none",
@@ -61,6 +61,10 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     menubutton: {
       marginRight: theme.spacing(1),
+      position: "relative",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
     },
   })
 );

@@ -61,6 +61,7 @@ export default function NavMenu() {
           </Typography>
 
           <Box mr={20} />
+
           <Box mr={3} alignSelf="right">
             <Button
               className={classes.menubutton}
@@ -70,9 +71,11 @@ export default function NavMenu() {
               log in
             </Button>
           </Box>
-          <Button className={classes.menubutton} variant="contained">
-            Sign in
-          </Button>
+          <Box mr={3} alignSelf="right">
+            <Button className={classes.menubutton} variant="contained">
+              Sign Up
+            </Button>
+          </Box>
         </Toolbar>
       </AppBar>
 
