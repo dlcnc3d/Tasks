@@ -1,10 +1,11 @@
-/*global google*/
 import React from "react";
 import Input from "@material-ui/core/Input";
 import { Tooltip } from "@material-ui/core";
 import PlacesAutocomplete, {
   geocodeByAddress,
 } from "react-places-autocomplete";
+import useStyles from "./Autocomplete.styles";
+import cls from "classnames";
 
 type Props = {};
 
@@ -14,6 +15,8 @@ export const Autocomplete: React.FC<Props> = (props) => {
     lat: 0,
     lng: 0,
   });
+
+  const classes = useStyles();
 
   const handleSelect = async (value: string) => {
     const results = await geocodeByAddress(value);
@@ -36,39 +39,43 @@ export const Autocomplete: React.FC<Props> = (props) => {
   };
 
   return (
-    <div>
-      <PlacesAutocomplete
-        searchOptions={searchOptions}
-        value={address}
-        onChange={setAddress}
-        onSelect={handleSelect}
-      >
-        {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-          <div>
-            <Tooltip title="Type address">
-              <Input {...getInputProps({ placeholder: "Type address" })} />
-            </Tooltip>
-            <div style={{ borderRadius: 35 }}>
-              {loading ? <div>...loading</div> : null}
+    <PlacesAutocomplete
+      searchOptions={searchOptions}
+      value={address}
+      onChange={setAddress}
+      onSelect={handleSelect}
+    >
+      {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+        <div
+          className={cls(classes.root, {
+            [classes.rootActive]: suggestions.length > 0,
+          })}
+        >
+          <Tooltip title="Type address">
+            <Input
+              className={classes.input}
+              {...getInputProps({ placeholder: "Type address" })}
+            />
+          </Tooltip>
+          <div className={classes.autocompleteWrapper}>
+            {loading ? <div>...loading</div> : null}
 
-              {suggestions.map((suggestion) => {
-                const style = {
-                  backgroundColor: suggestion.active
-                    ? "#596F8730"
-                    : "#596F8720",
-                  borderRadius: 5,
-                };
-
-                return (
-                  <div {...getSuggestionItemProps(suggestion, { style })}>
-                    {suggestion.description}
-                  </div>
-                );
-              })}
-            </div>
+            {suggestions.map((suggestion) => {
+              const style = {
+                backgroundColor: suggestion.active ? "#596F8730" : "#596F8720",
+              };
+              return (
+                <div
+                  className={classes.autocompleteItem}
+                  {...getSuggestionItemProps(suggestion, { style })}
+                >
+                  {suggestion.description}
+                </div>
+              );
+            })}
           </div>
-        )}
-      </PlacesAutocomplete>
-    </div>
+        </div>
+      )}
+    </PlacesAutocomplete>
   );
 };
