@@ -6,6 +6,7 @@ import PlacesAutocomplete, {
 } from "react-places-autocomplete";
 import useStyles from "./Autocomplete.styles";
 import cls from "classnames";
+import { useMapData } from "../../../context/map.context";
 
 type Props = {};
 
@@ -15,6 +16,10 @@ export const Autocomplete: React.FC<Props> = (props) => {
     lat: 0,
     lng: 0,
   });
+
+  const {
+    setStartPoint,
+  } = useMapData();
 
   const classes = useStyles();
 
@@ -28,7 +33,10 @@ export const Autocomplete: React.FC<Props> = (props) => {
 
     setAddress(value);
     setCoordinates(result);
-    console.log(latLng);
+    setStartPoint({
+      lat: result.lat,
+      lng: result.lng
+    })
   };
 
   const searchOptions = {

@@ -8,6 +8,7 @@ import {
   DirectionsRenderer,
   InfoWindow,
 } from "react-google-maps";
+import { useMapData } from "../../../context/map.context";
 
 const MapWrapper = compose(
   withProps({
@@ -16,11 +17,19 @@ const MapWrapper = compose(
     mapElement: <div style={{ height: `100%` }} />,
   }),
   withGoogleMap
-)((props) => (
-  <GoogleMap
-    defaultZoom={14}
-    defaultCenter={{ lat: 49.23, lng: 28.47 }}
-  ></GoogleMap>
-));
+)((props) => {
+  const { startPoint } = useMapData();
+  console.log(startPoint) 
+  return (<GoogleMap
+  defaultZoom={14}
+  defaultCenter={{ lat: 49.23, lng: 28.47 }}
+
+>
+  {startPoint ? <Marker position={{
+    lat: startPoint.lat,
+    lng: startPoint.lng
+  }} /> : null}
+</GoogleMap>)
+});
 
 export default MapWrapper;
