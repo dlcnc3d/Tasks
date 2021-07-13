@@ -1,7 +1,4 @@
 import { Typography } from "@material-ui/core";
-import { BottomNavigation, BottomNavigationAction } from "@material-ui/core";
-import HomeIcon from "@material-ui/icons/Home";
-
 import useStyles from "./Footer.styles";
 
 type Props = {
@@ -14,22 +11,7 @@ export const Footer: React.FC<Props> = (props) => {
 
   return (
     <div className={classes.root}>
-      <BottomNavigation>
-        <BottomNavigationAction
-          label="Recents"
-          value="recents"
-          icon={<HomeIcon />}
-        ></BottomNavigationAction>
-      </BottomNavigation>
-
-      <Typography
-        align="center"
-        color="textSecondary"
-        component="p"
-        variant="subtitle1"
-      >
-        Copyright (C) CDM Ukraine. {year}
-      </Typography>
+      <Typography>Copyright (C) CDM Ukraine. {year}</Typography>
     </div>
   );
 };

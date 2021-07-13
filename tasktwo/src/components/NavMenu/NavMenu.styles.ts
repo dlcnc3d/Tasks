@@ -1,10 +1,4 @@
-import {
-  makeStyles,  
-  Theme,
-  createStyles,
-} from "@material-ui/core/styles";
-
-
+import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 
 const drawerWidth = 200;
 
@@ -14,13 +8,15 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
     },
     appBar: {
+      height: "60px",
+      backgroundColor: "#596F87",
       transition: theme.transitions.create(["margin", "width"], {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,
       }),
     },
     appBarShift: {
-      width: `calc(500% - ${drawerWidth}px)`,
+      width: `calc(100% - ${drawerWidth}px)`,
       marginLeft: drawerWidth,
       transition: theme.transitions.create(["margin", "width"], {
         easing: theme.transitions.easing.easeOut,
@@ -28,7 +24,7 @@ const useStyles = makeStyles((theme: Theme) =>
       }),
     },
     menuButton: {
-      marginRight: theme.spacing(2),
+      marginRight: theme.spacing(1),
     },
     hide: {
       display: "none",
@@ -44,7 +40,7 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       alignItems: "center",
       padding: theme.spacing(0, 1),
-            ...theme.mixins.toolbar,
+      ...theme.mixins.toolbar,
       justifyContent: "flex-end",
     },
     content: {
@@ -63,8 +59,14 @@ const useStyles = makeStyles((theme: Theme) =>
       }),
       marginLeft: 0,
     },
+    menubutton: {
+      marginRight: theme.spacing(1),
+      position: "relative",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+    },
   })
 );
 
-
-export default useStyles
+export default useStyles;
