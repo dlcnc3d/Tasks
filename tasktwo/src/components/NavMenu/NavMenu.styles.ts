@@ -8,7 +8,11 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
     },
     appBar: {
+<<<<<<< HEAD
       height: "7vh",
+=======
+      height: "60px",
+>>>>>>> 82c7dd98a3531a8e129ea4663c033e9d763dec09
       backgroundColor: "#596F87",
       transition: theme.transitions.create(["margin", "width"], {
         easing: theme.transitions.easing.sharp,
@@ -24,7 +28,7 @@ const useStyles = makeStyles((theme: Theme) =>
       }),
     },
     menuButton: {
-      marginRight: theme.spacing(2),
+      marginRight: theme.spacing(1),
     },
     hide: {
       display: "none",
@@ -61,8 +65,19 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     menubutton: {
       marginRight: theme.spacing(1),
+<<<<<<< HEAD
+=======
+      position: "relative",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+>>>>>>> 82c7dd98a3531a8e129ea4663c033e9d763dec09
     },
   })
 );
 
+<<<<<<< HEAD
 export default useStyles;
+=======
+export default useStyles;
+>>>>>>> 82c7dd98a3531a8e129ea4663c033e9d763dec09
