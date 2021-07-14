@@ -9,10 +9,8 @@ import cls from "classnames";
 import { MarkerData } from "../../../definitions/types";
 import { MarkerType } from "../../../definitions/enums";
 
-
 type Props = {
-  onSelect:(data:MarkerData)=>void;
-  
+  onSelect: (data: MarkerData) => void;
 };
 
 export const Autocomplete: React.FC<Props> = (props) => {
@@ -21,9 +19,6 @@ export const Autocomplete: React.FC<Props> = (props) => {
     lat: 0,
     lng: 0,
   });
-
-
-  
 
   const classes = useStyles();
 
@@ -38,7 +33,6 @@ export const Autocomplete: React.FC<Props> = (props) => {
     setAddress(value);
     setCoordinates(result);
     props.onSelect(result);
-    
   };
 
   const searchOptions = {

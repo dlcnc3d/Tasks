@@ -10,7 +10,7 @@ export const CalculateDistanceForm = () => {
   const { setFinishPoint, setStartPoint } = useMapData();
   const { startPoint, finishPoint } = useMapData();
 
-  const GetPositionClick = () => {
+  const getPositionClick = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
         if (position !== null) {
@@ -54,9 +54,7 @@ export const CalculateDistanceForm = () => {
       />
 
       <FormHelperText id="StartPosition">Start Position</FormHelperText>
-
       <Box p={1} />
-
       <Autocomplete
         onSelect={(data: MarkerData) => selectHandler(data, MarkerType.Finish)}
       />
@@ -67,13 +65,11 @@ export const CalculateDistanceForm = () => {
           variant="outlined"
           color="primary"
           size="small"
-          onClick={GetPositionClick}
+          onClick={getPositionClick}
         >
-          {" "}
           Start poin by Geoposition
         </Button>
       </Tooltip>
-
       <Box p={2} />
       <Tooltip title="Click to build route">
         <Button
@@ -82,7 +78,6 @@ export const CalculateDistanceForm = () => {
           size="small"
           onClick={GetRouteClick}
         >
-          {" "}
           Build route
         </Button>
       </Tooltip>

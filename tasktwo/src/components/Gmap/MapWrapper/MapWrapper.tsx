@@ -24,8 +24,6 @@ const MapWrapper = compose(
 )((props) => {
   const { startPoint, finishPoint } = useMapData();
 
-  console.log(startPoint, finishPoint);
-
   return (
     <GoogleMap defaultZoom={14} defaultCenter={{ lat: 49.23, lng: 28.47 }}>
       {startPoint ? (
