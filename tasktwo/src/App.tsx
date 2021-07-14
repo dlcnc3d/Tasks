@@ -4,17 +4,20 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import NavMenu from "./components/NavMenu/NavMenu";
 import { Footer } from "./components/Footer/Footer";
 import { SidePanel } from "./components/SidePanel/SidePanel";
+import { MapProvider } from "./context/map.context";
 
 function App() {
   return (
-    <MuiThemeProvider theme={defaultTheme}>
-      <NavMenu />
-      <CssBaseline />
-      <main>
-        <SidePanel />
-      </main>
-      <Footer year={new Date().getFullYear()}> </Footer>
-    </MuiThemeProvider>
+    <MapProvider>
+      <MuiThemeProvider theme={defaultTheme}>
+        <NavMenu />
+        <CssBaseline />
+        <main>
+          <SidePanel />
+        </main>
+        <Footer year={new Date().getFullYear()}> </Footer>
+      </MuiThemeProvider>
+    </MapProvider>
   );
 }
 

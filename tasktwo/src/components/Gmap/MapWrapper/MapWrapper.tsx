@@ -7,7 +7,12 @@ import {
   Marker,
   DirectionsRenderer,
   InfoWindow,
+  GoogleMapProps,
 } from "react-google-maps";
+import { useMapData } from "../../../context/map.context";
+import { useState } from "react";
+import { MarkerData } from "../../../definitions/types";
+import { useEffect } from "react";
 
 const MapWrapper = compose(
   withProps({
@@ -16,11 +21,40 @@ const MapWrapper = compose(
     mapElement: <div style={{ height: `100%` }} />,
   }),
   withGoogleMap
-)((props) => (
-  <GoogleMap
-    defaultZoom={14}
-    defaultCenter={{ lat: 49.23, lng: 28.47 }}
-  ></GoogleMap>
-));
+)((props) => {
+  const { startPoint, finishPoint } = useMapData();
+
+  return (
+    <GoogleMap defaultZoom={14} defaultCenter={{ lat: 49.23, lng: 28.47 }}>
+      {startPoint ? (
+        <Marker
+          key={startPoint.type ? "Start" : startPoint.type}
+          position={{
+            lat: startPoint.lat,
+            lng: startPoint.lng,
+          }}
+        >
+          <InfoWindow>
+            <div>{startPoint.type}</div>
+          </InfoWindow>
+        </Marker>
+      ) : null}
+
+      {finishPoint ? (
+        <Marker
+          key={startPoint.type ? "Finish" : startPoint.type}
+          position={{
+            lat: finishPoint.lat,
+            lng: finishPoint.lng,
+          }}
+        >
+          <InfoWindow>
+            <div>{finishPoint.type}</div>
+          </InfoWindow>
+        </Marker>
+      ) : null}
+    </GoogleMap>
+  );
+});
 
 export default MapWrapper;
