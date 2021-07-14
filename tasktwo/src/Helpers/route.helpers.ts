@@ -1,9 +1,10 @@
 import React from "react";
 import { useContext } from "react";
-import { MarkerData } from "../../definitions/types";
-//import { MarkerData } from
+import { MarkerData } from "../definitions/types";
 
-export const CalculateRoute = (Start: MarkerData, End: MarkerData) => {
+
+
+export const routeHelpers = (Start: MarkerData, End: MarkerData) => {
   const [dataRoute, setdataRoute] = React.useState(null);
 
   const directionsService = new google.maps.DirectionsService();

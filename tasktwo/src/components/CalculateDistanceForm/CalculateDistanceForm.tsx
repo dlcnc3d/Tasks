@@ -4,11 +4,16 @@ import { Autocomplete } from "../Gmap/Autocomplete/Autocomplete";
 import { useMapData } from "../../context/map.context";
 import { MarkerData } from "../../definitions/types";
 import { MarkerType } from "../../definitions/enums";
-import { CalculateRoute } from "../CalculateRoute/CalculateRoute";
+
+
+
+
 
 export const CalculateDistanceForm = () => {
   const { setFinishPoint, setStartPoint } = useMapData();
   const { startPoint, finishPoint } = useMapData();
+  const { routesEnabled, setRoutesEnabled } = useMapData();
+  
 
   const getPositionClick = () => {
     if (navigator.geolocation) {
@@ -24,11 +29,12 @@ export const CalculateDistanceForm = () => {
     }
   };
 
-  const GetRouteClick = () => {
-    if (startPoint !== null && finishPoint !== null) {
-      CalculateRoute(startPoint as MarkerData, finishPoint as MarkerData);
-    }
-  };
+  
+  const getRoutesEnabled = React.useCallback(() => {    
+    setRoutesEnabled(!routesEnabled);        
+    }, []);
+
+
 
   const selectHandler = (marker: MarkerData, labeltype: MarkerType) => {
     if (labeltype === MarkerType.Start) {
@@ -76,7 +82,7 @@ export const CalculateDistanceForm = () => {
           variant="outlined"
           color="primary"
           size="small"
-          onClick={GetRouteClick}
+          onClick={getRoutesEnabled}
         >
           Build route
         </Button>
@@ -84,3 +90,5 @@ export const CalculateDistanceForm = () => {
     </>
   );
 };
+//getRoutesEnabled,
+//setRoutesEnabled,
