@@ -4,14 +4,14 @@ import { Tooltip } from "@material-ui/core";
 import PlacesAutocomplete, {
   geocodeByAddress,
 } from "react-places-autocomplete";
-<<<<<<< HEAD
-=======
 import useStyles from "./Autocomplete.styles";
 import cls from "classnames";
-import { useMapData } from "../../../context/map.context";
->>>>>>> 82c7dd98a3531a8e129ea4663c033e9d763dec09
+import { MarkerData } from "../../../definitions/types";
+import { MarkerType } from "../../../definitions/enums";
 
-type Props = {};
+type Props = {
+  onSelect: (data: MarkerData) => void;
+};
 
 export const Autocomplete: React.FC<Props> = (props) => {
   const [address, setAddress] = React.useState("");
@@ -20,15 +20,8 @@ export const Autocomplete: React.FC<Props> = (props) => {
     lng: 0,
   });
 
-<<<<<<< HEAD
-=======
-  const {
-    setStartPoint,
-  } = useMapData();
-
   const classes = useStyles();
 
->>>>>>> 82c7dd98a3531a8e129ea4663c033e9d763dec09
   const handleSelect = async (value: string) => {
     const results = await geocodeByAddress(value);
     const latLng = results[0].geometry.location.lng();
@@ -39,14 +32,7 @@ export const Autocomplete: React.FC<Props> = (props) => {
 
     setAddress(value);
     setCoordinates(result);
-<<<<<<< HEAD
-    console.log(latLng);
-=======
-    setStartPoint({
-      lat: result.lat,
-      lng: result.lng
-    })
->>>>>>> 82c7dd98a3531a8e129ea4663c033e9d763dec09
+    props.onSelect(result);
   };
 
   const searchOptions = {
@@ -57,44 +43,6 @@ export const Autocomplete: React.FC<Props> = (props) => {
   };
 
   return (
-<<<<<<< HEAD
-    <div>
-      <PlacesAutocomplete
-        searchOptions={searchOptions}
-        value={address}
-        onChange={setAddress}
-        onSelect={handleSelect}
-      >
-        {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-          <div>
-            <Tooltip title="Type address">
-              <Input {...getInputProps({ placeholder: "Type address" })} />
-            </Tooltip>
-            <div style={{ borderRadius: 35 }}>
-              {loading ? <div>...loading</div> : null}
-
-              {suggestions.map((suggestion) => {
-                const style = {
-                  backgroundColor: suggestion.active
-                    ? "#596F8730"
-                    : "#596F8720",
-                  borderRadius: 5,
-                };
-
-                return (
-                  <div {...getSuggestionItemProps(suggestion, { style })}>
-                    {suggestion.description}
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        )}
-      </PlacesAutocomplete>
-    </div>
-  );
-};
-=======
     <PlacesAutocomplete
       searchOptions={searchOptions}
       value={address}
@@ -135,4 +83,3 @@ export const Autocomplete: React.FC<Props> = (props) => {
     </PlacesAutocomplete>
   );
 };
->>>>>>> 82c7dd98a3531a8e129ea4663c033e9d763dec09

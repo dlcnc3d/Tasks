@@ -7,19 +7,12 @@ import {
   Marker,
   DirectionsRenderer,
   InfoWindow,
+  GoogleMapProps,
 } from "react-google-maps";
-<<<<<<< HEAD
-
-export const MapWrapper = compose(
-  withProps({
-    loadingElement: <div style={{ height: `100%` }} />,
-    containerElement: <div style={{ height: `500px` }} />,
-    mapElement: <div style={{ height: `100%` }} />,
-  }),
-  withGoogleMap
-)(() => <div></div>);
-=======
 import { useMapData } from "../../../context/map.context";
+import { useState } from "react";
+import { MarkerData } from "../../../definitions/types";
+import { useEffect } from "react";
 
 const MapWrapper = compose(
   withProps({
@@ -29,19 +22,39 @@ const MapWrapper = compose(
   }),
   withGoogleMap
 )((props) => {
-  const { startPoint } = useMapData();
-  console.log(startPoint) 
-  return (<GoogleMap
-  defaultZoom={14}
-  defaultCenter={{ lat: 49.23, lng: 28.47 }}
+  const { startPoint, finishPoint } = useMapData();
 
->
-  {startPoint ? <Marker position={{
-    lat: startPoint.lat,
-    lng: startPoint.lng
-  }} /> : null}
-</GoogleMap>)
+  return (
+    <GoogleMap defaultZoom={14} defaultCenter={{ lat: 49.23, lng: 28.47 }}>
+      {startPoint ? (
+        <Marker
+          key={startPoint.type ? "Start" : startPoint.type}
+          position={{
+            lat: startPoint.lat,
+            lng: startPoint.lng,
+          }}
+        >
+          <InfoWindow>
+            <div>{startPoint.type}</div>
+          </InfoWindow>
+        </Marker>
+      ) : null}
+
+      {finishPoint ? (
+        <Marker
+          key={startPoint.type ? "Finish" : startPoint.type}
+          position={{
+            lat: finishPoint.lat,
+            lng: finishPoint.lng,
+          }}
+        >
+          <InfoWindow>
+            <div>{finishPoint.type}</div>
+          </InfoWindow>
+        </Marker>
+      ) : null}
+    </GoogleMap>
+  );
 });
 
 export default MapWrapper;
->>>>>>> 82c7dd98a3531a8e129ea4663c033e9d763dec09

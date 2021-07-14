@@ -71,17 +71,11 @@ export default function NavMenu() {
               log in
             </Button>
           </Box>
-<<<<<<< HEAD
-          <Button className={classes.menubutton} variant="contained">
-            Sign in
-          </Button>
-=======
           <Box mr={3} alignSelf="right">
             <Button className={classes.menubutton} variant="contained">
               Sign Up
             </Button>
           </Box>
->>>>>>> 82c7dd98a3531a8e129ea4663c033e9d763dec09
         </Toolbar>
       </AppBar>
 
