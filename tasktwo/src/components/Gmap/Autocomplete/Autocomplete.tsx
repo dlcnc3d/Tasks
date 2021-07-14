@@ -6,9 +6,14 @@ import PlacesAutocomplete, {
 } from "react-places-autocomplete";
 import useStyles from "./Autocomplete.styles";
 import cls from "classnames";
-import { useMapData } from "../../../context/map.context";
+import { MarkerData } from "../../../definitions/types";
+import { MarkerType } from "../../../definitions/enums";
 
-type Props = {};
+
+type Props = {
+  onSelect:(data:MarkerData)=>void;
+  
+};
 
 export const Autocomplete: React.FC<Props> = (props) => {
   const [address, setAddress] = React.useState("");
@@ -17,9 +22,8 @@ export const Autocomplete: React.FC<Props> = (props) => {
     lng: 0,
   });
 
-  const {
-    setStartPoint,
-  } = useMapData();
+
+  
 
   const classes = useStyles();
 
@@ -33,10 +37,8 @@ export const Autocomplete: React.FC<Props> = (props) => {
 
     setAddress(value);
     setCoordinates(result);
-    setStartPoint({
-      lat: result.lat,
-      lng: result.lng
-    })
+    props.onSelect(result);
+    
   };
 
   const searchOptions = {

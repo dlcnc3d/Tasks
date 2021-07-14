@@ -3,9 +3,13 @@ import { useContext } from "react";
 import { MarkerData } from "../definitions/types";
 
 type State = {
+  markerType: Partial<string>;
+
   startPoint: Partial<MarkerData>;
 
   finishPoint: Partial<MarkerData>;
+
+  setMarkerType: React.Dispatch<string>;
 
   setStartPoint: React.Dispatch<MarkerData>;
 
@@ -17,6 +21,7 @@ const MapContext = React.createContext<Partial<State>>({} as State);
 export const MapProvider: React.FC = (props) => {
   const [startPoint, setStartPoint] = React.useState(null);
   const [finishPoint, setFinishPoint] = React.useState(null);
+  const [markerType, setMarkerType] = React.useState(null);
 
   const { children } = props;
 
@@ -27,6 +32,8 @@ export const MapProvider: React.FC = (props) => {
         setStartPoint,
         finishPoint,
         setFinishPoint,
+        markerType,
+        setMarkerType,
       }}
     >
       {children}
