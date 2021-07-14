@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Box, Button, FormHelperText, Tooltip } from "@material-ui/core";
 import { Autocomplete } from "../Gmap/Autocomplete/Autocomplete";
 import { useMapData } from "../../context/map.context";
@@ -30,9 +30,13 @@ export const CalculateDistanceForm = () => {
   };
 
   
-  const getRoutesEnabled = React.useCallback(() => {    
-    setRoutesEnabled(!routesEnabled);        
+  const getRoutesEnabled = React.useCallback(() => { 
+        setRoutesEnabled(!routesEnabled); 
+    alert(routesEnabled);       
     }, []);
+
+
+    
 
 
 
@@ -52,6 +56,8 @@ export const CalculateDistanceForm = () => {
     }
   };
 
+
+  
   return (
     <>
       <Box p={1} />

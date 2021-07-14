@@ -13,6 +13,7 @@ import { useMapData } from "../../../context/map.context";
 import { useState } from "react";
 import { MarkerData } from "../../../definitions/types";
 import { useEffect } from "react";
+import { MapRoutes } from "../../MapRoutes/MapRoutes";
 
 const MapWrapper = compose(
   withProps({
@@ -53,6 +54,15 @@ const MapWrapper = compose(
           </InfoWindow>
         </Marker>
       ) : null}
+
+
+            <MapRoutes
+            startPoint={startPoint}
+            finishPoint={finishPoint}
+            >
+            </MapRoutes>
+
+
     </GoogleMap>
   );
 });

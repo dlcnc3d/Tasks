@@ -1,14 +1,26 @@
 import React from "react";
 import { useContext } from "react";
 import { MarkerData } from "../definitions/types";
+import { useMapData } from "../context/map.context";
+
 
 
 
 export const routeHelpers = (Start: MarkerData, End: MarkerData) => {
+
+
+  const { routes, setRoutes } = useMapData();
+
   const [dataRoute, setdataRoute] = React.useState(null);
 
+
   const directionsService = new google.maps.DirectionsService();
+  
+  
+  
   const [direction, setDirection] = React.useState(null);
+
+
 
   const origin = Start;
   const destination = End;
@@ -22,7 +34,7 @@ export const routeHelpers = (Start: MarkerData, End: MarkerData) => {
     (result, status) => {
       if (status === google.maps.DirectionsStatus.OK) {
         console.log(result);
-        setDirection(result);
+        setdataRoute(result);
 
         if (
           result.routes[0].fare !== undefined &&
@@ -36,7 +48,7 @@ export const routeHelpers = (Start: MarkerData, End: MarkerData) => {
             duration: result.routes[0].legs[0].duration.text,
           };
 
-          //setdataRoute(dataRoute);
+          setdataRoute(dataRoute);
           console.log(result.routes[0].legs[0].distance.text);
           console.log(result.routes[0].legs[0].duration.text);
         }

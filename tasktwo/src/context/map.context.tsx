@@ -5,11 +5,11 @@ import { MarkerData } from "../definitions/types";
 type State = {
   markerType: Partial<string>;
 
-  startPoint: Partial<MarkerData>;
+  startPoint: MarkerData;
 
-  finishPoint: Partial<MarkerData>;
+  finishPoint: MarkerData;
   
-  routes:Partial<any>
+  routes:any
 
   routesEnabled:Partial<boolean>
 
@@ -37,7 +37,7 @@ export const MapProvider: React.FC = (props) => {
   //const [markerType, setMarkerType] = React.useState(null);
 
   const [routes, setRoutes] = React.useState(null);
-  const [routesEnabled, setRoutesEnabled] = React.useState(null);
+  const [routesEnabled, setRoutesEnabled] = React.useState(false);
 
 
 
