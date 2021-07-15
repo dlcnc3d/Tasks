@@ -3,28 +3,33 @@ import { useContext } from "react";
 import { MarkerData } from "../definitions/types";
 
 type State = {
-  markerType: Partial<string>;
+  markerType: string;
 
-  startPoint: Partial<MarkerData>;
+  //startPoint: MarkerData;
 
-  finishPoint: Partial<MarkerData>;
+  //finishPoint: MarkerData;
   
-  routes:Partial<any>
+  routes:google.maps.DirectionsResult;
 
-  routesEnabled:Partial<boolean>
+  routesEnabled:boolean;
+  
+  buttonColor: string;
+  
+  points:MarkerData[];
 
   setMarkerType: React.Dispatch<string>;
 
-  setStartPoint: React.Dispatch<MarkerData>;
+ // setStartPoint: React.Dispatch<MarkerData>;
 
-  setFinishPoint: React.Dispatch<MarkerData>
+  //setFinishPoint: React.Dispatch<MarkerData>
   
-  setRoutes: React.Dispatch<any>;
+  setRoutes: React.Dispatch<google.maps.DirectionsResult>;
   
-  setRoutesEnabled: React.Dispatch<boolean>;
-
+  setRoutesEnabled: React.Dispatch<boolean>;  
   
-
+  setButtonColor: React.Dispatch<string>;
+  
+  setPoints: React.Dispatch<MarkerData []>;
 
 
 };
@@ -32,13 +37,17 @@ type State = {
 const MapContext = React.createContext<Partial<State>>({} as State);
 
 export const MapProvider: React.FC = (props) => {
-  const [startPoint, setStartPoint] = React.useState(null);
-  const [finishPoint, setFinishPoint] = React.useState(null);
+  //const [startPoint, setStartPoint] = React.useState(null);
+  //const [finishPoint, setFinishPoint] = React.useState(null);
+
+  const [points, setPoints] = React.useState([]);
+
   //const [markerType, setMarkerType] = React.useState(null);
 
   const [routes, setRoutes] = React.useState(null);
-  const [routesEnabled, setRoutesEnabled] = React.useState(null);
-
+  const [routesEnabled, setRoutesEnabled] = React.useState(false);
+  
+  const [buttonColor, setButtonColor] = React.useState("primary");
 
 
 
@@ -47,16 +56,17 @@ export const MapProvider: React.FC = (props) => {
   return (
     <MapContext.Provider
       value={{
-        startPoint,
-        setStartPoint,
-        finishPoint,
-        setFinishPoint,
+        
+        points,
+        setPoints,
         //markerType,
         //setMarkerType,
         routes,
         setRoutes,
         routesEnabled,
         setRoutesEnabled,
+        buttonColor,
+        setButtonColor
 
 
       }}

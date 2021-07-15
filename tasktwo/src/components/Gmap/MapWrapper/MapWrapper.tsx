@@ -13,6 +13,9 @@ import { useMapData } from "../../../context/map.context";
 import { useState } from "react";
 import { MarkerData } from "../../../definitions/types";
 import { useEffect } from "react";
+import { MapRoutes } from "../../MapRoutes/MapRoutes";
+import { MarkerType } from "../../../definitions/enums";
+
 
 const MapWrapper = compose(
   withProps({
@@ -22,37 +25,31 @@ const MapWrapper = compose(
   }),
   withGoogleMap
 )((props) => {
-  const { startPoint, finishPoint } = useMapData();
+  const {points, routesEnabled } = useMapData();
 
   return (
     <GoogleMap defaultZoom={14} defaultCenter={{ lat: 49.23, lng: 28.47 }}>
-      {startPoint ? (
-        <Marker
-          key={startPoint.type ? "Start" : startPoint.type}
-          position={{
-            lat: startPoint.lat,
-            lng: startPoint.lng,
-          }}
-        >
-          <InfoWindow>
-            <div>{startPoint.type}</div>
-          </InfoWindow>
-        </Marker>
-      ) : null}
+       {points.map((p) => (
+      <Marker
+        key={p.lat}
+        position={{ lat: p.lat, lng: p.lng }}
+        //label={p.type}
+      >
+        <InfoWindow>
+          <div>
+              {p.type}
+          </div>
+        </InfoWindow>
+      </Marker>
+    ))}
+      
+    
 
-      {finishPoint ? (
-        <Marker
-          key={startPoint.type ? "Finish" : startPoint.type}
-          position={{
-            lat: finishPoint.lat,
-            lng: finishPoint.lng,
-          }}
-        >
-          <InfoWindow>
-            <div>{finishPoint.type}</div>
-          </InfoWindow>
-        </Marker>
-      ) : null}
+      <MapRoutes
+        startPoint={points[points.findIndex((x) => x.type === MarkerType.Start)]}
+        finishPoint={points[points.findIndex((x) => x.type === MarkerType.Finish)]}
+        enabled={routesEnabled}
+      ></MapRoutes>
     </GoogleMap>
   );
 });

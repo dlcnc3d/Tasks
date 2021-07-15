@@ -1,7 +1,10 @@
+import { MarkerType } from "../definitions/enums";
+
+
 export type MarkerData = {
   lat: number;
   lng: number;
-  time?: Date;
-  type?: string;
+  time?: number;
+  type?: MarkerType;
   //label?:string;
 };
