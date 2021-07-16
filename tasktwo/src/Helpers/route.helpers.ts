@@ -1,60 +1,26 @@
-import React from "react";
-import { useContext } from "react";
 import { MarkerData } from "../definitions/types";
-import { useMapData } from "../context/map.context";
 
+export const getRouteHelpers = function (
+  start: MarkerData,
+  end: MarkerData
+): Promise<any> {
+  return new Promise((resolve, reject) => {
+    const directionsService = new google.maps.DirectionsService();
 
-
-
-export const routeHelpers = (Start: MarkerData, End: MarkerData) => {
-
-
-  const { routes, setRoutes } = useMapData();
-
-  const [dataRoute, setdataRoute] = React.useState(null);
-
-
-  const directionsService = new google.maps.DirectionsService();
-  
-  
-  
-  const [direction, setDirection] = React.useState(null);
-
-
-
-  const origin = Start;
-  const destination = End;
-
-  directionsService.route(
-    {
-      origin: origin,
-      destination: destination,
-      travelMode: google.maps.TravelMode.TRANSIT,
-    },
-    (result, status) => {
-      if (status === google.maps.DirectionsStatus.OK) {
-        console.log(result);
-        setdataRoute(result);
-
-        if (
-          result.routes[0].fare !== undefined &&
-          typeof result.routes[0].fare !== "undefined"
-        ) {
-          console.log(result.routes[0].fare.value);
-          const dataRoute = {
-            fareValue: result.routes[0].fare.value,
-            fare: result.routes[0].fare.value,
-            distance: result.routes[0].legs[0].distance.text,
-            duration: result.routes[0].legs[0].duration.text,
-          };
-
-          setdataRoute(dataRoute);
-          console.log(result.routes[0].legs[0].distance.text);
-          console.log(result.routes[0].legs[0].duration.text);
+    directionsService.route(
+      {
+        origin: start,
+        destination: end,
+        travelMode: google.maps.TravelMode.TRANSIT,
+      },
+      (result, status) => {
+        if (status === google.maps.DirectionsStatus.OK) {
+          console.log(result);
+          resolve(result);
+        } else {
+          reject(console.error(`error fetching directions ${result}`));
         }
-      } else {
-        console.error(`error fetching directions ${result}`);
       }
-    }
-  );
+    );
+  });
 };

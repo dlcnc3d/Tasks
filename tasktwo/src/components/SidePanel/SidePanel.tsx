@@ -3,9 +3,6 @@ import { Paper } from "@material-ui/core";
 import useStyles from "./SidePanel.styles";
 import MapWrapper from "../Gmap/MapWrapper/MapWrapper";
 import { CalculateDistanceForm } from "../CalculateDistanceForm/CalculateDistanceForm";
-import { MapRoutes } from "../MapRoutes/MapRoutes";
-import { useMapData } from "../../context/map.context";
-
 
 type Props = {};
 
@@ -24,10 +21,7 @@ export const SidePanel: React.FC<Props> = (props) => {
 
           <Grid item xs={9}>
             <Paper className={classes.mainForm}>
-              <MapWrapper>       
-
-
-              </MapWrapper>
+              <MapWrapper></MapWrapper>
             </Paper>
           </Grid>
         </Grid>

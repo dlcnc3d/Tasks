@@ -1,39 +1,35 @@
 import React, { useEffect } from "react";
-import { useContext } from "react";
 import { MarkerData } from "../../definitions/types";
-import { routeHelpers } from "../../Helpers/route.helpers";
-import { useMapData } from "../../context/map.context";
+import { getRouteHelpers } from "../../Helpers/route.helpers";
 import { DirectionsRenderer } from "react-google-maps";
+import { useState } from "react";
 
 type Props = {
-  startPoint:MarkerData;
-  finishPoint:MarkerData;
+  startPoint: MarkerData;
+  finishPoint: MarkerData;
+  enabled: boolean;
 };
 
 export const MapRoutes: React.FC<Props> = (props) => {
-  const { startPoint, finishPoint } = props;
+  const { startPoint, finishPoint, enabled } = props;
 
+  const [routes, setRoutes] = useState<any>(null);
 
-
-  const { routes, routesEnabled } = useMapData();
-  const { setRoutes, setRoutesEnabled } = useMapData();
-
-
-
-  
   useEffect(() => {
-      
-    if (startPoint != null && finishPoint != null) setRoutes(routeHelpers(startPoint, finishPoint));
-  });
+    if (enabled && startPoint !== null && finishPoint !== null) {
+      getRouteHelpers(startPoint, finishPoint).then((result) => {
+        setRoutes(result);
+      });
+    }
+  }, [enabled, startPoint, finishPoint]);
 
   return (
-    <div >      
-      {routesEnabled &&  routes  && <DirectionsRenderer               
-               directions={routes as google.maps.DirectionsResult }     
-               />}
+    <div>
+      {enabled && routes && (
+        <DirectionsRenderer
+          directions={routes as google.maps.DirectionsResult}
+        />
+      )}
     </div>
   );
 };
-
-
-
