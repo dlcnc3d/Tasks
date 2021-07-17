@@ -7,7 +7,7 @@ import PlacesAutocomplete, {
 import useStyles from "./Autocomplete.styles";
 import cls from "classnames";
 import { MarkerData } from "../../../definitions/types";
-import { MarkerType } from "../../../definitions/enums";
+
 
 type Props = {
   onSelect: (data: MarkerData) => void;
@@ -24,7 +24,6 @@ export const Autocomplete: React.FC<Props> = (props) => {
 
   const handleSelect = async (value: string) => {
     const results = await geocodeByAddress(value);
-    const latLng = results[0].geometry.location.lng();
     const result = {
       lat: results[0].geometry.location.lat(),
       lng: results[0].geometry.location.lng(),
