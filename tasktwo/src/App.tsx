@@ -5,9 +5,12 @@ import NavMenu from "./components/NavMenu/NavMenu";
 import { Footer } from "./components/Footer/Footer";
 import { SidePanel } from "./components/SidePanel/SidePanel";
 import { MapProvider } from "./context/map.context";
+import { StrictMode } from "react";
 
 function App() {
   return (
+    
+    <StrictMode>
     <MapProvider>
       <MuiThemeProvider theme={defaultTheme}>
         <NavMenu />
@@ -18,6 +21,7 @@ function App() {
         <Footer year={new Date().getFullYear()}> </Footer>
       </MuiThemeProvider>
     </MapProvider>
+    </StrictMode>   
   );
 }
 

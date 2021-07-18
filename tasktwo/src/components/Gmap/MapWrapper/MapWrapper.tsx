@@ -38,6 +38,8 @@ const MapWrapper = compose<Props, Props>(
       lat: e.latLng.lat(),
       lng: e.latLng.lng(),
       time: Date.now(),
+
+      
       
     });
   };
@@ -47,10 +49,13 @@ const MapWrapper = compose<Props, Props>(
       defaultZoom={14}
       defaultCenter={{ lat: 49.23, lng: 28.47 }}
       onClick={MapClickHandle}
+            
+
+
     >
       {points.map((p) => (
         <Marker
-          key={p.lat}
+          key={p.time}
           position={{ lat: p.lat, lng: p.lng }}
           animation={google.maps.Animation.DROP}
           //label={p.type}

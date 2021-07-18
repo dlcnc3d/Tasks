@@ -17,6 +17,7 @@ export const CalculateDistanceForm : React.FC<Props> = (props) => {
   //const { startPoint, finishPoint } = useMapData();
   const { points, setPoints } = useMapData();
   const { routesEnabled, setRoutesEnabled } = useMapData();
+  const { setRoutes } = useMapData();
 
   
 
@@ -25,20 +26,20 @@ export const CalculateDistanceForm : React.FC<Props> = (props) => {
   const getPositionClick = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
-        if (position !== null) {
-          setPoints([
-            ...points,
-            {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude,
-              time: Date.now(),
-              type: MarkerType.Start,
-            },
-          ]);
-        }
+        if (position !== null)
+        {
+          props.selectHandler(
+            {lat: position.coords.longitude,
+            lng: position.coords.longitude,
+            time: Date.now(),},
+             MarkerType.Start, MarkerType.Start)
+
+        }      
       });
     }
   };
+
+
 
   const getRoutesEnabled = () => {
     setRoutesEnabled(!routesEnabled);    
@@ -47,9 +48,14 @@ export const CalculateDistanceForm : React.FC<Props> = (props) => {
 const DelPointsHandler = ()=>{
   setPoints([]);
   setRoutesEnabled(false);
+  setRoutes(null)
+
+  
 
   
 }
+
+//const [routes, setRoutes] = useState<any>(null);
 
 
   return (
@@ -76,6 +82,11 @@ const DelPointsHandler = ()=>{
           color="primary"
           size="small"
           onClick={getPositionClick}
+          
+            
+          
+
+
         >
           Start poin by Geoposition
         </Button>
