@@ -1,4 +1,4 @@
-import { MarkerData } from "../definitions/types";
+import { MarkerData } from "../../definitions/types";
 
 export const getRouteHelpers = function (
   start: MarkerData,

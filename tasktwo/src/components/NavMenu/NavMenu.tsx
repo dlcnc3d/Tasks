@@ -24,6 +24,11 @@ import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
 
 import useStyles from "./NavMenu.styles";
+import { Dialog, DialogContent, DialogTitle } from "@material-ui/core";
+import {RegisterForm} from "../RegisterForm/RegisterForm";
+
+
+
 
 export default function NavMenu() {
   const classes = useStyles();
@@ -37,6 +42,16 @@ export default function NavMenu() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+  const [openSingUp, setOpenSingUp]=  React.useState(false);
+
+  const handleClickOpen =() =>{
+    setOpenSingUp(true)
+  }
+
+  const handleClose =() =>{
+    setOpenSingUp(false)
+  }
 
   return (
     <div className={classes.root}>
@@ -72,9 +87,24 @@ export default function NavMenu() {
             </Button>
           </Box>
           <Box mr={3} alignSelf="right">
-            <Button className={classes.menubutton} variant="contained">
-              Sign Up
+            <Button 
+            className={classes.menubutton} 
+            variant="contained"
+            onClick={handleClickOpen}
+            >
+               Sign Up
             </Button>
+            <Dialog 
+            open={openSingUp}
+            onClose={handleClose}
+            aria-labelledby="form-dialog-title"
+            > 
+            <RegisterForm
+            onClose={handleClose}
+            />
+            </Dialog>
+
+
           </Box>
         </Toolbar>
       </AppBar>

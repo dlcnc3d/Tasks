@@ -47,6 +47,7 @@ const MapWrapper = compose<Props, Props>(
       defaultZoom={14}
       defaultCenter={{ lat: 49.23, lng: 28.47 }}
       onClick={MapClickHandle}
+      
     >
       {points.map((p) => (
         <Marker
