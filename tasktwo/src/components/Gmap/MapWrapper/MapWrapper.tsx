@@ -38,8 +38,6 @@ const MapWrapper = compose<Props, Props>(
       lat: e.latLng.lat(),
       lng: e.latLng.lng(),
       time: Date.now(),
-
-      
       
     });
   };

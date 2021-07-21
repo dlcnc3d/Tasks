@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { MarkerData } from "../../definitions/types";
-import { getRouteHelpers } from "../../Helpers/route.helpers";
+import { getRouteHelpers } from "../../core/helpers/route.helpers";
 import { DirectionsRenderer } from "react-google-maps";
 import { useState } from "react";
 
