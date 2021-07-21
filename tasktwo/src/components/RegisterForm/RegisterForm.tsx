@@ -12,15 +12,14 @@ import {
 import Input from "@material-ui/core/Input";
 import { Label } from "@material-ui/icons";
 
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import useStyles from "./RegisterForm.styles";
 
 import { useAuthData } from "../../context/auth.context";
 import Alert from "@material-ui/lab/Alert";
 
 type FormValues = {
-  firstName: string;
-  lastName: string;
+  Name: string;
   email: string;
   password: string;
   confirmPassword: string;
@@ -32,9 +31,10 @@ type Props = {
 
 export const RegisterForm: React.FC<Props> = (props) => {
   const classes = useStyles();
-  const { register, watch, getValues, handleSubmit } = useForm<FormValues>();
-  const password = React.useRef({});
-  password.current = watch("password", "");
+  const { register, watch, getValues, handleSubmit, control } =
+    useForm<FormValues>();
+  //const password = React.useRef({});
+  //password.current = watch("password", "");
 
   //  const nameRef = useRef<HTMLInputElement>(null);
   //  const emailRef = useRef<HTMLInputElement>(null);
@@ -46,7 +46,7 @@ export const RegisterForm: React.FC<Props> = (props) => {
   const { signUp, currentUser } = useAuthData();
 
   const submitHandler = async (data: FormValues) => {
-    const { confirmPassword, email, firstName, lastName, password } = data;
+    const { confirmPassword, email, Name, password } = data;
 
     if (password !== confirmPassword) {
       return setError("Passwords do not match");
@@ -55,7 +55,6 @@ export const RegisterForm: React.FC<Props> = (props) => {
     try {
       setError("");
       setLoading(true);
-      //await auth.createUserWithEmailAndPassword(emailRef.current!.value, passwordRef.current!.value);
       await signUp(email, password);
       console.log(email, password);
     } catch {
@@ -66,70 +65,130 @@ export const RegisterForm: React.FC<Props> = (props) => {
 
   return (
     <div className={classes.root}>
-      <Paper className={classes.form}>
+      <Paper>
         <Box p={1} />
         <Grid>
-          <label> Sing Up</label>
-          <Box p={2} />
-          {currentUser && currentUser.email}
-          {error && (
-            <Alert variant="outlined" severity="error">
-              {error}
-            </Alert>
-          )}
+          <div className={classes.title}>
+            <label> Sing Up</label>
+            <Box p={2} />
+            {currentUser && currentUser.email}
+            {error && (
+              <Alert
+                className={classes.input}
+                variant="outlined"
+                severity="error"
+              >
+                {error}
+              </Alert>
+            )}
+          </div>
+          <form className={classes.form} onSubmit={handleSubmit(submitHandler)}>
+            <Controller
+              name="Name"
+              control={control}
+              defaultValue=""
+              render={({
+                field: { onChange, value },
+                fieldState: { error },
+              }) => (
+                <TextField
+                  className={classes.input}
+                  variant="outlined"
+                  label="Name"
+                  value={value}
+                  onChange={onChange}
+                  error={!!error}
+                  helperText={error ? error.message : null}
+                  //{...register("Name", { required: true, minLength: 5 })}
+                  id="Name"
+                />
+              )}
+              rules={{ required: "Name is required" }}
+            />
 
-          <form onSubmit={handleSubmit(submitHandler)}>
-            <TextField
-              className={classes.input}
-              variant="outlined"
-              label="first name"
-              {...register("firstName", { required: true, minLength: 5 })}
-              id="firstName"
+            <Box p={1} />
+
+            <Controller
+              name="email"
+              control={control}
+              defaultValue=""
+              render={({
+                field: { onChange, value },
+                fieldState: { error },
+              }) => (
+                <TextField
+                  className={classes.input}
+                  variant="outlined"
+                  label="email"
+                  type="email"
+                  value={value}
+                  onChange={onChange}
+                  error={!!error}
+                  helperText={error ? error.message : null}
+                  id="age"
+                />
+              )}
+              rules={{ required: "email is required" }}
             />
             <Box p={1} />
-            <TextField
-              className={classes.input}
-              variant="outlined"
-              label="last name"
-              {...register("lastName")}
-              id="lastName"
-            />
 
-            <Box p={1} />
-            <TextField
-              className={classes.input}
-              variant="outlined"
-              label="email"
-              type="email"
-              {...register("email")}
-              id="age"
-            />
-
-            <Box p={1} />
-
-            <TextField
-              className={classes.input}
-              variant="outlined"
-              type="password"
-              label="password"
-              {...register("password", {
-                //required:true,
-                required: "Enter a passw    ord",
+            <Controller
+              name="password"
+              control={control}
+              defaultValue=""
+              render={({
+                field: { onChange, value },
+                fieldState: { error },
+              }) => (
+                <TextField
+                  className={classes.input}
+                  variant="outlined"
+                  type="password"
+                  label="password"
+                  value={value}
+                  onChange={onChange}
+                  error={!!error}
+                  helperText={error ? error.message : null}
+                  id="password"
+                />
+              )}
+              rules={{
+                required: "password is required",
                 minLength: {
-                  value: 8,
-                  message: "Password must have at least 8 characters",
+                  value: 4,
+                  message: "Password must have at least 4 characters",
                 },
-              })}
-              id="password"
+              }}
             />
+
             <Box p={1} />
-            <TextField
-              className={classes.input}
-              variant="outlined"
-              type="Password"
-              label="confirm password"
-              {...register("confirmPassword")}
-              id="confirmPassword"
+            <Controller
+              name="confirmPassword"
+              control={control}
+              defaultValue=""
+              render={({
+                field: { onChange, value },
+                fieldState: { error },
+              }) => (
+                <TextField
+                  className={classes.input}
+                  variant="outlined"
+                  type="password"
+                  label="confirm password"
+                  value={value}
+                  onChange={onChange}
+                  error={!!error}
+                  helperText={error ? error.message : null}
+                  id="confirmPassword"
+                />
+              )}
+              rules={{
+                required: "confirm password",
+                minLength: {
+                  value: 4,
+                  message: "Password must have at least 4 characters",
+                },
+              }}
             />
 
             <Box p={2} />
@@ -153,6 +212,8 @@ export const RegisterForm: React.FC<Props> = (props) => {
               submit
             </Button>
           </form>
+
+          <div className={classes.form}>Already have an account? Log in</div>
         </Grid>
       </Paper>
     </div>
