@@ -1,17 +1,6 @@
 import React, { useRef, useState } from "react";
 
-import {
-  Box,
-  Button,
-  FormHelperText,
-  Grid,
-  Paper,
-  Select,
-  TextField,
-} from "@material-ui/core";
-import Input from "@material-ui/core/Input";
-import { Label } from "@material-ui/icons";
-
+import { Box, Button, Grid, Paper, Select, TextField } from "@material-ui/core";
 import { Controller, useForm } from "react-hook-form";
 import useStyles from "./RegisterForm.styles";
 
@@ -19,7 +8,7 @@ import { useAuthData } from "../../context/auth.context";
 import Alert from "@material-ui/lab/Alert";
 
 type FormValues = {
-  Name: string;
+  name: string;
   email: string;
   password: string;
   confirmPassword: string;
@@ -33,20 +22,13 @@ export const RegisterForm: React.FC<Props> = (props) => {
   const classes = useStyles();
   const { register, watch, getValues, handleSubmit, control } =
     useForm<FormValues>();
-  //const password = React.useRef({});
-  //password.current = watch("password", "");
-
-  //  const nameRef = useRef<HTMLInputElement>(null);
-  //  const emailRef = useRef<HTMLInputElement>(null);
-  //  const passwordRef = useRef<HTMLInputElement>(null);
-  //  const passwordConfirmRef = useRef<HTMLInputElement>(null);
 
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const { signUp, currentUser } = useAuthData();
 
   const submitHandler = async (data: FormValues) => {
-    const { confirmPassword, email, Name, password } = data;
+    const { confirmPassword, email, name, password } = data;
 
     if (password !== confirmPassword) {
       return setError("Passwords do not match");
@@ -64,27 +46,29 @@ export const RegisterForm: React.FC<Props> = (props) => {
   };
 
   return (
-    <div className={classes.root}>
-      <Paper>
-        <Box p={1} />
+    <div>
+      <Paper className={classes.root}>
         <Grid>
-          <div className={classes.title}>
-            <label> Sing Up</label>
-            <Box p={2} />
+          <div className={classes.titlemain}>
+            <label className={classes.title}>Sing Up</label>
             {currentUser && currentUser.email}
-            {error && (
-              <Alert
-                className={classes.input}
-                variant="outlined"
-                severity="error"
-              >
-                {error}
-              </Alert>
-            )}
+            <Box p={1}>
+              {error && (
+                <Alert
+                  className={classes.input}
+                  variant="outlined"
+                  severity="error"
+                >
+                  {error}
+                </Alert>
+              )}
+            </Box>
           </div>
+
           <form className={classes.form} onSubmit={handleSubmit(submitHandler)}>
+            <Box p={1} />
             <Controller
-              name="Name"
+              name="name"
               control={control}
               defaultValue=""
               render={({
@@ -94,13 +78,12 @@ export const RegisterForm: React.FC<Props> = (props) => {
                 <TextField
                   className={classes.input}
                   variant="outlined"
-                  label="Name"
+                  label="name"
                   value={value}
                   onChange={onChange}
                   error={!!error}
                   helperText={error ? error.message : null}
-                  //{...register("Name", { required: true, minLength: 5 })}
-                  id="Name"
+                  id="name"
                 />
               )}
               rules={{ required: "Name is required" }}
@@ -191,7 +174,7 @@ export const RegisterForm: React.FC<Props> = (props) => {
               }}
             />
 
-            <Box p={2} />
+            <Box p={1} />
             <Button
               className={classes.button}
               type="button"
@@ -207,13 +190,12 @@ export const RegisterForm: React.FC<Props> = (props) => {
               type="submit"
               variant="outlined"
               color="primary"
-              //onClick={handleSubmit(onSubmit)}
             >
               submit
             </Button>
-          </form>
 
-          <div className={classes.form}>Already have an account? Log in</div>
+            <div className={classes.text}>Already have an account? Log in</div>
+          </form>
         </Grid>
       </Paper>
     </div>

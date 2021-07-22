@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useContext } from "react";
 import { MarkerData } from "../definitions/types";
 
-
 type State = {
   markerType: string;
 

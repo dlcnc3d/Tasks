@@ -1,55 +1,58 @@
-
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
-import { Translate } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
+      alignItems: "center",
+      padding: theme.spacing(0),
+      minheight: "600px",
 
-display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: theme.spacing(0),
-    height: '600px',
-    //backgroundColor: "#a1dffb90",
-
-    '& .MuiTextField-root': {
-      margin: theme.spacing(2),
-      width: '350px',
-      height: '50px',
-
-    },
-    '& .MuiButtonBase-root': {
-      margin: theme.spacing(2),
-    },
-  },
-
-      
-      form: {        
-        backgroundColor: "#a1dffb20",        
-      }, 
-
-      title: {        
-        backgroundColor: "#596F87", 
-        
-      }, 
-
-
-
-      input: {
-        width: "90%",
-        height: "100%",
-        variant: "outlined",
+      "& .MuiTextField-root": {
+        margin: theme.spacing(3),
+        width: "350px",
+        height: "35px",
       },
-      button: {
-        width: "40%",
-        height: "100%",
-        variant: "outlined",
-        margin:"10px",
+      "& .MuiButtonBase-root": {
+        margin: theme.spacing(2),
       },
+    },
+
+    form: {
+      backgroundColor: "#a1dffb20",
+    },
+
+    titlemain: {
+      marginTop: "20",
+      textAlign: "center",
+      height: "110px",
+      padding: theme.spacing(0),
+      justifyContent: "center",
+      backgroundColor: "#596F87",
+    },
+
+    title: {
+      fontSize: 30,
+      textAlign: "center",
+      color: "white",
+    },
+    text: {
+      fontSize: 15,
+      textAlign: "center",
+    },
+
+    input: {
+      width: "100%",
+      height: "100%",
+      variant: "outlined",
+      justifyContent: "center",
+    },
+    button: {
+      width: "41%",
+      height: "100%",
+      variant: "outlined",
+      padding: "15px",
+    },
   })
 );
 
 export default useStyles;
-

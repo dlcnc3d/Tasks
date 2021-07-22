@@ -5,14 +5,10 @@ import {
   withGoogleMap,
   GoogleMap,
   Marker,
-  DirectionsRenderer,
   InfoWindow,
-  GoogleMapProps,
 } from "react-google-maps";
 import { useMapData } from "../../../context/map.context";
-import { useState } from "react";
 import { MarkerData } from "../../../definitions/types";
-import { useEffect } from "react";
 import { MapRoutes } from "../../MapRoutes/MapRoutes";
 import { MarkerType } from "../../../definitions/enums";
 
@@ -31,14 +27,11 @@ const MapWrapper = compose<Props, Props>(
 )((props) => {
   const { points, routesEnabled } = useMapData();
 
-  const MapClickHandle = (
-    e: any
-  ) => {
+  const MapClickHandle = (e: any) => {
     props.onMapClick({
       lat: e.latLng.lat(),
       lng: e.latLng.lng(),
       time: Date.now(),
-      
     });
   };
 
@@ -47,9 +40,6 @@ const MapWrapper = compose<Props, Props>(
       defaultZoom={14}
       defaultCenter={{ lat: 49.23, lng: 28.47 }}
       onClick={MapClickHandle}
-            
-
-
     >
       {points.map((p) => (
         <Marker

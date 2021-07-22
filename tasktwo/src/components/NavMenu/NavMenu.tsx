@@ -25,10 +25,7 @@ import Box from "@material-ui/core/Box";
 
 import useStyles from "./NavMenu.styles";
 import { Dialog, DialogContent, DialogTitle } from "@material-ui/core";
-import {RegisterForm} from "../RegisterForm/RegisterForm";
-
-
-
+import { RegisterForm } from "../RegisterForm/RegisterForm";
 
 export default function NavMenu() {
   const classes = useStyles();
@@ -43,15 +40,15 @@ export default function NavMenu() {
     setOpen(false);
   };
 
-  const [openSingUp, setOpenSingUp]=  React.useState(false);
+  const [openSingUp, setOpenSingUp] = React.useState(false);
 
-  const handleClickOpen =() =>{
-    setOpenSingUp(true)
-  }
+  const handleClickOpen = () => {
+    setOpenSingUp(true);
+  };
 
-  const handleClose =() =>{
-    setOpenSingUp(false)
-  }
+  const handleClose = () => {
+    setOpenSingUp(false);
+  };
 
   return (
     <div className={classes.root}>
@@ -83,28 +80,24 @@ export default function NavMenu() {
               color="inherit"
               variant="outlined"
             >
-              log in
+              Sign in
             </Button>
           </Box>
           <Box mr={3} alignSelf="right">
-            <Button 
-            className={classes.menubutton} 
-            variant="contained"
-            onClick={handleClickOpen}
+            <Button
+              className={classes.menubutton}
+              variant="contained"
+              onClick={handleClickOpen}
             >
-               Sign Up
+              Sign Up
             </Button>
-            <Dialog 
-            open={openSingUp}
-            onClose={handleClose}
-            aria-labelledby="form-dialog-title"
-            > 
-            <RegisterForm
-            onClose={handleClose}
-            />
+            <Dialog
+              open={openSingUp}
+              onClose={handleClose}
+              aria-labelledby="form-dialog-title"
+            >
+              <RegisterForm onClose={handleClose} />
             </Dialog>
-
-
           </Box>
         </Toolbar>
       </AppBar>
@@ -129,18 +122,18 @@ export default function NavMenu() {
         </div>
         <Divider />
         <List>
-          {["Sign in", "Sing Up"].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>
-                {index % 2 === 0 ? (
-                  <AccountBoxIcon />
-                ) : (
-                  <SupervisorAccountIcon />
-                )}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
+          <ListItem button key={"Sign in"}>
+            <ListItemIcon>
+              <AccountBoxIcon />
+            </ListItemIcon>
+            <ListItemText primary={"Sign in"} />
+          </ListItem>
+          <ListItem button key={"Sign Up"} onClick={handleClickOpen}>
+            <ListItemIcon>
+              <AccountBoxIcon />
+            </ListItemIcon>
+            <ListItemText primary={"Sign Up"} />
+          </ListItem>
         </List>
         <Divider />
       </Drawer>
