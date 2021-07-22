@@ -83,9 +83,6 @@ const DelPointsHandler = ()=>{
           size="small"
           onClick={getPositionClick}
           
-            
-          
-
 
         >
           Start poin by Geoposition

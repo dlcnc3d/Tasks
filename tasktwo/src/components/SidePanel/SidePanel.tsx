@@ -40,6 +40,9 @@ export const SidePanel: React.FC = () => {
               ? typeCheck
               : labeltype,
         },
+
+
+
       ]);
     }
   };

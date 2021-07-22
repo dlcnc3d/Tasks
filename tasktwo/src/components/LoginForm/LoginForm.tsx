@@ -2,49 +2,46 @@ import React, { useRef, useState } from "react";
 
 import { Box, Button, Grid, Paper, Select, TextField } from "@material-ui/core";
 import { Controller, useForm } from "react-hook-form";
-import useStyles from "./RegisterForm.styles";
+import useStyles from "./LoginForm.styles";
 
 import { useAuthData } from "../../context/auth.context";
 import Alert from "@material-ui/lab/Alert";
 import { Link, useHistory} from "react-router-dom";
 
 type FormValues = {
-  name: string;
   email: string;
-  password: string;
-  confirmPassword: string;
+  password: string; 
 };
 
 type Props = {
   onClose: () => void;
 };
 
-export const RegisterForm: React.FC<Props> = (props) => {
+export const LoginForm: React.FC<Props> = (props) => {
   const classes = useStyles();
   const { register, watch, getValues, handleSubmit, control } =
     useForm<FormValues>();
 
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const { signUp, currentUser } = useAuthData();
-  const history = useHistory();
+  const history = useHistory()
+  
+  //---------------
+  const { logIn, currentUser } = useAuthData();
 
   const submitHandler = async (data: FormValues) => {
-    const { confirmPassword, email, name, password } = data;
-
-    if (password !== confirmPassword) {
-      return setError("Passwords do not match");
-    }
-
+    const {email, password } = data;
+    
     try {
       setError("");
       setLoading(true);
-      await signUp(email, password);
+      await logIn(email, password);
       console.log(email, password);
       history.push("/")
       props.onClose();
+
     } catch {
-      setError("Failed to create an account");
+      setError("Failed to sign in");
     }
     setLoading(false);
   };
@@ -54,7 +51,7 @@ export const RegisterForm: React.FC<Props> = (props) => {
       <Paper className={classes.root}>
         <Grid>
           <div className={classes.titlemain}>
-            <label className={classes.title}>Sing Up</label>
+            <label className={classes.title}>Log In</label>
             {currentUser && currentUser.email}
             <Box p={1}>
               {error && (
@@ -71,31 +68,8 @@ export const RegisterForm: React.FC<Props> = (props) => {
 
           <form className={classes.form} onSubmit={handleSubmit(submitHandler)}>
             <Box p={1} />
-            <Controller
-              name="name"
-              control={control}
-              defaultValue=""
-              render={({
-                field: { onChange, value },
-                fieldState: { error },
-              }) => (
-                <TextField
-                  className={classes.input}
-                  variant="outlined"
-                  label="name"
-                  value={value}
-                  onChange={onChange}
-                  error={!!error}
-                  helperText={error ? error.message : null}
-                  id="name"
-                />
-              )}
-              rules={{ required: "Name is required" }}
-            />
-
-            <Box p={1} />
-
-            <Controller
+           
+           <Controller
               name="email"
               control={control}
               defaultValue=""
@@ -149,36 +123,7 @@ export const RegisterForm: React.FC<Props> = (props) => {
             />
 
             <Box p={1} />
-            <Controller
-              name="confirmPassword"
-              control={control}
-              defaultValue=""
-              render={({
-                field: { onChange, value },
-                fieldState: { error },
-              }) => (
-                <TextField
-                  className={classes.input}
-                  variant="outlined"
-                  type="password"
-                  label="confirm password"
-                  value={value}
-                  onChange={onChange}
-                  error={!!error}
-                  helperText={error ? error.message : null}
-                  id="confirmPassword"
-                />
-              )}
-              rules={{
-                required: "confirm password",
-                minLength: {
-                  value: 4,
-                  message: "Password must have at least 4 characters",
-                },
-              }}
-            />
-
-            <Box p={1} />
+            
             <Button
               className={classes.button}
               type="button"
@@ -195,16 +140,15 @@ export const RegisterForm: React.FC<Props> = (props) => {
               variant="outlined"
               color="primary"
             >
-              submit
+              Log In
             </Button>
 
             <div className={classes.text}>
-            Already have an account? 
-                <Link to="/login">
-                Sign In
+                Don't have account?  
+                <Link to="/signup">
+                Sign Up
                 </Link>
-                </div>            
-            
+                </div>
           </form>
         </Grid>
       </Paper>

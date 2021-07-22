@@ -7,6 +7,7 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: theme.spacing(0),
       minheight: "600px",
       maxWidth:"400px",
+      zIndex:99999999,
 
       "& .MuiTextField-root": {
         margin: theme.spacing(3),

@@ -6,22 +6,36 @@ import { Footer } from "./components/Footer/Footer";
 import { SidePanel } from "./components/SidePanel/SidePanel";
 import { MapProvider } from "./context/map.context";
 import { StrictMode } from "react";
+import { AuthProvider } from "./context/auth.context";
+import React from "react";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { RegisterForm } from "./components/RegisterForm/RegisterForm";
+import { LoginForm } from "./components/LoginForm/LoginForm";
+
+//<SidePanel />
 
 function App() {
   return (
-    
     <StrictMode>
-    <MapProvider>
-      <MuiThemeProvider theme={defaultTheme}>
-        <NavMenu />
-        <CssBaseline />
-        <main>
-          <SidePanel />
-        </main>
-        <Footer year={new Date().getFullYear()}> </Footer>
-      </MuiThemeProvider>
-    </MapProvider>
-    </StrictMode>   
+      <Router>
+        <AuthProvider>
+          <MapProvider>
+            <MuiThemeProvider theme={defaultTheme}>
+              <NavMenu />
+              <CssBaseline />
+              <main>
+                <Switch>
+                  <Route exact path="/" component={SidePanel} />
+                  <Route path="/signup" component={RegisterForm} />
+                  <Route path="/login" component={LoginForm} />
+                </Switch>
+              </main>
+              <Footer year={new Date().getFullYear()}> </Footer>
+            </MuiThemeProvider>
+          </MapProvider>
+        </AuthProvider>
+      </Router>
+    </StrictMode>
   );
 }
 

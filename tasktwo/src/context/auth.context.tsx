@@ -6,6 +6,8 @@ import firebase from "firebase/app";
 
 type State = {
   signUp: (email: string, password: string) => void;
+  logIn: (email: string, password: string) => void;
+  logOut: () => void;
   currentUser: firebase.User;
   setCurrentUser: React.Dispatch<firebase.User>;
 };
@@ -22,6 +24,16 @@ export const AuthProvider: React.FC = (props) => {
     return auth.createUserWithEmailAndPassword(email, password);
   };
 
+  const logIn = (email: string, password: string) => {
+    return auth.signInWithEmailAndPassword(email, password);
+  };
+
+
+  const logOut = () => {
+    return auth.signOut();
+  };
+
+
   useEffect(() => {
     const unsubcribe = auth.onAuthStateChanged((user) => {
       setCurrentUser(user);
@@ -35,6 +47,8 @@ export const AuthProvider: React.FC = (props) => {
         currentUser,
         setCurrentUser,
         signUp,
+        logIn,
+        logOut,
       }}
     >
       {children}

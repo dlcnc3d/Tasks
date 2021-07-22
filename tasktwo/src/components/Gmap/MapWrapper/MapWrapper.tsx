@@ -8,9 +8,13 @@ import {
   InfoWindow,
 } from "react-google-maps";
 import { useMapData } from "../../../context/map.context";
+import { useAuthData } from "../../../context/auth.context";
 import { MarkerData } from "../../../definitions/types";
 import { MapRoutes } from "../../MapRoutes/MapRoutes";
 import { MarkerType } from "../../../definitions/enums";
+
+
+
 
 type Props = {
   onMapClick: (data: MarkerData) => void;
@@ -28,18 +32,28 @@ const MapWrapper = compose<Props, Props>(
   const { points, routesEnabled } = useMapData();
 
   const MapClickHandle = (e: any) => {
-    props.onMapClick({
-      lat: e.latLng.lat(),
-      lng: e.latLng.lng(),
-      time: Date.now(),
-    });
+if (currentUser!==null)
+{
+  props.onMapClick({
+  lat: e.latLng.lat(),
+  lng: e.latLng.lng(),
+  time: Date.now(),
+});
+}
+else
+{
+  alert("Please log in")
+}
+    
   };
+
+  const { currentUser } = useAuthData();
 
   return (
     <GoogleMap
       defaultZoom={14}
       defaultCenter={{ lat: 49.23, lng: 28.47 }}
-      onClick={MapClickHandle}
+      onClick= {MapClickHandle}
     >
       {points.map((p) => (
         <Marker

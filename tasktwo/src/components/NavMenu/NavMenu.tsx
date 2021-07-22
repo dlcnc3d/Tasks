@@ -26,11 +26,18 @@ import Box from "@material-ui/core/Box";
 import useStyles from "./NavMenu.styles";
 import { Dialog, DialogContent, DialogTitle } from "@material-ui/core";
 import { RegisterForm } from "../RegisterForm/RegisterForm";
+import { LoginForm } from "../LoginForm/LoginForm";
+import { useAuthData } from "../../context/auth.context";
+
 
 export default function NavMenu() {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  
+  const { currentUser, logOut } = useAuthData();
+
+
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -40,14 +47,37 @@ export default function NavMenu() {
     setOpen(false);
   };
 
-  const [openSingUp, setOpenSingUp] = React.useState(false);
+  const [openSignUp, setOpenSignUp] = React.useState(false);
+  const [openLogIn, setOpenLogIn] = React.useState(false);
 
-  const handleClickOpen = () => {
-    setOpenSingUp(true);
+  
+
+  const handleClickOpenSignUp = () => {
+    if (openLogIn) 
+    {
+      setOpenLogIn(false);
+    }  
+    setOpenSignUp(true);
   };
 
+
+  const handleClickOpenLogIn = () => {
+    if (openSignUp) 
+    {
+      setOpenSignUp(false);
+    }    
+    setOpenLogIn(true);    
+  };
+
+  const handleClickLogOut = () => {
+    logOut();    
+  };
+
+
+
   const handleClose = () => {
-    setOpenSingUp(false);
+    setOpenSignUp(false);
+    setOpenLogIn(false);
   };
 
   return (
@@ -79,25 +109,36 @@ export default function NavMenu() {
               className={classes.menubutton}
               color="inherit"
               variant="outlined"
+              onClick={currentUser===null? handleClickOpenLogIn: handleClickLogOut}
             >
-              Sign in
+          {currentUser===null? "Log in": "Log Out"}              
             </Button>
+            <Dialog
+              open={openLogIn}
+              onClose={handleClose}
+              aria-labelledby="form-dialog-title"
+            >
+              <LoginForm onClose={handleClose} />
+            </Dialog>
           </Box>
           <Box mr={3} alignSelf="right">
             <Button
               className={classes.menubutton}
               variant="contained"
-              onClick={handleClickOpen}
+              onClick={handleClickOpenSignUp}
             >
               Sign Up
             </Button>
             <Dialog
-              open={openSingUp}
+              open={openSignUp}
               onClose={handleClose}
               aria-labelledby="form-dialog-title"
             >
               <RegisterForm onClose={handleClose} />
             </Dialog>
+
+
+            
           </Box>
         </Toolbar>
       </AppBar>
@@ -122,13 +163,15 @@ export default function NavMenu() {
         </div>
         <Divider />
         <List>
-          <ListItem button key={"Sign in"}>
+          <ListItem button key={"Log in"} onClick={currentUser===null? handleClickOpenLogIn: handleClickLogOut}>
             <ListItemIcon>
               <AccountBoxIcon />
             </ListItemIcon>
-            <ListItemText primary={"Sign in"} />
+            <ListItemText 
+            primary={currentUser===null? "Log in": "Log Out"}
+            />
           </ListItem>
-          <ListItem button key={"Sign Up"} onClick={handleClickOpen}>
+          <ListItem button key={"Sign Up"} onClick={handleClickOpenSignUp}>
             <ListItemIcon>
               <AccountBoxIcon />
             </ListItemIcon>
