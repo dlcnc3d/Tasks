@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { MarkerData } from "../../definitions/types";
+import { MarkerData, RouteData } from "../../definitions/types";
 import { getRouteHelpers } from "../../core/helpers/route.helpers";
 import { DirectionsRenderer } from "react-google-maps";
 import { useState } from "react";
@@ -19,6 +19,11 @@ export const MapRoutes: React.FC<Props> = (props) => {
     if (enabled && startPoint !== null && finishPoint !== null) {
       getRouteHelpers(startPoint, finishPoint).then((result) => {
         setRoutes(result);
+
+       
+
+
+
       });
     }
   }, [enabled, startPoint, finishPoint]);

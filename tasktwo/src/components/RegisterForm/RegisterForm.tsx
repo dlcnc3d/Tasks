@@ -6,7 +6,7 @@ import useStyles from "./RegisterForm.styles";
 
 import { useAuthData } from "../../context/auth.context";
 import Alert from "@material-ui/lab/Alert";
-import { Link, useHistory} from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 type FormValues = {
   name: string;
@@ -41,7 +41,7 @@ export const RegisterForm: React.FC<Props> = (props) => {
       setLoading(true);
       await signUp(email, password);
       console.log(email, password);
-      history.push("/")
+      history.push("/");
       props.onClose();
     } catch {
       setError("Failed to create an account");
@@ -199,12 +199,9 @@ export const RegisterForm: React.FC<Props> = (props) => {
             </Button>
 
             <div className={classes.text}>
-            Already have an account? 
-                <Link to="/login">
-                Sign In
-                </Link>
-                </div>            
-            
+              Already have an account?
+              <Link to="/login">Log In</Link>
+            </div>
           </form>
         </Grid>
       </Paper>

@@ -10,7 +10,7 @@ import { MarkerData } from "../../../definitions/types";
 
 
 type Props = {
-  onSelect: (data: MarkerData) => void;
+  onSelect: (data: MarkerData) => void;  
 };
 
 export const Autocomplete: React.FC<Props> = (props) => {

@@ -8,3 +8,9 @@ export type MarkerData = {
   type?: MarkerType;
   //label?:string;
 };
+
+export type RouteData = {
+    fare: number;
+    distance: string;
+    duration: string;
+};

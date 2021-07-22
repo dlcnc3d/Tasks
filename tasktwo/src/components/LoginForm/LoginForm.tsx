@@ -6,11 +6,11 @@ import useStyles from "./LoginForm.styles";
 
 import { useAuthData } from "../../context/auth.context";
 import Alert from "@material-ui/lab/Alert";
-import { Link, useHistory} from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 type FormValues = {
   email: string;
-  password: string; 
+  password: string;
 };
 
 type Props = {
@@ -24,22 +24,21 @@ export const LoginForm: React.FC<Props> = (props) => {
 
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const history = useHistory()
-  
+  const history = useHistory();
+
   //---------------
   const { logIn, currentUser } = useAuthData();
 
   const submitHandler = async (data: FormValues) => {
-    const {email, password } = data;
-    
+    const { email, password } = data;
+
     try {
       setError("");
       setLoading(true);
       await logIn(email, password);
       console.log(email, password);
-      history.push("/")
+      history.push("/");
       props.onClose();
-
     } catch {
       setError("Failed to sign in");
     }
@@ -68,8 +67,8 @@ export const LoginForm: React.FC<Props> = (props) => {
 
           <form className={classes.form} onSubmit={handleSubmit(submitHandler)}>
             <Box p={1} />
-           
-           <Controller
+
+            <Controller
               name="email"
               control={control}
               defaultValue=""
@@ -123,7 +122,7 @@ export const LoginForm: React.FC<Props> = (props) => {
             />
 
             <Box p={1} />
-            
+
             <Button
               className={classes.button}
               type="button"
@@ -144,11 +143,9 @@ export const LoginForm: React.FC<Props> = (props) => {
             </Button>
 
             <div className={classes.text}>
-                Don't have account?  
-                <Link to="/signup">
-                Sign Up
-                </Link>
-                </div>
+              Don't have account?
+              <Link to="/signup">Sign Up</Link>
+            </div>
           </form>
         </Grid>
       </Paper>

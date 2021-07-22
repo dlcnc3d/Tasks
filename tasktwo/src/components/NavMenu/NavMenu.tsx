@@ -33,11 +33,8 @@ import { useAuthData } from "../../context/auth.context";
 export default function NavMenu() {
   const classes = useStyles();
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
-  
+  const [open, setOpen] = React.useState(false);  
   const { currentUser, logOut } = useAuthData();
-
-
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -49,9 +46,7 @@ export default function NavMenu() {
 
   const [openSignUp, setOpenSignUp] = React.useState(false);
   const [openLogIn, setOpenLogIn] = React.useState(false);
-
   
-
   const handleClickOpenSignUp = () => {
     if (openLogIn) 
     {
@@ -59,7 +54,6 @@ export default function NavMenu() {
     }  
     setOpenSignUp(true);
   };
-
 
   const handleClickOpenLogIn = () => {
     if (openSignUp) 
@@ -83,8 +77,7 @@ export default function NavMenu() {
   return (
     <div className={classes.root}>
       <AppBar
-        position="fixed"
-        className={clsx(classes.appBar, {
+          className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
         })}
       >
@@ -98,13 +91,22 @@ export default function NavMenu() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap>
+          
+          <Typography variant="h6" noWrap className={classes.title}>
             Menu
           </Typography>
+          
+          <Typography
+          
+          className={classes.userSign}
+          color= {currentUser===null?"secondary": "inherit"}
+          variant ={currentUser===null?"h5": "h6"}          
+           >
+            {currentUser===null?"unregisterd user": currentUser.email}        
+            </Typography>
+        
 
-          <Box mr={20} />
-
-          <Box mr={3} alignSelf="right">
+          <Box mr={2}>
             <Button
               className={classes.menubutton}
               color="inherit"
@@ -113,6 +115,7 @@ export default function NavMenu() {
             >
           {currentUser===null? "Log in": "Log Out"}              
             </Button>
+            
             <Dialog
               open={openLogIn}
               onClose={handleClose}
@@ -120,10 +123,13 @@ export default function NavMenu() {
             >
               <LoginForm onClose={handleClose} />
             </Dialog>
+            
           </Box>
-          <Box mr={3} alignSelf="right">
+  
+
+          <Box mr={3} >
             <Button
-              className={classes.menubutton}
+              
               variant="contained"
               onClick={handleClickOpenSignUp}
             >
@@ -137,9 +143,8 @@ export default function NavMenu() {
               <RegisterForm onClose={handleClose} />
             </Dialog>
 
-
-            
           </Box>
+         
         </Toolbar>
       </AppBar>
 
@@ -173,7 +178,7 @@ export default function NavMenu() {
           </ListItem>
           <ListItem button key={"Sign Up"} onClick={handleClickOpenSignUp}>
             <ListItemIcon>
-              <AccountBoxIcon />
+              <SupervisorAccountIcon />
             </ListItemIcon>
             <ListItemText primary={"Sign Up"} />
           </ListItem>

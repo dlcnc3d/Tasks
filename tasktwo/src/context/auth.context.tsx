@@ -28,11 +28,9 @@ export const AuthProvider: React.FC = (props) => {
     return auth.signInWithEmailAndPassword(email, password);
   };
 
-
   const logOut = () => {
     return auth.signOut();
   };
-
 
   useEffect(() => {
     const unsubcribe = auth.onAuthStateChanged((user) => {

@@ -4,7 +4,7 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       display: "flex",
-      height: "58px",
+      height: "54px",
       width: "100%",
       flexDirection: "row",
       marginTop: "0px",

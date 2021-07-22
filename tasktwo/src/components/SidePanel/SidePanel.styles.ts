@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme: Theme) =>
       minWidth:"800px",
     },
     LeftPanel: {
-      height: "89vh",
+      height: "88vh",
       backgroundColor: "#a1dffb30",
       elevation: "100",
       paddingLeft: "20px",
@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme: Theme) =>
       
     },    
     mainForm: {
-      height: "89vh",
+      height: "88vh",
       display: "flex",
       flexDirection: "column",
       elevation: "0",

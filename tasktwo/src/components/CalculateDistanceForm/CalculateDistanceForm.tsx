@@ -5,71 +5,75 @@ import { useMapData } from "../../context/map.context";
 import { MarkerData } from "../../definitions/types";
 import { MarkerType } from "../../definitions/enums";
 import useStyles from "./CalculateDistanceForm.styles";
+import { useAuthData } from "../../context/auth.context";
 
 type Props = {
-    selectHandler: (marker: MarkerData,
-      typeCheck: MarkerType,
-      labeltype: MarkerType) => void
+  selectHandler: (
+    marker: MarkerData,
+    typeCheck: MarkerType,
+    labeltype: MarkerType
+  ) => void;
 };
 
-export const CalculateDistanceForm : React.FC<Props> = (props) => {
+export const CalculateDistanceForm: React.FC<Props> = (props) => {
   //const { setFinishPoint, setStartPoint } = useMapData();
   //const { startPoint, finishPoint } = useMapData();
   const { points, setPoints } = useMapData();
   const { routesEnabled, setRoutesEnabled } = useMapData();
-  const { setRoutes } = useMapData();
-
-  
+  const { routes, setRoutes } = useMapData();
+  const { currentUser } = useAuthData();
 
   const classes = useStyles();
 
   const getPositionClick = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
-        if (position !== null)
-        {
+        if (position !== null) {
           props.selectHandler(
-            {lat: position.coords.longitude,
-            lng: position.coords.longitude,
-            time: Date.now(),},
-             MarkerType.Start, MarkerType.Start)
-
-        }      
+            {
+              lat: position.coords.longitude,
+              lng: position.coords.longitude,
+              time: Date.now(),
+            },
+            MarkerType.Start,
+            MarkerType.Start
+          );
+        }
       });
     }
   };
 
-
-
   const getRoutesEnabled = () => {
-    setRoutesEnabled(!routesEnabled);    
+    setRoutesEnabled(!routesEnabled);
+
+
+//--------------------------------------
+    if (routes!==null)
+{    alert (routes.routes[0].legs[0].distance.text)}
+
+
   };
- 
-const DelPointsHandler = ()=>{
-  setPoints([]);
-  setRoutesEnabled(false);
-  setRoutes(null)
 
-  
-
-  
-}
-
-//const [routes, setRoutes] = useState<any>(null);
-
+  const DelPointsHandler = () => {
+    setPoints([]);
+    setRoutesEnabled(false);
+    setRoutes(null);
+  };
 
   return (
     <>
       <Box p={1} />
       <Autocomplete
-        onSelect={(data: MarkerData) =>
-          props.selectHandler(data, MarkerType.Start, MarkerType.Start)
-        }
+        onSelect={(data: MarkerData) => {
+          currentUser !== null
+            ? props.selectHandler(data, MarkerType.Start, MarkerType.Start)
+            : alert("You can't use autocoplite. Please log in");
+        }}
       />
 
       <FormHelperText id="StartPosition">Start Position</FormHelperText>
       <Box p={1} />
-      <Autocomplete
+      <Autocomplete      
         onSelect={(data: MarkerData) =>
           props.selectHandler(data, MarkerType.Finish, MarkerType.Finish)
         }
@@ -82,8 +86,6 @@ const DelPointsHandler = ()=>{
           color="primary"
           size="small"
           onClick={getPositionClick}
-          
-
         >
           Start poin by Geoposition
         </Button>
@@ -96,6 +98,7 @@ const DelPointsHandler = ()=>{
           variant="outlined"
           color={routesEnabled ? "secondary" : "primary"}
           size="small"
+
         >
           Build route
         </Button>

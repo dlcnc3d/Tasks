@@ -6,9 +6,12 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       display: "flex",
+      width: "100%",
     },
     appBar: {
       height: "60px",
+      width: "100%",
+
       backgroundColor: "#596F87",
       transition: theme.transitions.create(["margin", "width"], {
         easing: theme.transitions.easing.sharp,
@@ -23,9 +26,14 @@ const useStyles = makeStyles((theme: Theme) =>
         duration: theme.transitions.duration.enteringScreen,
       }),
     },
-    menuButton: {
-      marginRight: theme.spacing(1),
+    title: {
+      flexGrow: 1,
     },
+
+    menuButton: {
+      marginleft: theme.spacing(1),
+    },
+
     hide: {
       display: "none",
     },
@@ -43,28 +51,22 @@ const useStyles = makeStyles((theme: Theme) =>
       ...theme.mixins.toolbar,
       justifyContent: "flex-end",
     },
-    content: {
-      flexGrow: 1,
-      padding: theme.spacing(3),
-      transition: theme.transitions.create("margin", {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-      }),
-      marginLeft: -drawerWidth,
+    userSign: {
+      marginRight: theme.spacing(3),
+      flexFlow: "row",
+      float: "right",
+      marginright: "1",
+      alignItems: "right",
     },
+
     contentShift: {
       transition: theme.transitions.create("margin", {
         easing: theme.transitions.easing.easeOut,
         duration: theme.transitions.duration.enteringScreen,
       }),
-      marginLeft: 0,
     },
     menubutton: {
-      marginRight: theme.spacing(1),
-      position: "relative",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
+      marginRight: theme.spacing(2),
     },
   })
 );
