@@ -3,6 +3,7 @@ import { MarkerData, RouteData } from "../../definitions/types";
 import { getRouteHelpers } from "../../core/helpers/route.helpers";
 import { DirectionsRenderer } from "react-google-maps";
 import { useState } from "react";
+import { useMapData } from "../../context/map.context";
 
 type Props = {
   startPoint: MarkerData;
@@ -13,16 +14,13 @@ type Props = {
 export const MapRoutes: React.FC<Props> = (props) => {
   const { startPoint, finishPoint, enabled } = props;
 
-  const [routes, setRoutes] = useState<any>(null);
+    const { routes, setRoutes } = useMapData();
+
 
   useEffect(() => {
     if (enabled && startPoint !== null && finishPoint !== null) {
       getRouteHelpers(startPoint, finishPoint).then((result) => {
-        setRoutes(result);
-
-       
-
-
+        setRoutes(result);       
 
       });
     }

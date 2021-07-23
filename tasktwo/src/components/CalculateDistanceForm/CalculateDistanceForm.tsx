@@ -7,6 +7,7 @@ import { MarkerType } from "../../definitions/enums";
 import useStyles from "./CalculateDistanceForm.styles";
 import { useAuthData } from "../../context/auth.context";
 
+
 type Props = {
   selectHandler: (
     marker: MarkerData,
@@ -22,6 +23,10 @@ export const CalculateDistanceForm: React.FC<Props> = (props) => {
   const { routesEnabled, setRoutesEnabled } = useMapData();
   const { routes, setRoutes } = useMapData();
   const { currentUser } = useAuthData();
+  
+
+
+
 
   const classes = useStyles();
 
@@ -31,7 +36,7 @@ export const CalculateDistanceForm: React.FC<Props> = (props) => {
         if (position !== null) {
           props.selectHandler(
             {
-              lat: position.coords.longitude,
+              lat: position.coords.latitude,
               lng: position.coords.longitude,
               time: Date.now(),
             },
@@ -45,13 +50,6 @@ export const CalculateDistanceForm: React.FC<Props> = (props) => {
 
   const getRoutesEnabled = () => {
     setRoutesEnabled(!routesEnabled);
-
-
-//--------------------------------------
-    if (routes!==null)
-{    alert (routes.routes[0].legs[0].distance.text)}
-
-
   };
 
   const DelPointsHandler = () => {
@@ -68,16 +66,21 @@ export const CalculateDistanceForm: React.FC<Props> = (props) => {
           currentUser !== null
             ? props.selectHandler(data, MarkerType.Start, MarkerType.Start)
             : alert("You can't use autocoplite. Please log in");
+           
         }}
+        markerValue="123"
+        //markerValue={points[0].lat===null?"0":points[0].lat.toString}
       />
 
       <FormHelperText id="StartPosition">Start Position</FormHelperText>
       <Box p={1} />
-      <Autocomplete      
+      <Autocomplete
         onSelect={(data: MarkerData) =>
           props.selectHandler(data, MarkerType.Finish, MarkerType.Finish)
         }
+        markerValue="123"
       />
+      
       <FormHelperText id="EndPosition">End Position</FormHelperText>
       <Box p={1} />
       <Tooltip title="Click to get your geolocation posittion">
@@ -98,7 +101,6 @@ export const CalculateDistanceForm: React.FC<Props> = (props) => {
           variant="outlined"
           color={routesEnabled ? "secondary" : "primary"}
           size="small"
-
         >
           Build route
         </Button>

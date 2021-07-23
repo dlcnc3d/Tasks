@@ -11,6 +11,7 @@ import { MarkerData } from "../../../definitions/types";
 
 type Props = {
   onSelect: (data: MarkerData) => void;  
+  markerValue: string;
 };
 
 export const Autocomplete: React.FC<Props> = (props) => {
@@ -25,9 +26,20 @@ export const Autocomplete: React.FC<Props> = (props) => {
   const handleSelect = async (value: string) => {
     const results = await geocodeByAddress(value);
     const result = {
+      
       lat: results[0].geometry.location.lat(),
       lng: results[0].geometry.location.lng(),
+
+      
+
+
     };
+//-----------------------------------------------------------
+    console.log(result);
+    console.log("------");
+    console.log(value);
+    
+
 
     setAddress(value);
     setCoordinates(result);
@@ -44,7 +56,8 @@ export const Autocomplete: React.FC<Props> = (props) => {
   return (
     <PlacesAutocomplete
       searchOptions={searchOptions}
-      value={address}
+      value={props.markerValue}
+      //value={address}
       onChange={setAddress}
       onSelect={handleSelect}
     >

@@ -13,9 +13,6 @@ import { MarkerData } from "../../../definitions/types";
 import { MapRoutes } from "../../MapRoutes/MapRoutes";
 import { MarkerType } from "../../../definitions/enums";
 
-
-
-
 type Props = {
   onMapClick: (data: MarkerData) => void;
   children?: React.ReactNode;
@@ -32,19 +29,15 @@ const MapWrapper = compose<Props, Props>(
   const { points, routesEnabled } = useMapData();
 
   const MapClickHandle = (e: any) => {
-if (currentUser!==null)
-{
-  props.onMapClick({
-  lat: e.latLng.lat(),
-  lng: e.latLng.lng(),
-  time: Date.now(),
-});
-}
-else
-{
-  alert("Please log in")
-}
-    
+    if (currentUser !== null) {
+      props.onMapClick({
+        lat: e.latLng.lat(),
+        lng: e.latLng.lng(),
+        time: Date.now(),
+      });
+    } else {
+      alert("Please log in");
+    }
   };
 
   const { currentUser } = useAuthData();
@@ -53,7 +46,7 @@ else
     <GoogleMap
       defaultZoom={14}
       defaultCenter={{ lat: 49.23, lng: 28.47 }}
-      onClick= {MapClickHandle}
+      onClick={MapClickHandle}
     >
       {points.map((p) => (
         <Marker

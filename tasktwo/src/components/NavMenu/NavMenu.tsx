@@ -28,6 +28,10 @@ import { Dialog, DialogContent, DialogTitle } from "@material-ui/core";
 import { RegisterForm } from "../RegisterForm/RegisterForm";
 import { LoginForm } from "../LoginForm/LoginForm";
 import { useAuthData } from "../../context/auth.context";
+import { useMapData } from "../../context/map.context";
+import { getRouteDatahelper } from "../../core/helpers/routeData.helpers";
+
+
 
 
 export default function NavMenu() {
@@ -35,6 +39,8 @@ export default function NavMenu() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);  
   const { currentUser, logOut } = useAuthData();
+  const { routes, setRoutes } = useMapData();
+
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -96,13 +102,20 @@ export default function NavMenu() {
             Menu
           </Typography>
           
+          
+          <Typography>
+          {getRouteDatahelper(routes)}
+          
+           </Typography>
+           <Box mr={5}/> 
+           
           <Typography
           
           className={classes.userSign}
           color= {currentUser===null?"secondary": "inherit"}
           variant ={currentUser===null?"h5": "h6"}          
            >
-            {currentUser===null?"unregisterd user": currentUser.email}        
+            {currentUser===null?"unregistered user": currentUser.email}        
             </Typography>
         
 

@@ -15,6 +15,10 @@ export const SidePanel: React.FC = () => {
   const classes = useStyles();
   const { points, setPoints } = useMapData();
 
+
+
+  
+
   const selectHandler = (
     marker: MarkerData,
     typeCheck: MarkerType,
@@ -40,9 +44,6 @@ export const SidePanel: React.FC = () => {
               ? typeCheck
               : labeltype,
         },
-
-
-
       ]);
     }
   };
