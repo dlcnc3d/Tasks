@@ -6,6 +6,7 @@ import { MarkerData } from "../../definitions/types";
 import { MarkerType } from "../../definitions/enums";
 import useStyles from "./CalculateDistanceForm.styles";
 import { useAuthData } from "../../context/auth.context";
+import { getAddressByLatLngHelper } from "../../core/helpers/geocode.helpers";
 
 
 type Props = {
@@ -68,7 +69,13 @@ export const CalculateDistanceForm: React.FC<Props> = (props) => {
             : alert("You can't use autocoplite. Please log in");
            
         }}
-        markerValue="123"
+        
+        
+
+        //markerValue={points.findIndex((x) => x.type === MarkerType.Start)===-1?
+        //  points[points.findIndex((x) => x.type === MarkerType.Start)].lat.toString:""}
+
+        
         //markerValue={points[0].lat===null?"0":points[0].lat.toString}
       />
 
@@ -78,7 +85,7 @@ export const CalculateDistanceForm: React.FC<Props> = (props) => {
         onSelect={(data: MarkerData) =>
           props.selectHandler(data, MarkerType.Finish, MarkerType.Finish)
         }
-        markerValue="123"
+       // markerValue="123"
       />
       
       <FormHelperText id="EndPosition">End Position</FormHelperText>

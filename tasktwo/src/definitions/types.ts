@@ -6,6 +6,7 @@ export type MarkerData = {
   lng: number;
   time?: number;
   type?: MarkerType;
+  address?:string
   //label?:string;
 };
 

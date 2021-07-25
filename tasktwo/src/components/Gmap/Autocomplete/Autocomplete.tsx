@@ -11,7 +11,7 @@ import { MarkerData } from "../../../definitions/types";
 
 type Props = {
   onSelect: (data: MarkerData) => void;  
-  markerValue: string;
+ // markerValue:any;
 };
 
 export const Autocomplete: React.FC<Props> = (props) => {
@@ -56,8 +56,8 @@ export const Autocomplete: React.FC<Props> = (props) => {
   return (
     <PlacesAutocomplete
       searchOptions={searchOptions}
-      value={props.markerValue}
-      //value={address}
+      //value={props.markerValue}
+      value={address}
       onChange={setAddress}
       onSelect={handleSelect}
     >

@@ -56,7 +56,10 @@ const MapWrapper = compose<Props, Props>(
           //label={p.type}
         >
           <InfoWindow>
+          <div>
             <div>{MarkerType[p.type]}</div>
+            <div>{p.address}</div>
+            </div>
           </InfoWindow>
         </Marker>
       ))}
