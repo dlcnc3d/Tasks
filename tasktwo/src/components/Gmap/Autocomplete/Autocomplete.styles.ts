@@ -3,11 +3,12 @@ import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      height: 40,
-      width: "90%",
+      height: "40px",
+      width: "100%",
       flex: 1,
       position: "relative",
       zIndex: 1,
+      paddingRight: "20px"
     },
     rootActive: {
       zIndex: 2,
@@ -16,7 +17,7 @@ const useStyles = makeStyles((theme: Theme) =>
       position: "absolute",
       width: "100%",
       height: "auto",
-      maxHeight: 200,
+      maxHeight: 300,
       top: "100%",
       left: 0,
       zIndex: 100,
@@ -30,8 +31,10 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     input: {
       //-------------------------------------------------
+      variant:"outlined",
       width: "100%",
       height: "100%",
+
     },
   })
 );

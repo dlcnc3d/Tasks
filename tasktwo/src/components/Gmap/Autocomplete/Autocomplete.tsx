@@ -1,6 +1,6 @@
 import React from "react";
 import Input from "@material-ui/core/Input";
-import { Tooltip } from "@material-ui/core";
+import { TextField, Tooltip } from "@material-ui/core";
 import PlacesAutocomplete, {
   geocodeByAddress,
 } from "react-places-autocomplete";
@@ -65,8 +65,10 @@ export const Autocomplete: React.FC<Props> = (props) => {
           })}
         >
           <Tooltip title="Type address">
-            <Input
-              className={classes.input}
+            <TextField
+            className={classes.input}
+            type="input"
+            variant="outlined"
               {...getInputProps({ placeholder: "Type address" })}
             />
           </Tooltip>

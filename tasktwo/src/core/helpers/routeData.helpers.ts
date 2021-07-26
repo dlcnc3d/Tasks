@@ -1,7 +1,8 @@
 
 export const  getRouteDatahelper = (routes: google.maps.DirectionsResult):string=> {
 
-if (routes!== null)
+if (routes!== null && routes.routes[0].fare !== undefined &&
+    typeof routes.routes[0].fare !== "undefined"   )
 {
     const RouteData ={
         fare: routes.routes[0].fare.value,
@@ -12,11 +13,12 @@ return (
     `cost - ${RouteData.fare} UAH, 
     duration - ${RouteData.duration} min, 
     distance - ${RouteData.distance} km,     
-    transfers (approximate) - ${((RouteData.fare === 5 || RouteData.fare === 4 || RouteData.fare === 10) ? 0 : RouteData.fare/12.1) }                
+    transfers (approximate) - ${((RouteData.fare === 5 || RouteData.fare === 4 || RouteData.fare === 10) ? 0 : Math.trunc(RouteData.fare/12.1)) }                
     ` )}
 else
 return("")
 }
+
 
 
 

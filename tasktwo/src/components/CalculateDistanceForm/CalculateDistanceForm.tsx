@@ -10,6 +10,8 @@ import { MarkerType } from "../../definitions/enums";
 import useStyles from "./CalculateDistanceForm.styles";
 import { useAuthData } from "../../context/auth.context";
 import { getAddressByLatLngHelper } from "../../core/helpers/geocode.helpers";
+import classNames from "classnames";
+import { useEffect } from "react";
 
 type Props = {
   selectHandler: (
@@ -47,8 +49,12 @@ export const CalculateDistanceForm: React.FC<Props> = (props) => {
     }
   };
 
+
+
+
+
   const getRoutesEnabled = () => {
-    setRoutesEnabled(!routesEnabled);
+    setRoutesEnabled(true);
   };
 
   const DelPointsHandler = () => {
@@ -57,33 +63,49 @@ export const CalculateDistanceForm: React.FC<Props> = (props) => {
     setRoutes(null);
   };
 
+  
+
+  useEffect(() => {
+    if (points.length >= 2) getRoutesEnabled();
+    if (currentUser===null) getPositionClick();   
+
+  }, [points, currentUser]);
+
   return (
     <>
       <Box p={1} />
-
+{ currentUser &&
       <Box display="flex" alignItems="stretch">
-        <Autocomplete
-          onSelect={(data: MarkerData) => {
-            currentUser !== null
-              ? props.selectHandler(data, MarkerType.Start, MarkerType.Start)
-              : alert("You can't use autocoplite. Please log in");
-          }}
-          address={points[points.findIndex((x) => x.type === MarkerType.Start)]?.address}
-        />
-
+        <Box flexGrow="1">
+          <Autocomplete
+            onSelect={(data: MarkerData) => {
+              currentUser !== null
+                ? props.selectHandler(data, MarkerType.Start, MarkerType.Start)
+                : alert("You can't use autocoplite. Please log in");
+            }}
+            address={
+              points[points.findIndex((x) => x.type === MarkerType.Start)]
+                ?.address
+            }
+          />
+        </Box>
         <Tooltip title="Click to get your geolocation posittion">
           <Button
             className={classes.button}
+            size="large"
             variant="contained"
             color="primary"
-            size="small"
             startIcon={<LocationOnIcon />}
             onClick={getPositionClick}
-          ></Button>
+          >
+            GEO
+          </Button>
         </Tooltip>
       </Box>
+      }
+      <FormHelperText id="StartPosition"> {currentUser!==null? "Start Position": "Start Position has been found by geolocation"}</FormHelperText>
 
-      <FormHelperText id="StartPosition">Start Position</FormHelperText>
+
 
       <Box p={1} />
 
@@ -91,38 +113,32 @@ export const CalculateDistanceForm: React.FC<Props> = (props) => {
         onSelect={(data: MarkerData) =>
           props.selectHandler(data, MarkerType.Finish, MarkerType.Finish)
         }
-        address={points[points.findIndex((x) => x.type === MarkerType.Finish)]?.address}
-        // markerValue="123"
+        address={
+          points[points.findIndex((x) => x.type === MarkerType.Finish)]?.address
+        }
       />
-
+      <Box p={1} />
       <FormHelperText id="EndPosition">End Position</FormHelperText>
 
       <Box p={1} />
+      
+{ currentUser &&
+      <Box display="flex" alignItems="stretch" paddingRight="20px">
+        <Tooltip title="Click to delete all marker on map">
+          <Button
+            className={classes.buttonClick}
+            onClick={DelPointsHandler}
+            variant="outlined"
+            color={routesEnabled ? "secondary" : "primary"}
+            fullWidth
+            //size="small"
+          >
+            Delete points
+          </Button>
+        </Tooltip>
+      </Box>
+}
 
-      <Box p={2} />
-      <Tooltip title="Click to build route">
-        <Button
-          className={classes.buttonClick}
-          onClick={getRoutesEnabled}
-          variant="outlined"
-          color={routesEnabled ? "secondary" : "primary"}
-          size="small"
-        >
-          Build route
-        </Button>
-      </Tooltip>
-      <Box p={2} />
-      <Tooltip title="Click to delete all marker on map">
-        <Button
-          className={classes.buttonClick}
-          onClick={DelPointsHandler}
-          variant="outlined"
-          color={routesEnabled ? "secondary" : "primary"}
-          size="small"
-        >
-          Delete points
-        </Button>
-      </Tooltip>
     </>
   );
 };

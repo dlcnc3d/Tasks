@@ -8,8 +8,10 @@ const useStyles = makeStyles((theme: Theme) =>
       flexDirection: "column",
       justifyContent: "center",
       paddingTop: "62px",
+     //paddingRight: "250px",
       width: "100%",
       minWidth:"800px",
+
     },
     LeftPanel: {
       height: "88vh",
