@@ -7,11 +7,11 @@ import PlacesAutocomplete, {
 import useStyles from "./Autocomplete.styles";
 import cls from "classnames";
 import { MarkerData } from "../../../definitions/types";
-
+import { useEffect } from "react";
 
 type Props = {
-  onSelect: (data: MarkerData) => void;  
- // markerValue:any;
+  onSelect: (data: MarkerData) => void;
+  address: string;
 };
 
 export const Autocomplete: React.FC<Props> = (props) => {
@@ -20,26 +20,24 @@ export const Autocomplete: React.FC<Props> = (props) => {
     lat: 0,
     lng: 0,
   });
+  const { address: propsAddress } = props;
+
+  useEffect(() => {
+    setAddress(propsAddress);
+  }, [propsAddress]);
 
   const classes = useStyles();
 
   const handleSelect = async (value: string) => {
     const results = await geocodeByAddress(value);
     const result = {
-      
       lat: results[0].geometry.location.lat(),
       lng: results[0].geometry.location.lng(),
-
-      
-
-
     };
-//-----------------------------------------------------------
+    //-----------------------------------------------------------
     console.log(result);
     console.log("------");
     console.log(value);
-    
-
 
     setAddress(value);
     setCoordinates(result);
@@ -56,7 +54,6 @@ export const Autocomplete: React.FC<Props> = (props) => {
   return (
     <PlacesAutocomplete
       searchOptions={searchOptions}
-      //value={props.markerValue}
       value={address}
       onChange={setAddress}
       onSelect={handleSelect}

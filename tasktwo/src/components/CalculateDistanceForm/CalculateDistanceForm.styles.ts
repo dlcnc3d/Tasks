@@ -6,6 +6,29 @@ const useStyles = makeStyles((theme: Theme) =>
     buttonClick: {
       color: "primary",
     },
+    button: {
+      width: "20%",
+      variant:"contained",
+      color: "primary",
+      size: "small",
+
+      // padding: "15px",
+    },
+    input: {
+      //width: "20%",
+      //flexGrow: 1,
+      //display: "flex",
+      //flexDirection: "row",
+
+
+
+
+      
+      
+      
+
+      // padding: "15px",
+    },
   })
 );
 

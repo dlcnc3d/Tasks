@@ -5,6 +5,7 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       height: 40,
       width: "90%",
+      flex: 1,
       position: "relative",
       zIndex: 1,
     },
@@ -28,6 +29,7 @@ const useStyles = makeStyles((theme: Theme) =>
       cursor: "pointer",
     },
     input: {
+      //-------------------------------------------------
       width: "100%",
       height: "100%",
     },

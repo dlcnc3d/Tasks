@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 
 import { Grid } from "@material-ui/core";
 import { Paper } from "@material-ui/core";
@@ -17,9 +17,11 @@ export const SidePanel: React.FC = () => {
 
   const classes = useStyles();
   const { points, setPoints } = useMapData();
-  const [address, setAddress] = useState("");
+  
 
   
+  
+
 
   
 
@@ -28,39 +30,42 @@ export const SidePanel: React.FC = () => {
     typeCheck: MarkerType,
     labeltype: MarkerType
   ) => {
-    if (points.findIndex((x) => x.type === labeltype) !== -1) {
+    getAddressByLatLngHelper(marker).then((result) => {
+      if (points.findIndex((x) => x.type === labeltype) !== -1) {
 
-      getAddressByLatLngHelper(marker).then((result) => {setAddress(result)});
+        setPoints(
+          points.map((item) =>
+            item.type === labeltype
+              ? { ...item, 
+                lat: marker.lat, 
+                lng: marker.lng,
+                address: result            
+              }
+              : item
+          )
+        );
+      } else {
+  
+       
+        
+  
+        setPoints([
+          ...points,
+          {
+            lat: marker.lat,
+            lng: marker.lng,
+            time: Date.now(),
+            address: result,
+            type:
+              points.findIndex((x) => x.type === typeCheck) === -1
+                ? typeCheck
+                : labeltype,
+          },
+        ]);
+      }
+    });
 
-      setPoints(
-        points.map((item) =>
-          item.type === labeltype
-            ? { ...item, 
-              lat: marker.lat, 
-              lng: marker.lng,
-              address: address
-            
-            }
-            : item
-        )
-      );
-    } else {
-      getAddressByLatLngHelper(marker).then((result) => {setAddress(result)});
-
-      setPoints([
-        ...points,
-        {
-          lat: marker.lat,
-          lng: marker.lng,
-          time: Date.now(),
-          address: address,
-          type:
-            points.findIndex((x) => x.type === typeCheck) === -1
-              ? typeCheck
-              : labeltype,
-        },
-      ]);
-    }
+   
   };
 
   return (

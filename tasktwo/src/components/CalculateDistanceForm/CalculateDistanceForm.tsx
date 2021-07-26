@@ -1,5 +1,8 @@
 import React from "react";
-import { Box, Button, FormHelperText, Tooltip } from "@material-ui/core";
+import { Box, Button, FormHelperText, Input, Tooltip } from "@material-ui/core";
+
+import LocationOnIcon from "@material-ui/icons/LocationOn";
+
 import { Autocomplete } from "../Gmap/Autocomplete/Autocomplete";
 import { useMapData } from "../../context/map.context";
 import { MarkerData } from "../../definitions/types";
@@ -7,7 +10,6 @@ import { MarkerType } from "../../definitions/enums";
 import useStyles from "./CalculateDistanceForm.styles";
 import { useAuthData } from "../../context/auth.context";
 import { getAddressByLatLngHelper } from "../../core/helpers/geocode.helpers";
-
 
 type Props = {
   selectHandler: (
@@ -24,10 +26,6 @@ export const CalculateDistanceForm: React.FC<Props> = (props) => {
   const { routesEnabled, setRoutesEnabled } = useMapData();
   const { routes, setRoutes } = useMapData();
   const { currentUser } = useAuthData();
-  
-
-
-
 
   const classes = useStyles();
 
@@ -62,44 +60,45 @@ export const CalculateDistanceForm: React.FC<Props> = (props) => {
   return (
     <>
       <Box p={1} />
-      <Autocomplete
-        onSelect={(data: MarkerData) => {
-          currentUser !== null
-            ? props.selectHandler(data, MarkerType.Start, MarkerType.Start)
-            : alert("You can't use autocoplite. Please log in");
-           
-        }}
-        
-        
 
-        //markerValue={points.findIndex((x) => x.type === MarkerType.Start)===-1?
-        //  points[points.findIndex((x) => x.type === MarkerType.Start)].lat.toString:""}
+      <Box display="flex" alignItems="stretch">
+        <Autocomplete
+          onSelect={(data: MarkerData) => {
+            currentUser !== null
+              ? props.selectHandler(data, MarkerType.Start, MarkerType.Start)
+              : alert("You can't use autocoplite. Please log in");
+          }}
+          address={points[points.findIndex((x) => x.type === MarkerType.Start)]?.address}
+        />
 
-        
-        //markerValue={points[0].lat===null?"0":points[0].lat.toString}
-      />
+        <Tooltip title="Click to get your geolocation posittion">
+          <Button
+            className={classes.button}
+            variant="contained"
+            color="primary"
+            size="small"
+            startIcon={<LocationOnIcon />}
+            onClick={getPositionClick}
+          ></Button>
+        </Tooltip>
+      </Box>
 
       <FormHelperText id="StartPosition">Start Position</FormHelperText>
+
       <Box p={1} />
+
       <Autocomplete
         onSelect={(data: MarkerData) =>
           props.selectHandler(data, MarkerType.Finish, MarkerType.Finish)
         }
-       // markerValue="123"
+        address={points[points.findIndex((x) => x.type === MarkerType.Finish)]?.address}
+        // markerValue="123"
       />
-      
+
       <FormHelperText id="EndPosition">End Position</FormHelperText>
+
       <Box p={1} />
-      <Tooltip title="Click to get your geolocation posittion">
-        <Button
-          variant="outlined"
-          color="primary"
-          size="small"
-          onClick={getPositionClick}
-        >
-          Start poin by Geoposition
-        </Button>
-      </Tooltip>
+
       <Box p={2} />
       <Tooltip title="Click to build route">
         <Button

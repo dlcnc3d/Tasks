@@ -34,6 +34,13 @@ export const MapProvider: React.FC = (props) => {
   const [routesEnabled, setRoutesEnabled] = React.useState(false);
   const { children } = props;
 
+  useEffect(() => {
+        
+    console.log(points)
+      
+  }, [points]);
+ 
+
   return (
     <MapContext.Provider
       value={{
