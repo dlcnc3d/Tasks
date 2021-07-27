@@ -154,7 +154,7 @@ export const CalculateDistanceForm: React.FC<Props> = (props) => {
 
 
       {error && !currentUser && (
-        <Paper className={classes.errors}>
+        <Paper className={classes.errors}   >
           <div>
             <Box p={1}>
               <Alert

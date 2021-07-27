@@ -1,5 +1,4 @@
-import React, {useState, useEffect} from "react";
-
+import React, { useState, useEffect, Suspense } from "react";
 import { Box, Grid } from "@material-ui/core";
 import { Paper } from "@material-ui/core";
 import useStyles from "./SidePanel.styles";
@@ -9,10 +8,7 @@ import { MarkerData } from "../../definitions/types";
 import { MarkerType } from "../../definitions/enums";
 import { useMapData } from "../../context/map.context";
 import { getAddressByLatLngHelper } from "../../core/helpers/geocode.helpers";
-
-
-
-//---------------------------------
+import { Loader } from "../Loader/Loader";
 
 export const SidePanel: React.FC = () => {
   const onMapClickHandle = (e: MarkerData) => {
@@ -21,13 +17,8 @@ export const SidePanel: React.FC = () => {
 
   const classes = useStyles();
   const { points, setPoints } = useMapData();
-  
-  
-  
-  
+  const [loading, SetLoading] = useState(true);
 
-
-  
 
   const selectHandler = (
     marker: MarkerData,
@@ -36,23 +27,14 @@ export const SidePanel: React.FC = () => {
   ) => {
     getAddressByLatLngHelper(marker).then((result) => {
       if (points.findIndex((x) => x.type === labeltype) !== -1) {
-
         setPoints(
           points.map((item) =>
             item.type === labeltype
-              ? { ...item, 
-                lat: marker.lat, 
-                lng: marker.lng,
-                address: result            
-              }
+              ? { ...item, lat: marker.lat, lng: marker.lng, address: result }
               : item
           )
         );
       } else {
-  
-       
-        
-  
         setPoints([
           ...points,
           {
@@ -68,8 +50,6 @@ export const SidePanel: React.FC = () => {
         ]);
       }
     });
-
-   
   };
 
   return (
@@ -80,15 +60,15 @@ export const SidePanel: React.FC = () => {
             <Paper className={classes.LeftPanel}>
               <CalculateDistanceForm selectHandler={selectHandler} />
             </Paper>
-
-
-
-
           </Grid>
 
           <Grid item xs={9}>
             <Paper className={classes.mainForm}>
-              <MapWrapper onMapClick={onMapClickHandle}></MapWrapper>
+            { loading&& <Loader />} 
+             
+             <Suspense fallback={<Loader />}>
+                <MapWrapper onMapClick={onMapClickHandle}></MapWrapper>
+              </Suspense>
             </Paper>
           </Grid>
         </Grid>

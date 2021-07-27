@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 
-import { Box, Button, Grid, Paper, Select, TextField } from "@material-ui/core";
+import { Box, Button, Grid, Paper, Select, TextField, Typography } from "@material-ui/core";
 import { Controller, useForm } from "react-hook-form";
 import useStyles from "./RegisterForm.styles";
 
@@ -54,9 +54,10 @@ export const RegisterForm: React.FC<Props> = (props) => {
       <Paper className={classes.root}>
         <Grid>
           <div className={classes.titlemain}>
+          <Typography className={classes.title}>Sign Up </Typography>         
              <Box p={1}>
               {error && (
-                <Alert
+                <Alert                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
                   className={classes.input}
                   variant="outlined"
                   severity="error"
@@ -196,10 +197,7 @@ export const RegisterForm: React.FC<Props> = (props) => {
               submit
             </Button>
 
-            <div className={classes.text}>
-              Already have an account?
-              <Link to="/login">Log In</Link>
-            </div>
+            
           </form>
         </Grid>
       </Paper>

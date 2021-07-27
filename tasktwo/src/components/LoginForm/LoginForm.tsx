@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 
-import { Box, Button, Grid, Paper, Select, TextField } from "@material-ui/core";
+import { Box, Button, Grid, Paper, Select, TextField, Typography } from "@material-ui/core";
 import { Controller, useForm } from "react-hook-form";
 import useStyles from "./LoginForm.styles";
 
@@ -40,7 +40,7 @@ export const LoginForm: React.FC<Props> = (props) => {
       history.push("/");
       props.onClose();
     } catch {
-      setError("Failed to sign in");
+      setError("Failed to log in. Incorrect email or password");
     }
     setLoading(false);
   };
@@ -49,7 +49,8 @@ export const LoginForm: React.FC<Props> = (props) => {
     <div>
       <Paper className={classes.root}>
         <Grid>
-          <div className={classes.titlemain}>          
+          <div className={classes.titlemain}> 
+          <Typography className={classes.title}>Log in </Typography>         
             <Box p={1}>
               {error && (
                 <Alert
@@ -140,10 +141,7 @@ export const LoginForm: React.FC<Props> = (props) => {
               Log In
             </Button>
 
-            <div className={classes.text}>
-              Don't have account?
-              <Link to="/signup">Sign Up</Link>
-            </div>
+            
           </form>
         </Grid>
       </Paper>

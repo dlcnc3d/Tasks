@@ -13,9 +13,6 @@ import { MarkerData } from "../../../definitions/types";
 import { MapRoutes } from "../../MapRoutes/MapRoutes";
 import { MarkerType } from "../../../definitions/enums";
 
-
-
-
 type Props = {
   onMapClick: (data: MarkerData) => void;
   children?: React.ReactNode;
@@ -30,13 +27,7 @@ const MapWrapper = compose<Props, Props>(
   withGoogleMap
 )((props) => {
   const { points, routesEnabled } = useMapData();
-
-  //---------------------
   const { error, setError } = useMapData();
-
-  
-
-
 
   const MapClickHandle = (e: any) => {
     if (currentUser !== null) {
@@ -45,14 +36,9 @@ const MapWrapper = compose<Props, Props>(
         lng: e.latLng.lng(),
         time: Date.now(),
       });
-      setError("")
-
+      setError("");
     } else {
-
-      setError("You a not registered user. Please sing up or log in");
-      //alert("Please log in");
-
-
+      setError("Please sing up or log in");
     }
   };
 
@@ -69,12 +55,11 @@ const MapWrapper = compose<Props, Props>(
           key={p.time}
           position={{ lat: p.lat, lng: p.lng }}
           animation={google.maps.Animation.DROP}
-          //label={p.type}
         >
           <InfoWindow>
-          <div>
-            <div>{MarkerType[p.type]}</div>
-            <div>{p.address}</div>
+            <div>
+              <div>{MarkerType[p.type]}</div>
+              <div>{p.address}</div>
             </div>
           </InfoWindow>
         </Marker>

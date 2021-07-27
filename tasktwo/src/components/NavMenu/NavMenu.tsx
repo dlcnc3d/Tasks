@@ -29,7 +29,6 @@ import { RegisterForm } from "../RegisterForm/RegisterForm";
 import { LoginForm } from "../LoginForm/LoginForm";
 import { useAuthData } from "../../context/auth.context";
 import { useMapData } from "../../context/map.context";
-//import { getRouteDatahelper } from "../../core/helpers/routeData.helpers";
 
 export default function NavMenu() {
   const classes = useStyles();
@@ -39,7 +38,6 @@ export default function NavMenu() {
   const { routes, setRoutes } = useMapData();
   const { routesEnabled, setRoutesEnabled } = useMapData();
   const { points, setPoints } = useMapData();
-
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -99,7 +97,6 @@ export default function NavMenu() {
             Menu
           </Typography>
 
-          <Typography>getRouteDatahelper(routes)</Typography>
           <Box mr={5} />
 
           <Typography

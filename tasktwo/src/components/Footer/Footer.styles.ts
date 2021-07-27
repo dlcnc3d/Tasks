@@ -4,10 +4,11 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       display: "flex",
-      height: "54px",
+      height: "50px",
       width: "100%",
       flexDirection: "row",
       marginTop: "0px",
+      marginBotton: "0px",
       paddingTop: "15px",
       backgroundColor: "#596F87",
       justifyContent: "center",
