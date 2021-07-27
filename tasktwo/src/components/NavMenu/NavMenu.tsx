@@ -29,18 +29,16 @@ import { RegisterForm } from "../RegisterForm/RegisterForm";
 import { LoginForm } from "../LoginForm/LoginForm";
 import { useAuthData } from "../../context/auth.context";
 import { useMapData } from "../../context/map.context";
-import { getRouteDatahelper } from "../../core/helpers/routeData.helpers";
-
-
-
+//import { getRouteDatahelper } from "../../core/helpers/routeData.helpers";
 
 export default function NavMenu() {
   const classes = useStyles();
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);  
+  const [open, setOpen] = React.useState(false);
   const { currentUser, logOut } = useAuthData();
   const { routes, setRoutes } = useMapData();
-
+  const { routesEnabled, setRoutesEnabled } = useMapData();
+  const { points, setPoints } = useMapData();
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -52,28 +50,27 @@ export default function NavMenu() {
 
   const [openSignUp, setOpenSignUp] = React.useState(false);
   const [openLogIn, setOpenLogIn] = React.useState(false);
-  
+
   const handleClickOpenSignUp = () => {
-    if (openLogIn) 
-    {
+    if (openLogIn) {
       setOpenLogIn(false);
-    }  
+    }
     setOpenSignUp(true);
   };
 
   const handleClickOpenLogIn = () => {
-    if (openSignUp) 
-    {
+    if (openSignUp) {
       setOpenSignUp(false);
-    }    
-    setOpenLogIn(true);    
+    }
+    setOpenLogIn(true);
   };
 
   const handleClickLogOut = () => {
-    logOut();    
+    setPoints([]);
+    setRoutesEnabled(false);
+    setRoutes(null);
+    logOut();
   };
-
-
 
   const handleClose = () => {
     setOpenSignUp(false);
@@ -83,7 +80,7 @@ export default function NavMenu() {
   return (
     <div className={classes.root}>
       <AppBar
-          className={clsx(classes.appBar, {
+        className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
         })}
       >
@@ -97,38 +94,34 @@ export default function NavMenu() {
           >
             <MenuIcon />
           </IconButton>
-          
+
           <Typography variant="h6" noWrap className={classes.title}>
             Menu
           </Typography>
-          
-          
-          <Typography>
-          {getRouteDatahelper(routes)}
-          
-           </Typography>
-           <Box mr={5}/> 
-           
+
+          <Typography>getRouteDatahelper(routes)</Typography>
+          <Box mr={5} />
+
           <Typography
-          
-          className={classes.userSign}
-          color= {currentUser===null?"secondary": "inherit"}
-          variant ={currentUser===null?"h5": "h6"}          
-           >
-            {currentUser===null?"unregistered user": currentUser.email}        
-            </Typography>
-        
+            className={classes.userSign}
+            color={currentUser === null ? "secondary" : "inherit"}
+            variant={currentUser === null ? "h5" : "h6"}
+          >
+            {currentUser === null ? "unregistered user" : currentUser.email}
+          </Typography>
 
           <Box mr={2}>
             <Button
               className={classes.menubutton}
               color="inherit"
               variant="outlined"
-              onClick={currentUser===null? handleClickOpenLogIn: handleClickLogOut}
+              onClick={
+                currentUser === null ? handleClickOpenLogIn : handleClickLogOut
+              }
             >
-          {currentUser===null? "Log in": "Log Out"}              
+              {currentUser === null ? "Log in" : "Log Out"}
             </Button>
-            
+
             <Dialog
               open={openLogIn}
               onClose={handleClose}
@@ -136,16 +129,10 @@ export default function NavMenu() {
             >
               <LoginForm onClose={handleClose} />
             </Dialog>
-            
           </Box>
-  
 
-          <Box mr={3} >
-            <Button
-              
-              variant="contained"
-              onClick={handleClickOpenSignUp}
-            >
+          <Box mr={3}>
+            <Button variant="contained" onClick={handleClickOpenSignUp}>
               Sign Up
             </Button>
             <Dialog
@@ -155,9 +142,7 @@ export default function NavMenu() {
             >
               <RegisterForm onClose={handleClose} />
             </Dialog>
-
           </Box>
-         
         </Toolbar>
       </AppBar>
 
@@ -181,12 +166,18 @@ export default function NavMenu() {
         </div>
         <Divider />
         <List>
-          <ListItem button key={"Log in"} onClick={currentUser===null? handleClickOpenLogIn: handleClickLogOut}>
+          <ListItem
+            button
+            key={"Log in"}
+            onClick={
+              currentUser === null ? handleClickOpenLogIn : handleClickLogOut
+            }
+          >
             <ListItemIcon>
               <AccountBoxIcon />
             </ListItemIcon>
-            <ListItemText 
-            primary={currentUser===null? "Log in": "Log Out"}
+            <ListItemText
+              primary={currentUser === null ? "Log in" : "Log Out"}
             />
           </ListItem>
           <ListItem button key={"Sign Up"} onClick={handleClickOpenSignUp}>

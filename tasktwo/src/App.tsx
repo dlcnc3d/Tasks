@@ -24,11 +24,8 @@ function App() {
               <NavMenu />
               <CssBaseline />
               <main>
-                <Switch>
-                  <Route exact path="/" component={SidePanel} />
-                  <Route path="/signup" component={RegisterForm} />
-                  <Route path="/login" component={LoginForm} />
-                </Switch>
+               <SidePanel></SidePanel>
+               
               </main>
               <Footer year={new Date().getFullYear()}> </Footer>
             </MuiThemeProvider>

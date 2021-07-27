@@ -54,9 +54,7 @@ export const RegisterForm: React.FC<Props> = (props) => {
       <Paper className={classes.root}>
         <Grid>
           <div className={classes.titlemain}>
-            <label className={classes.title}>Sing Up</label>
-            {currentUser && currentUser.email}
-            <Box p={1}>
+             <Box p={1}>
               {error && (
                 <Alert
                   className={classes.input}

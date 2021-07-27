@@ -13,6 +13,9 @@ import { MarkerData } from "../../../definitions/types";
 import { MapRoutes } from "../../MapRoutes/MapRoutes";
 import { MarkerType } from "../../../definitions/enums";
 
+
+
+
 type Props = {
   onMapClick: (data: MarkerData) => void;
   children?: React.ReactNode;
@@ -28,6 +31,13 @@ const MapWrapper = compose<Props, Props>(
 )((props) => {
   const { points, routesEnabled } = useMapData();
 
+  //---------------------
+  const { error, setError } = useMapData();
+
+  
+
+
+
   const MapClickHandle = (e: any) => {
     if (currentUser !== null) {
       props.onMapClick({
@@ -35,8 +45,14 @@ const MapWrapper = compose<Props, Props>(
         lng: e.latLng.lng(),
         time: Date.now(),
       });
+      setError("")
+
     } else {
-      alert("Please log in");
+
+      setError("You a not registered user. Please sing up or log in");
+      //alert("Please log in");
+
+
     }
   };
 

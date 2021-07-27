@@ -49,9 +49,7 @@ export const LoginForm: React.FC<Props> = (props) => {
     <div>
       <Paper className={classes.root}>
         <Grid>
-          <div className={classes.titlemain}>
-            <label className={classes.title}>Log In</label>
-            {currentUser && currentUser.email}
+          <div className={classes.titlemain}>          
             <Box p={1}>
               {error && (
                 <Alert

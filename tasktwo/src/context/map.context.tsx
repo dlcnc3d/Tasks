@@ -3,6 +3,9 @@ import { useContext } from "react";
 import { MarkerData, RouteData } from "../definitions/types";
 
 type State = {
+  
+  error: string;
+
   markerType: string;
 
   routes: google.maps.DirectionsResult;
@@ -24,6 +27,8 @@ type State = {
   setCurrentUser: React.Dispatch<any>;
 
   setPoints: React.Dispatch<MarkerData[]>;
+
+  setError: React.Dispatch<string>;
 };
 
 const MapContext = React.createContext<Partial<State>>({} as State);
@@ -31,9 +36,11 @@ const MapContext = React.createContext<Partial<State>>({} as State);
 export const MapProvider: React.FC = (props) => {
   const [points, setPoints] = React.useState([]);
   const [routes, setRoutes] = React.useState(null);
+  const [error, setError] = React.useState("");
   const [routesEnabled, setRoutesEnabled] = React.useState(false);
   const { children } = props;
 
+  ////-------------------
   useEffect(() => {
         
     console.log(points)
@@ -44,12 +51,14 @@ export const MapProvider: React.FC = (props) => {
   return (
     <MapContext.Provider
       value={{
+        error,
         points,
         setPoints,
         routes,
         setRoutes,
         routesEnabled,
         setRoutesEnabled,
+        setError
       }}
     >
       {children}

@@ -19,6 +19,7 @@ export const AuthProvider: React.FC = (props) => {
   const [currentUser, setCurrentUser] = React.useState<firebase.User | null>(
     null
   );
+  const [fetched, setFetched] = React.useState<boolean>(false);
 
   const signUp = (email: string, password: string) => {
     return auth.createUserWithEmailAndPassword(email, password);
@@ -35,6 +36,7 @@ export const AuthProvider: React.FC = (props) => {
   useEffect(() => {
     const unsubcribe = auth.onAuthStateChanged((user) => {
       setCurrentUser(user);
+      setFetched(true);
     });
     return unsubcribe;
   }, []);
@@ -49,7 +51,7 @@ export const AuthProvider: React.FC = (props) => {
         logOut,
       }}
     >
-      {children}
+      {fetched && children}
     </AuthContext.Provider>
   );
 };

@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 
-import { Grid } from "@material-ui/core";
+import { Box, Grid } from "@material-ui/core";
 import { Paper } from "@material-ui/core";
 import useStyles from "./SidePanel.styles";
 import MapWrapper from "../Gmap/MapWrapper/MapWrapper";
@@ -10,6 +10,10 @@ import { MarkerType } from "../../definitions/enums";
 import { useMapData } from "../../context/map.context";
 import { getAddressByLatLngHelper } from "../../core/helpers/geocode.helpers";
 
+
+
+//---------------------------------
+
 export const SidePanel: React.FC = () => {
   const onMapClickHandle = (e: MarkerData) => {
     selectHandler(e as MarkerData, MarkerType.Start, MarkerType.Finish);
@@ -18,7 +22,7 @@ export const SidePanel: React.FC = () => {
   const classes = useStyles();
   const { points, setPoints } = useMapData();
   
-
+  
   
   
 
@@ -76,6 +80,10 @@ export const SidePanel: React.FC = () => {
             <Paper className={classes.LeftPanel}>
               <CalculateDistanceForm selectHandler={selectHandler} />
             </Paper>
+
+
+
+
           </Grid>
 
           <Grid item xs={9}>

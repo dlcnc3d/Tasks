@@ -33,6 +33,20 @@ const useStyles = makeStyles((theme: Theme) =>
 
       // padding: "15px",
     },
+
+    errors:{
+      
+     // width: "30%",
+      //variant:"contained",
+      //backgroundColor: "#596F87",
+      //size: "large",
+      //padding: "15px",
+      marginRight:"20px"
+      
+
+  },
+
+
   })
 );
 
