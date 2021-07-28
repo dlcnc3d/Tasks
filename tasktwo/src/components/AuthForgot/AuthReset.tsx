@@ -39,7 +39,9 @@ export const AuthReset: React.FC<Props> = (props) => {
       setLoading(true);
       await resetPassword(email);      
       setMessage("Please chech yor email for further instructions");
-      props.onClose();
+      //---
+      setTimeout(() => {props.onClose()}, 1500);
+      ;
     } catch {
       setError("Failed to reset password");
     }

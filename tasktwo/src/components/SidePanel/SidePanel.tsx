@@ -65,10 +65,9 @@ export const SidePanel: React.FC = () => {
           <Grid item xs={9}>
             <Paper className={classes.mainForm}>
             { loading&& <Loader />} 
+            
+            <MapWrapper onMapClick={onMapClickHandle}></MapWrapper>
              
-             <Suspense fallback={<Loader />}>
-                <MapWrapper onMapClick={onMapClickHandle}></MapWrapper>
-              </Suspense>
             </Paper>
           </Grid>
         </Grid>

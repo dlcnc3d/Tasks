@@ -55,6 +55,9 @@ export const UpdateUserData: React.FC<Props> = (props) => {
       promises.push(updateEmail(email));
       setMessage("Email has been updated");
 
+      
+
+
     }
 
     if (password) {

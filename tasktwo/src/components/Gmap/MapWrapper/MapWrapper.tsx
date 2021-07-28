@@ -39,6 +39,7 @@ const MapWrapper = compose<Props, Props>(
       setError("");
     } else {
       setError("Please sing up or log in");
+      setTimeout(() => setError(""), 1000);
     }
   };
 

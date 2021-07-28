@@ -109,12 +109,20 @@ export const CalculateDistanceForm: React.FC<Props> = (props) => {
           </Tooltip>
         </Box>
       )}
-      <FormHelperText id="StartPosition">
-        {" "}
+      <FormHelperText id="StartPosition"
+      className={currentUser !== null
+        ? classes.ordinary
+        : classes.blinkElement      
+         }>
+        
         {currentUser !== null
           ? "Start Position"
           : "Start Position has been found by geolocation"}
       </FormHelperText>
+
+
+
+
 
       <Box p={1} />
 

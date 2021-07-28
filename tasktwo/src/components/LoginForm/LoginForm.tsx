@@ -149,10 +149,11 @@ export const LoginForm: React.FC<Props> = (props) => {
             >
               Log In
             </Button>
+            
             <Button
               className={classes.buttonfullWidth}
-              disabled={loading}
-              type="submit"
+              //disabled={loading}
+              type="button"
               variant="outlined"
               color="secondary"
               onClick={handleClickAuthReset}  

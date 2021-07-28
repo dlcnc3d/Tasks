@@ -9,13 +9,15 @@ import Toolbar from "@material-ui/core/Toolbar";
 import List from "@material-ui/core/List";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
-import IconButton from "@material-ui/core/IconButton";
+
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import ListItem from "@material-ui/core/ListItem";
+import IconButton from "@material-ui/core/IconButton";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
+import SettingsIcon from "@material-ui/icons/Settings";
 
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import SupervisorAccountIcon from "@material-ui/icons/SupervisorAccount";
@@ -24,13 +26,14 @@ import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
 
 import useStyles from "./NavMenu.styles";
-import { Dialog, DialogContent, DialogTitle } from "@material-ui/core";
+import { Dialog, DialogContent, DialogTitle, Tooltip } from "@material-ui/core";
 import { RegisterForm } from "../RegisterForm/RegisterForm";
 import { LoginForm } from "../LoginForm/LoginForm";
 import { useAuthData } from "../../context/auth.context";
 import { useMapData } from "../../context/map.context";
 import { AuthReset } from "../AuthForgot/AuthReset";
 import { UpdateUserData } from "../UpdateUserData/UpdateUserData";
+import { useEffect } from "react";
 //import { getRouteDatahelper } from "../../core/helpers/routeData.helpers";
 
 export default function NavMenu() {
@@ -73,10 +76,6 @@ export default function NavMenu() {
     setOpenLogIn(true);
   };
 
-  const handleClickAuthReset = () => {
-    setAuthReset(true);
-  };
-
   const handleClickUpdateUserData = () => {
     setUpdateUserData(true);
   };
@@ -87,6 +86,12 @@ export default function NavMenu() {
     setRoutes(null);
     logOut();
   };
+
+  useEffect(() => {
+    if (authReset === true) {
+      setOpenLogIn(false);
+    }
+  }, [authReset]);
 
   const handleClose = () => {
     setOpenSignUp(false);
@@ -119,24 +124,27 @@ export default function NavMenu() {
 
           <Box mr={5} />
 
+          {currentUser && (
+            <Typography className={classes.userSign}> user name </Typography>
+          )}
+
           <Typography
-            className={classes.userSign}
-            color={currentUser === null ? "secondary" : "inherit"}
-            variant={currentUser === null ? "h5" : "h6"}
+            className={
+              currentUser === null ? classes.userUnSign : classes.userSign
+            }
+            variant="h5"
           >
             {currentUser === null ? "unregistered user" : currentUser.email}
           </Typography>
 
           <Box mr={2}>
             {currentUser && (
-              <Button
-                className={classes.menubutton}
-                color="inherit"
-                variant="outlined"
+               <Tooltip title="Account setting">
+              <SettingsIcon
+                className={classes.buttonIcon}
                 onClick={handleClickUpdateUserData}
-              >
-                Update user information
-              </Button>
+              />
+              </Tooltip>
             )}
 
             <Dialog
@@ -149,15 +157,6 @@ export default function NavMenu() {
           </Box>
 
           <Box mr={2}>
-            <Button
-              className={classes.menubutton}
-              color="inherit"
-              variant="outlined"
-              onClick={handleClickAuthReset}
-            >
-              Reset
-            </Button>
-
             <Dialog
               open={authReset}
               onClose={handleClose}
@@ -241,14 +240,31 @@ export default function NavMenu() {
             <ListItemIcon>
               <AccountBoxIcon />
             </ListItemIcon>
+
             <ListItemText
               primary={currentUser === null ? "Log in" : "Log Out"}
             />
           </ListItem>
+
+          {currentUser && (
+            <ListItem
+              button
+              key={"Account"}
+              onClick={handleClickUpdateUserData}
+            >
+              <ListItemIcon>
+                <SettingsIcon />
+              </ListItemIcon>
+
+              <ListItemText primary={"Account"} />
+            </ListItem>
+          )}
+
           <ListItem button key={"Sign Up"} onClick={handleClickOpenSignUp}>
             <ListItemIcon>
               <SupervisorAccountIcon />
             </ListItemIcon>
+
             <ListItemText primary={"Sign Up"} />
           </ListItem>
         </List>

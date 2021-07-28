@@ -43,9 +43,24 @@ const useStyles = makeStyles((theme: Theme) =>
       //padding: "15px",
       marginRight:"20px",
       marginTop:"20px"
-      
-
   },
+  '@keyframes blinker': {
+    from: { opacity: 1 },
+    to: { opacity: 0.4 },
+    
+},
+blinkElement: {
+    animationName: '$blinker',
+    animationDuration: '1s',
+    animationTimingFunction: 'linear',
+    animationIterationCount: 'infinite',
+    color: 'red',
+},
+
+ordinary: {
+  backgroundColor:""
+  
+},
 
 
   })

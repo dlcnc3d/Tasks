@@ -57,8 +57,28 @@ const useStyles = makeStyles((theme: Theme) =>
       float: "right",
       marginright: "1",
       alignItems: "right",
+      color:"inherit",
+      variant:"h6",
     },
-
+    '@keyframes blinker': {
+      from: { opacity: 1 },
+      to: { opacity: 0.5 },
+      
+  },
+     userUnSign: {
+      animationName: '$blinker',
+      animationDuration: '1s',
+      animationTimingFunction: 'linear',
+      animationIterationCount: 'infinite',
+     // marginRight: theme.spacing(3),
+      //flexFlow: "row",
+      //float: "right",
+      //marginright: "1px",
+      //alignItems: "right",
+      color:"#ff5e66",
+      variant:"h5",
+      component:"h5"
+    },
     contentShift: {
       transition: theme.transitions.create("margin", {
         easing: theme.transitions.easing.easeOut,
@@ -68,6 +88,13 @@ const useStyles = makeStyles((theme: Theme) =>
     menubutton: {
       marginRight: theme.spacing(2),
     },
+    buttonIcon: {
+      marginRight: theme.spacing(2),
+      display: "flex",
+      cursor: "pointer",
+    },
+
+    
   })
 );
 
