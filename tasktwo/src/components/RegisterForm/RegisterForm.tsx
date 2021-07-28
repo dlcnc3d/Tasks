@@ -70,27 +70,7 @@ export const RegisterForm: React.FC<Props> = (props) => {
 
           <form className={classes.form} onSubmit={handleSubmit(submitHandler)}>
             <Box p={1} />
-            <Controller
-              name="name"
-              control={control}
-              defaultValue=""
-              render={({
-                field: { onChange, value },
-                fieldState: { error },
-              }) => (
-                <TextField
-                  className={classes.input}
-                  variant="outlined"
-                  label="name"
-                  value={value}
-                  onChange={onChange}
-                  error={!!error}
-                  helperText={error ? error.message : null}
-                  id="name"
-                />
-              )}
-              rules={{ required: "Name is required" }}
-            />
+           
 
             <Box p={1} />
 

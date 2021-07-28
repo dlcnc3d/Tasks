@@ -7,6 +7,11 @@ import firebase from "firebase/app";
 type State = {
   signUp: (email: string, password: string) => void;
   logIn: (email: string, password: string) => void;
+  resetPassword: (email: string) => void;
+  updateEmail: (email: string) => void;
+  updatePassword: (password: string) => void;
+
+
   logOut: () => void;
   currentUser: firebase.User;
   setCurrentUser: React.Dispatch<firebase.User>;
@@ -29,6 +34,21 @@ export const AuthProvider: React.FC = (props) => {
     return auth.signInWithEmailAndPassword(email, password);
   };
 
+  const resetPassword = (email: string)=>{
+    if (email!==null)
+    return auth.sendPasswordResetEmail(email);
+  }
+
+const updateEmail =(email: string)=>{
+return currentUser.updateEmail(email);
+}
+
+const updatePassword =(password: string)=>{
+  return currentUser.updatePassword(password);
+  }
+  
+  
+
   const logOut = () => {
     return auth.signOut();
   };
@@ -49,6 +69,10 @@ export const AuthProvider: React.FC = (props) => {
         signUp,
         logIn,
         logOut,
+        resetPassword,
+        updateEmail,
+        updatePassword
+
       }}
     >
       {fetched && children}

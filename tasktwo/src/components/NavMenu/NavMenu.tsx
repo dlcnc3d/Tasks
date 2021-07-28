@@ -29,6 +29,9 @@ import { RegisterForm } from "../RegisterForm/RegisterForm";
 import { LoginForm } from "../LoginForm/LoginForm";
 import { useAuthData } from "../../context/auth.context";
 import { useMapData } from "../../context/map.context";
+import { AuthReset } from "../AuthForgot/AuthReset";
+import { UpdateUserData } from "../UpdateUserData/UpdateUserData";
+//import { getRouteDatahelper } from "../../core/helpers/routeData.helpers";
 
 export default function NavMenu() {
   const classes = useStyles();
@@ -36,8 +39,11 @@ export default function NavMenu() {
   const [open, setOpen] = React.useState(false);
   const { currentUser, logOut } = useAuthData();
   const { routes, setRoutes } = useMapData();
+  const { authReset, setAuthReset } = useMapData();
+
   const { routesEnabled, setRoutesEnabled } = useMapData();
   const { points, setPoints } = useMapData();
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -48,6 +54,10 @@ export default function NavMenu() {
 
   const [openSignUp, setOpenSignUp] = React.useState(false);
   const [openLogIn, setOpenLogIn] = React.useState(false);
+  ////
+  //const [authReset, setAuthReset] = React.useState(false);
+
+  const [updateUserData, setUpdateUserData] = React.useState(false);
 
   const handleClickOpenSignUp = () => {
     if (openLogIn) {
@@ -63,6 +73,14 @@ export default function NavMenu() {
     setOpenLogIn(true);
   };
 
+  const handleClickAuthReset = () => {
+    setAuthReset(true);
+  };
+
+  const handleClickUpdateUserData = () => {
+    setUpdateUserData(true);
+  };
+
   const handleClickLogOut = () => {
     setPoints([]);
     setRoutesEnabled(false);
@@ -73,6 +91,8 @@ export default function NavMenu() {
   const handleClose = () => {
     setOpenSignUp(false);
     setOpenLogIn(false);
+    setAuthReset(false);
+    setUpdateUserData(false);
   };
 
   return (
@@ -108,6 +128,46 @@ export default function NavMenu() {
           </Typography>
 
           <Box mr={2}>
+            {currentUser && (
+              <Button
+                className={classes.menubutton}
+                color="inherit"
+                variant="outlined"
+                onClick={handleClickUpdateUserData}
+              >
+                Update user information
+              </Button>
+            )}
+
+            <Dialog
+              open={updateUserData}
+              onClose={handleClose}
+              aria-labelledby="form-dialog-title"
+            >
+              <UpdateUserData onClose={handleClose} />
+            </Dialog>
+          </Box>
+
+          <Box mr={2}>
+            <Button
+              className={classes.menubutton}
+              color="inherit"
+              variant="outlined"
+              onClick={handleClickAuthReset}
+            >
+              Reset
+            </Button>
+
+            <Dialog
+              open={authReset}
+              onClose={handleClose}
+              aria-labelledby="form-dialog-title"
+            >
+              <AuthReset onClose={handleClose} />
+            </Dialog>
+          </Box>
+
+          <Box mr={2}>
             <Button
               className={classes.menubutton}
               color="inherit"
@@ -132,6 +192,14 @@ export default function NavMenu() {
             <Button variant="contained" onClick={handleClickOpenSignUp}>
               Sign Up
             </Button>
+            <Dialog
+              open={openSignUp}
+              onClose={handleClose}
+              aria-labelledby="form-dialog-title"
+            >
+              <RegisterForm onClose={handleClose} />
+            </Dialog>
+
             <Dialog
               open={openSignUp}
               onClose={handleClose}

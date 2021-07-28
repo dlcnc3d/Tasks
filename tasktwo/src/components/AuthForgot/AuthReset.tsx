@@ -2,12 +2,11 @@ import React, { useRef, useState } from "react";
 
 import { Box, Button, Grid, Paper, Select, TextField, Typography } from "@material-ui/core";
 import { Controller, useForm } from "react-hook-form";
-import useStyles from "./LoginForm.styles";
+import useStyles from "./AuthReset.styles";
 
 import { useAuthData } from "../../context/auth.context";
 import Alert from "@material-ui/lab/Alert";
-import { Link, useHistory } from "react-router-dom";
-import { useMapData } from "../../context/map.context";
+import { Link } from "react-router-dom";
 
 type FormValues = {
   email: string;
@@ -18,38 +17,31 @@ type Props = {
   onClose: () => void;
 };
 
-export const LoginForm: React.FC<Props> = (props) => {
+export const AuthReset: React.FC<Props> = (props) => {
   const classes = useStyles();
   const { register, watch, getValues, handleSubmit, control } =
     useForm<FormValues>();
 
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const history = useHistory();
+  const [message, setMessage] = useState("");
+  
 
   //---------------
-  const { logIn, currentUser } = useAuthData();
-
-  const { authReset, setAuthReset } = useMapData();
-
-
-  const handleClickAuthReset = () => {
-    setAuthReset(true);
-  };
-
+  const { logIn, resetPassword } = useAuthData();
 
   const submitHandler = async (data: FormValues) => {
     const { email, password } = data;
 
     try {
       setError("");
+      setMessage("");
       setLoading(true);
-      await logIn(email, password);
-      console.log(email, password);
-      history.push("/");
+      await resetPassword(email);      
+      setMessage("Please chech yor email for further instructions");
       props.onClose();
     } catch {
-      setError("Failed to log in. Incorrect email or password");
+      setError("Failed to reset password");
     }
     setLoading(false);
   };
@@ -59,7 +51,7 @@ export const LoginForm: React.FC<Props> = (props) => {
       <Paper className={classes.root}>
         <Grid>
           <div className={classes.titlemain}> 
-          <Typography className={classes.title}>Log in </Typography>         
+          <Typography className={classes.title}>Forgot Password </Typography>         
             <Box p={1}>
               {error && (
                 <Alert
@@ -70,6 +62,16 @@ export const LoginForm: React.FC<Props> = (props) => {
                   {error}
                 </Alert>
               )}
+ {message && (
+                <Alert
+                  className={classes.input}
+                  variant="outlined"
+                  severity="success"
+                >
+                  {message}
+                </Alert>
+              )}
+
             </Box>
           </div>
 
@@ -100,34 +102,7 @@ export const LoginForm: React.FC<Props> = (props) => {
             />
             <Box p={1} />
 
-            <Controller
-              name="password"
-              control={control}
-              defaultValue=""
-              render={({
-                field: { onChange, value },
-                fieldState: { error },
-              }) => (
-                <TextField
-                  className={classes.input}
-                  variant="outlined"
-                  type="password"
-                  label="password"
-                  value={value}
-                  onChange={onChange}
-                  error={!!error}
-                  helperText={error ? error.message : null}
-                  id="password"
-                />
-              )}
-              rules={{
-                required: "password is required",
-                minLength: {
-                  value: 4,
-                  message: "Password must have at least 4 characters",
-                },
-              }}
-            />
+            
 
             <Box p={1} />
 
@@ -147,18 +122,7 @@ export const LoginForm: React.FC<Props> = (props) => {
               variant="outlined"
               color="primary"
             >
-              Log In
-            </Button>
-            <Button
-              className={classes.buttonfullWidth}
-              disabled={loading}
-              type="submit"
-              variant="outlined"
-              color="secondary"
-              onClick={handleClickAuthReset}  
-
-            >
-              Reset password
+              RESET PASSWORD
             </Button>
 
             

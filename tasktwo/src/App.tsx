@@ -1,4 +1,4 @@
-import { MuiThemeProvider } from "@material-ui/core";
+import { Dialog, MuiThemeProvider } from "@material-ui/core";
 import { defaultTheme } from "./themes/default";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import NavMenu from "./components/NavMenu/NavMenu";
@@ -35,7 +35,19 @@ function App() {
               <NavMenu />
               <CssBaseline />
               <main>
-              <SidePanel />              
+              
+              <Switch>
+
+
+             
+              
+              
+              
+              <SidePanel />  
+
+              </Switch>
+
+
               </main>
               <Footer year={new Date().getFullYear()}> </Footer>
             </MuiThemeProvider>

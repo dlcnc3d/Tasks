@@ -6,8 +6,7 @@ const useStyles = makeStyles((theme: Theme) =>
       alignItems: "center",
       padding: theme.spacing(0),
       minheight: "600px",
-      maxWidth: "400px",
-      // zIndex:99999999,
+      maxWidth:"400px",
 
       "& .MuiTextField-root": {
         margin: theme.spacing(3),
@@ -53,18 +52,8 @@ const useStyles = makeStyles((theme: Theme) =>
       height: "100%",
       variant: "outlined",
       padding: "15px",
-      //marginLeft:"100px"
-    },
-    buttonfullWidth: {
-      width: "90%",
-      height: "50%",
-      variant: "outlined",
-      padding: "5px",
     },
   })
 );
-
-
-
 
 export default useStyles;

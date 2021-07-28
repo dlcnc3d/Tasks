@@ -1,65 +1,88 @@
 import React, { useRef, useState } from "react";
 
-import { Box, Button, Grid, Paper, Select, TextField, Typography } from "@material-ui/core";
+import {
+  Box,
+  Button,
+  Grid,
+  Paper,
+  Select,
+  TextField,
+  Typography,
+} from "@material-ui/core";
 import { Controller, useForm } from "react-hook-form";
-import useStyles from "./LoginForm.styles";
+import useStyles from "./UpdateUserData.styles";
 
 import { useAuthData } from "../../context/auth.context";
 import Alert from "@material-ui/lab/Alert";
 import { Link, useHistory } from "react-router-dom";
-import { useMapData } from "../../context/map.context";
 
 type FormValues = {
-  email: string;
+   email: string;
   password: string;
+  confirmPassword: string;
 };
 
 type Props = {
   onClose: () => void;
 };
 
-export const LoginForm: React.FC<Props> = (props) => {
+export const UpdateUserData: React.FC<Props> = (props) => {
   const classes = useStyles();
   const { register, watch, getValues, handleSubmit, control } =
     useForm<FormValues>();
 
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+
+  const {currentUser } = useAuthData();
+  const { updateEmail, updatePassword } = useAuthData();
+
   const history = useHistory();
 
-  //---------------
-  const { logIn, currentUser } = useAuthData();
+  const submitHandler = (data: FormValues) => {
+    const { confirmPassword, email, password } = data;
 
-  const { authReset, setAuthReset } = useMapData();
-
-
-  const handleClickAuthReset = () => {
-    setAuthReset(true);
-  };
-
-
-  const submitHandler = async (data: FormValues) => {
-    const { email, password } = data;
-
-    try {
-      setError("");
-      setLoading(true);
-      await logIn(email, password);
-      console.log(email, password);
-      history.push("/");
-      props.onClose();
-    } catch {
-      setError("Failed to log in. Incorrect email or password");
+    if (password !== confirmPassword) {
+      return setError("Passwords do not match");
     }
-    setLoading(false);
+
+    const promises = [];
+    setError("");
+    setLoading(true);
+    setMessage("");
+    if (email !== currentUser.email) {
+      promises.push(updateEmail(email));
+      setMessage("Email has been updated");
+
+    }
+
+    if (password) {
+      promises.push(updatePassword(password));
+      setMessage("Password has been updated");
+
+    }
+    Promise.all(promises)
+      .then(() => {
+        history.push("/");
+      })
+      .catch(() => {
+        setError("Failed to update an account");
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+   
   };
 
   return (
     <div>
       <Paper className={classes.root}>
         <Grid>
-          <div className={classes.titlemain}> 
-          <Typography className={classes.title}>Log in </Typography>         
+          <div className={classes.titlemain}>
+            <Typography className={classes.title}>
+              Update User Information{" "}
+            </Typography>
             <Box p={1}>
               {error && (
                 <Alert
@@ -70,6 +93,16 @@ export const LoginForm: React.FC<Props> = (props) => {
                   {error}
                 </Alert>
               )}
+{message && (
+                <Alert
+                  className={classes.input}
+                  variant="outlined"
+                  severity="success"
+                >
+                  {message}
+                </Alert>
+              )}
+
             </Box>
           </div>
 
@@ -79,7 +112,7 @@ export const LoginForm: React.FC<Props> = (props) => {
             <Controller
               name="email"
               control={control}
-              defaultValue=""
+              defaultValue={currentUser.email}
               render={({
                 field: { onChange, value },
                 fieldState: { error },
@@ -113,6 +146,7 @@ export const LoginForm: React.FC<Props> = (props) => {
                   variant="outlined"
                   type="password"
                   label="password"
+                  placeholder="do not type if you want to keep same data"
                   value={value}
                   onChange={onChange}
                   error={!!error}
@@ -120,8 +154,7 @@ export const LoginForm: React.FC<Props> = (props) => {
                   id="password"
                 />
               )}
-              rules={{
-                required: "password is required",
+              rules={{                
                 minLength: {
                   value: 4,
                   message: "Password must have at least 4 characters",
@@ -130,7 +163,36 @@ export const LoginForm: React.FC<Props> = (props) => {
             />
 
             <Box p={1} />
+            <Controller
+              name="confirmPassword"
+              control={control}
+              defaultValue=""
+              render={({
+                field: { onChange, value },
+                fieldState: { error },
+              }) => (
+                <TextField
+                  className={classes.input}
+                  variant="outlined"
+                  type="password"
+                  label="confirm password"
+                  placeholder="do not type if you want to keep same data"
+                  value={value}
+                  onChange={onChange}
+                  error={!!error}
+                  helperText={error ? error.message : null}
+                  id="confirmPassword"
+                />
+              )}
+              rules={{                
+                minLength: {
+                  value: 4,
+                  message: "Password must have at least 4 characters",
+                },
+              }}
+            />
 
+            <Box p={1} />
             <Button
               className={classes.button}
               type="button"
@@ -147,21 +209,8 @@ export const LoginForm: React.FC<Props> = (props) => {
               variant="outlined"
               color="primary"
             >
-              Log In
+              UPDATE
             </Button>
-            <Button
-              className={classes.buttonfullWidth}
-              disabled={loading}
-              type="submit"
-              variant="outlined"
-              color="secondary"
-              onClick={handleClickAuthReset}  
-
-            >
-              Reset password
-            </Button>
-
-            
           </form>
         </Grid>
       </Paper>

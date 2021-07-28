@@ -53,18 +53,8 @@ const useStyles = makeStyles((theme: Theme) =>
       height: "100%",
       variant: "outlined",
       padding: "15px",
-      //marginLeft:"100px"
-    },
-    buttonfullWidth: {
-      width: "90%",
-      height: "50%",
-      variant: "outlined",
-      padding: "5px",
     },
   })
 );
-
-
-
 
 export default useStyles;

@@ -12,6 +12,9 @@ type State = {
 
   routesEnabled: boolean;
 
+  authReset: boolean;
+
+  
   buttonColor: string;
 
   points: MarkerData[];
@@ -21,6 +24,9 @@ type State = {
   setRoutes: React.Dispatch<google.maps.DirectionsResult>;
 
   setRoutesEnabled: React.Dispatch<boolean>;
+  
+  setAuthReset: React.Dispatch<boolean>;
+
 
   setButtonColor: React.Dispatch<string>;
 
@@ -37,6 +43,7 @@ export const MapProvider: React.FC = (props) => {
   const [points, setPoints] = React.useState([]);
   const [routes, setRoutes] = React.useState(null);
   const [error, setError] = React.useState("");
+  const [authReset, setAuthReset] = React.useState(false);
   const [routesEnabled, setRoutesEnabled] = React.useState(false);
   const { children } = props;
 
@@ -58,7 +65,10 @@ export const MapProvider: React.FC = (props) => {
         setRoutes,
         routesEnabled,
         setRoutesEnabled,
-        setError
+        setError,
+        setAuthReset,
+        authReset,
+        
       }}
     >
       {children}
