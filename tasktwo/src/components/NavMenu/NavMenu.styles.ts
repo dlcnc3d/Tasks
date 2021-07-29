@@ -6,9 +6,12 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       display: "flex",
+      width: "100%",
     },
     appBar: {
       height: "60px",
+      width: "100%",
+
       backgroundColor: "#596F87",
       transition: theme.transitions.create(["margin", "width"], {
         easing: theme.transitions.easing.sharp,
@@ -23,9 +26,14 @@ const useStyles = makeStyles((theme: Theme) =>
         duration: theme.transitions.duration.enteringScreen,
       }),
     },
-    menuButton: {
-      marginRight: theme.spacing(1),
+    title: {
+      flexGrow: 1,
     },
+
+    menuButton: {
+      marginleft: theme.spacing(1),
+    },
+
     hide: {
       display: "none",
     },
@@ -43,28 +51,41 @@ const useStyles = makeStyles((theme: Theme) =>
       ...theme.mixins.toolbar,
       justifyContent: "flex-end",
     },
-    content: {
-      flexGrow: 1,
-      padding: theme.spacing(3),
-      transition: theme.transitions.create("margin", {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-      }),
-      marginLeft: -drawerWidth,
+    userSign: {
+      marginRight: theme.spacing(3),
+      flexFlow: "row",
+      float: "right",
+      marginright: "1",
+      alignItems: "right",
+      color: "inherit",
+      variant: "h6",
+    },
+    "@keyframes blinker": {
+      from: { opacity: 1 },
+      to: { opacity: 0.5 },
+    },
+    userUnSign: {
+      animationName: "$blinker",
+      animationDuration: "1s",
+      animationTimingFunction: "linear",
+      animationIterationCount: "infinite",      
+      color: "#ff5e66",
+      variant: "h5",
+      component: "h5",
     },
     contentShift: {
       transition: theme.transitions.create("margin", {
         easing: theme.transitions.easing.easeOut,
         duration: theme.transitions.duration.enteringScreen,
       }),
-      marginLeft: 0,
     },
     menubutton: {
-      marginRight: theme.spacing(1),
-      position: "relative",
+      marginRight: theme.spacing(2),
+    },
+    buttonIcon: {
+      marginRight: theme.spacing(2),
       display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
+      cursor: "pointer",
     },
   })
 );

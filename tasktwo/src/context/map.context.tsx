@@ -1,39 +1,67 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useContext } from "react";
-import { MarkerData } from "../definitions/types";
+import { MarkerData, RouteData } from "../definitions/types";
 
 type State = {
-  markerType: Partial<string>;
+  error: string;
 
-  startPoint: Partial<MarkerData>;
+  markerType: string;
 
-  finishPoint: Partial<MarkerData>;
+  routes: google.maps.DirectionsResult;
+
+  routesEnabled: boolean;
+
+  authReset: boolean;
+
+  buttonColor: string;
+
+  points: MarkerData[];
 
   setMarkerType: React.Dispatch<string>;
 
-  setStartPoint: React.Dispatch<MarkerData>;
+  setRoutes: React.Dispatch<google.maps.DirectionsResult>;
 
-  setFinishPoint: React.Dispatch<MarkerData>;
+  setRoutesEnabled: React.Dispatch<boolean>;
+
+  setAuthReset: React.Dispatch<boolean>;
+
+  setButtonColor: React.Dispatch<string>;
+
+  setCurrentUser: React.Dispatch<any>;
+
+  setPoints: React.Dispatch<MarkerData[]>;
+
+  setError: React.Dispatch<string>;
 };
 
 const MapContext = React.createContext<Partial<State>>({} as State);
 
 export const MapProvider: React.FC = (props) => {
-  const [startPoint, setStartPoint] = React.useState(null);
-  const [finishPoint, setFinishPoint] = React.useState(null);
-  const [markerType, setMarkerType] = React.useState(null);
-
+  const [points, setPoints] = React.useState([]);
+  const [routes, setRoutes] = React.useState(null);
+  const [error, setError] = React.useState("");
+  const [authReset, setAuthReset] = React.useState(false);
+  const [routesEnabled, setRoutesEnabled] = React.useState(false);
   const { children } = props;
+
+  ////-------------------
+  useEffect(() => {
+    console.log(points);
+  }, [points]);
 
   return (
     <MapContext.Provider
       value={{
-        startPoint,
-        setStartPoint,
-        finishPoint,
-        setFinishPoint,
-        markerType,
-        setMarkerType,
+        error,
+        points,
+        setPoints,
+        routes,
+        setRoutes,
+        routesEnabled,
+        setRoutesEnabled,
+        setError,
+        setAuthReset,
+        authReset,
       }}
     >
       {children}

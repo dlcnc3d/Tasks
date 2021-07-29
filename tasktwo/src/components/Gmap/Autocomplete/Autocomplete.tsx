@@ -1,16 +1,18 @@
 import React from "react";
 import Input from "@material-ui/core/Input";
-import { Tooltip } from "@material-ui/core";
+import { TextField, Tooltip } from "@material-ui/core";
 import PlacesAutocomplete, {
   geocodeByAddress,
 } from "react-places-autocomplete";
 import useStyles from "./Autocomplete.styles";
 import cls from "classnames";
 import { MarkerData } from "../../../definitions/types";
-import { MarkerType } from "../../../definitions/enums";
+import { useEffect } from "react";
+import uniqid from 'uniqid';
 
 type Props = {
   onSelect: (data: MarkerData) => void;
+  address: string;
 };
 
 export const Autocomplete: React.FC<Props> = (props) => {
@@ -19,16 +21,25 @@ export const Autocomplete: React.FC<Props> = (props) => {
     lat: 0,
     lng: 0,
   });
+  const { address: propsAddress } = props;
+
+  useEffect(() => {
+    setAddress(propsAddress);
+  }, [propsAddress]);
 
   const classes = useStyles();
 
   const handleSelect = async (value: string) => {
     const results = await geocodeByAddress(value);
-    const latLng = results[0].geometry.location.lng();
     const result = {
+      id: uniqid(),
       lat: results[0].geometry.location.lat(),
       lng: results[0].geometry.location.lng(),
     };
+    //-----------------------------------------------------------
+    console.log(result);
+    console.log("------");
+    console.log(value);
 
     setAddress(value);
     setCoordinates(result);
@@ -56,8 +67,10 @@ export const Autocomplete: React.FC<Props> = (props) => {
           })}
         >
           <Tooltip title="Type address">
-            <Input
+            <TextField
               className={classes.input}
+              type="input"
+              variant="outlined"
               {...getInputProps({ placeholder: "Type address" })}
             />
           </Tooltip>

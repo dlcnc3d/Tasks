@@ -9,13 +9,15 @@ import Toolbar from "@material-ui/core/Toolbar";
 import List from "@material-ui/core/List";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
-import IconButton from "@material-ui/core/IconButton";
+
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import ListItem from "@material-ui/core/ListItem";
+import IconButton from "@material-ui/core/IconButton";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
+import SettingsIcon from "@material-ui/icons/Settings";
 
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import SupervisorAccountIcon from "@material-ui/icons/SupervisorAccount";
@@ -24,11 +26,26 @@ import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
 
 import useStyles from "./NavMenu.styles";
+import { Dialog, DialogContent, DialogTitle, Tooltip } from "@material-ui/core";
+import { RegisterForm } from "../RegisterForm/RegisterForm";
+import { LoginForm } from "../LoginForm/LoginForm";
+import { useAuthData } from "../../context/auth.context";
+import { useMapData } from "../../context/map.context";
+import { AuthReset } from "../AuthForgot/AuthReset";
+import { UpdateUserData } from "../UpdateUserData/UpdateUserData";
+import { useEffect } from "react";
+//import { getRouteDatahelper } from "../../core/helpers/routeData.helpers";
 
 export default function NavMenu() {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const { currentUser, logOut } = useAuthData();
+  const { routes, setRoutes } = useMapData();
+  const { authReset, setAuthReset } = useMapData();
+
+  const { routesEnabled, setRoutesEnabled } = useMapData();
+  const { points, setPoints } = useMapData();
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -38,10 +55,54 @@ export default function NavMenu() {
     setOpen(false);
   };
 
+  const [openSignUp, setOpenSignUp] = React.useState(false);
+  const [openLogIn, setOpenLogIn] = React.useState(false);
+  ////
+  //const [authReset, setAuthReset] = React.useState(false);
+
+  const [updateUserData, setUpdateUserData] = React.useState(false);
+
+  const handleClickOpenSignUp = () => {
+    if (openLogIn) {
+      setOpenLogIn(false);
+    }
+    setOpenSignUp(true);
+  };
+
+  const handleClickOpenLogIn = () => {
+    if (openSignUp) {
+      setOpenSignUp(false);
+    }
+    setOpenLogIn(true);
+  };
+
+  const handleClickUpdateUserData = () => {
+    setUpdateUserData(true);
+  };
+
+  const handleClickLogOut = () => {
+    setPoints([]);
+    setRoutesEnabled(false);
+    setRoutes(null);
+    logOut();
+  };
+
+  useEffect(() => {
+    if (authReset === true) {
+      setOpenLogIn(false);
+    }
+  }, [authReset]);
+
+  const handleClose = () => {
+    setOpenSignUp(false);
+    setOpenLogIn(false);
+    setAuthReset(false);
+    setUpdateUserData(false);
+  };
+
   return (
     <div className={classes.root}>
       <AppBar
-        position="fixed"
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
         })}
@@ -56,25 +117,95 @@ export default function NavMenu() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap>
+
+          <Typography variant="h6" noWrap className={classes.title}>
             Menu
           </Typography>
 
-          <Box mr={20} />
+          <Box mr={5} />
 
-          <Box mr={3} alignSelf="right">
+          {currentUser && (
+            <Typography className={classes.userSign}> user name </Typography>
+          )}
+
+          <Typography
+            className={
+              currentUser === null ? classes.userUnSign : classes.userSign
+            }
+            variant="h5"
+          >
+            {currentUser === null ? "unregistered user" : currentUser.email}
+          </Typography>
+
+          <Box mr={2}>
+            {currentUser && (
+              <Tooltip title="Account setting">
+                <SettingsIcon
+                  className={classes.buttonIcon}
+                  onClick={handleClickUpdateUserData}
+                />
+              </Tooltip>
+            )}
+
+            <Dialog
+              open={updateUserData}
+              onClose={handleClose}
+              aria-labelledby="form-dialog-title"
+            >
+              <UpdateUserData onClose={handleClose} />
+            </Dialog>
+          </Box>
+
+          <Box mr={2}>
+            <Dialog
+              open={authReset}
+              onClose={handleClose}
+              aria-labelledby="form-dialog-title"
+            >
+              <AuthReset onClose={handleClose} />
+            </Dialog>
+          </Box>
+
+          <Box mr={2}>
             <Button
               className={classes.menubutton}
               color="inherit"
               variant="outlined"
+              onClick={
+                currentUser === null ? handleClickOpenLogIn : handleClickLogOut
+              }
             >
-              log in
+              {currentUser === null ? "Log in" : "Log Out"}
             </Button>
+
+            <Dialog
+              open={openLogIn}
+              onClose={handleClose}
+              aria-labelledby="form-dialog-title"
+            >
+              <LoginForm onClose={handleClose} />
+            </Dialog>
           </Box>
-          <Box mr={3} alignSelf="right">
-            <Button className={classes.menubutton} variant="contained">
+
+          <Box mr={3}>
+            <Button variant="contained" onClick={handleClickOpenSignUp}>
               Sign Up
             </Button>
+            <Dialog
+              open={openSignUp}
+              onClose={handleClose}
+              aria-labelledby="form-dialog-title"
+            >
+              <RegisterForm onClose={handleClose} />
+            </Dialog>
+
+            <Dialog
+              open={openSignUp}
+              onClose={handleClose}
+              aria-labelledby="form-dialog-title"
+            >
+              <RegisterForm onClose={handleClose} />
+            </Dialog>
           </Box>
         </Toolbar>
       </AppBar>
@@ -99,18 +230,43 @@ export default function NavMenu() {
         </div>
         <Divider />
         <List>
-          {["Sign in", "Sing Up"].map((text, index) => (
-            <ListItem button key={text}>
+          <ListItem
+            button
+            key={"Log in"}
+            onClick={
+              currentUser === null ? handleClickOpenLogIn : handleClickLogOut
+            }
+          >
+            <ListItemIcon>
+              <AccountBoxIcon />
+            </ListItemIcon>
+
+            <ListItemText
+              primary={currentUser === null ? "Log in" : "Log Out"}
+            />
+          </ListItem>
+
+          {currentUser && (
+            <ListItem
+              button
+              key={"Account"}
+              onClick={handleClickUpdateUserData}
+            >
               <ListItemIcon>
-                {index % 2 === 0 ? (
-                  <AccountBoxIcon />
-                ) : (
-                  <SupervisorAccountIcon />
-                )}
+                <SettingsIcon />
               </ListItemIcon>
-              <ListItemText primary={text} />
+
+              <ListItemText primary={"Account"} />
             </ListItem>
-          ))}
+          )}
+
+          <ListItem button key={"Sign Up"} onClick={handleClickOpenSignUp}>
+            <ListItemIcon>
+              <SupervisorAccountIcon />
+            </ListItemIcon>
+
+            <ListItemText primary={"Sign Up"} />
+          </ListItem>
         </List>
         <Divider />
       </Drawer>
