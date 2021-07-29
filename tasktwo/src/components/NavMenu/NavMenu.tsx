@@ -57,9 +57,6 @@ export default function NavMenu() {
 
   const [openSignUp, setOpenSignUp] = React.useState(false);
   const [openLogIn, setOpenLogIn] = React.useState(false);
-  ////
-  //const [authReset, setAuthReset] = React.useState(false);
-
   const [updateUserData, setUpdateUserData] = React.useState(false);
 
   const handleClickOpenSignUp = () => {
