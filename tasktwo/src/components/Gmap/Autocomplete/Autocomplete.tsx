@@ -8,6 +8,7 @@ import useStyles from "./Autocomplete.styles";
 import cls from "classnames";
 import { MarkerData } from "../../../definitions/types";
 import { useEffect } from "react";
+import uniqid from 'uniqid';
 
 type Props = {
   onSelect: (data: MarkerData) => void;
@@ -31,6 +32,7 @@ export const Autocomplete: React.FC<Props> = (props) => {
   const handleSelect = async (value: string) => {
     const results = await geocodeByAddress(value);
     const result = {
+      id: uniqid(),
       lat: results[0].geometry.location.lat(),
       lng: results[0].geometry.location.lng(),
     };
@@ -66,9 +68,9 @@ export const Autocomplete: React.FC<Props> = (props) => {
         >
           <Tooltip title="Type address">
             <TextField
-            className={classes.input}
-            type="input"
-            variant="outlined"
+              className={classes.input}
+              type="input"
+              variant="outlined"
               {...getInputProps({ placeholder: "Type address" })}
             />
           </Tooltip>

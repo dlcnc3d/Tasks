@@ -8,27 +8,22 @@ const useStyles = makeStyles((theme: Theme) =>
       flexDirection: "column",
       justifyContent: "center",
       paddingTop: "60px",
-     //paddingRight: "250px",
       width: "100%",
-      minWidth:"800px",
-      
-
+      minWidth: "800px",
     },
     LeftPanel: {
       height: "calc(100vh - 110px)",
       backgroundColor: "#a1dffb30",
       elevation: "100",
       paddingLeft: "20px",
-      paddingRigt: "20px",       
-      
-    },    
-    mainForm: {      
+      paddingRigt: "20px",
+    },
+    mainForm: {
       height: "calc(100vh - 110px)",
       display: "flex",
       backgroundColor: "#a1dffb30",
       flexDirection: "column",
       elevation: "0",
-      
     },
   })
 );

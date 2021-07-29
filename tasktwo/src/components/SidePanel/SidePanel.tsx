@@ -9,6 +9,7 @@ import { MarkerType } from "../../definitions/enums";
 import { useMapData } from "../../context/map.context";
 import { getAddressByLatLngHelper } from "../../core/helpers/geocode.helpers";
 import { Loader } from "../Loader/Loader";
+import uniqid from 'uniqid';
 
 export const SidePanel: React.FC = () => {
   const onMapClickHandle = (e: MarkerData) => {
@@ -19,13 +20,14 @@ export const SidePanel: React.FC = () => {
   const { points, setPoints } = useMapData();
   const [loading, SetLoading] = useState(true);
 
-
   const selectHandler = (
     marker: MarkerData,
     typeCheck: MarkerType,
     labeltype: MarkerType
   ) => {
     getAddressByLatLngHelper(marker).then((result) => {
+      console.log(result);
+      
       if (points.findIndex((x) => x.type === labeltype) !== -1) {
         setPoints(
           points.map((item) =>
@@ -38,6 +40,7 @@ export const SidePanel: React.FC = () => {
         setPoints([
           ...points,
           {
+            id: uniqid(),
             lat: marker.lat,
             lng: marker.lng,
             time: Date.now(),
@@ -64,10 +67,9 @@ export const SidePanel: React.FC = () => {
 
           <Grid item xs={9}>
             <Paper className={classes.mainForm}>
-            { loading&& <Loader />} 
-            
-            <MapWrapper onMapClick={onMapClickHandle}></MapWrapper>
-             
+              {loading && <Loader />}
+
+              <MapWrapper onMapClick={onMapClickHandle}></MapWrapper>
             </Paper>
           </Grid>
         </Grid>

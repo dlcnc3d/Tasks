@@ -7,62 +7,47 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       flexDirection: "row",
       width: "100%",
-      
-
     },
     buttonClick: {
       color: "primary",
       size: "large",
     },
     button: {
-      
       width: "30%",
-      variant:"contained",
-      backgroundColor: "#596F87",
+      variant: "contained",
+      //backgroundColor: "#596F87",
+      backgroundColor: "#6e8399",
+
       size: "large",
       padding: "15px",
-      marginRight:"20px"
-      
-
+      marginRight: "20px",
+      "&:hover": {
+        backgroundColor: "#4e6278",
+        borderColor: "black",
+        boxShadow: "30px",
+      },
     },
-    input: {
-      //width: "20%",
-      //flexGrow: 1,
-      //display: "flex",
-      //flexDirection: "row",
+    input: {},
 
-      // padding: "15px",
+    errors: {
+      marginRight: "20px",
+      marginTop: "20px",
+    },
+    "@keyframes blinker": {
+      from: { opacity: 1 },
+      to: { opacity: 0.4 },
+    },
+    blinkElement: {
+      animationName: "$blinker",
+      animationDuration: "1s",
+      animationTimingFunction: "linear",
+      animationIterationCount: "infinite",
+      color: "red",
     },
 
-    errors:{
-      
-     // width: "30%",
-      //variant:"contained",
-      //backgroundColor: "#596F87",
-      //size: "large",
-      //padding: "15px",
-      marginRight:"20px",
-      marginTop:"20px"
-  },
-  '@keyframes blinker': {
-    from: { opacity: 1 },
-    to: { opacity: 0.4 },
-    
-},
-blinkElement: {
-    animationName: '$blinker',
-    animationDuration: '1s',
-    animationTimingFunction: 'linear',
-    animationIterationCount: 'infinite',
-    color: 'red',
-},
-
-ordinary: {
-  backgroundColor:""
-  
-},
-
-
+    ordinary: {
+      backgroundColor: "",
+    },
   })
 );
 

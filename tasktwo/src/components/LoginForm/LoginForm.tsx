@@ -1,6 +1,14 @@
 import React, { useRef, useState } from "react";
 
-import { Box, Button, Grid, Paper, Select, TextField, Typography } from "@material-ui/core";
+import {
+  Box,
+  Button,
+  Grid,
+  Paper,
+  Select,
+  TextField,
+  Typography,
+} from "@material-ui/core";
 import { Controller, useForm } from "react-hook-form";
 import useStyles from "./LoginForm.styles";
 
@@ -32,11 +40,9 @@ export const LoginForm: React.FC<Props> = (props) => {
 
   const { authReset, setAuthReset } = useMapData();
 
-
   const handleClickAuthReset = () => {
     setAuthReset(true);
   };
-
 
   const submitHandler = async (data: FormValues) => {
     const { email, password } = data;
@@ -58,13 +64,13 @@ export const LoginForm: React.FC<Props> = (props) => {
     <div>
       <Paper className={classes.root}>
         <Grid>
-          <div className={classes.titlemain}> 
-          <Typography className={classes.title}>Log in </Typography>         
+          <div className={classes.titlemain}>
+            <Typography className={classes.title}>Log in </Typography>
             <Box p={1}>
               {error && (
                 <Alert
                   className={classes.input}
-                  variant="outlined"
+                  variant="filled"
                   severity="error"
                 >
                   {error}
@@ -149,20 +155,17 @@ export const LoginForm: React.FC<Props> = (props) => {
             >
               Log In
             </Button>
-            
+
             <Button
               className={classes.buttonfullWidth}
               //disabled={loading}
               type="button"
               variant="outlined"
               color="secondary"
-              onClick={handleClickAuthReset}  
-
+              onClick={handleClickAuthReset}
             >
               Reset password
             </Button>
-
-            
           </form>
         </Grid>
       </Paper>

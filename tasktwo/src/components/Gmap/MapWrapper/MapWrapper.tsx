@@ -12,6 +12,8 @@ import { useAuthData } from "../../../context/auth.context";
 import { MarkerData } from "../../../definitions/types";
 import { MapRoutes } from "../../MapRoutes/MapRoutes";
 import { MarkerType } from "../../../definitions/enums";
+import uniqid from 'uniqid';
+import { useRef } from "react";
 
 type Props = {
   onMapClick: (data: MarkerData) => void;
@@ -28,10 +30,16 @@ const MapWrapper = compose<Props, Props>(
 )((props) => {
   const { points, routesEnabled } = useMapData();
   const { error, setError } = useMapData();
+  const { currentUser } = useAuthData();
+  const ref = useRef();
+
+  console.log(ref);
+  
 
   const MapClickHandle = (e: any) => {
     if (currentUser !== null) {
       props.onMapClick({
+        id: uniqid(),
         lat: e.latLng.lat(),
         lng: e.latLng.lng(),
         time: Date.now(),
@@ -43,19 +51,20 @@ const MapWrapper = compose<Props, Props>(
     }
   };
 
-  const { currentUser } = useAuthData();
-
   return (
     <GoogleMap
       defaultZoom={14}
       defaultCenter={{ lat: 49.23, lng: 28.47 }}
       onClick={MapClickHandle}
+      ref={ref}
+      //key={new Date().getTime()}
     >
       {points.map((p) => (
         <Marker
-          key={p.time}
+          key={p.id}
           position={{ lat: p.lat, lng: p.lng }}
           animation={google.maps.Animation.DROP}
+          // noRedraw={true}
         >
           <InfoWindow>
             <div>

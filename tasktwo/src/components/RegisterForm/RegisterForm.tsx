@@ -1,6 +1,14 @@
 import React, { useRef, useState } from "react";
 
-import { Box, Button, Grid, Paper, Select, TextField, Typography } from "@material-ui/core";
+import {
+  Box,
+  Button,
+  Grid,
+  Paper,
+  Select,
+  TextField,
+  Typography,
+} from "@material-ui/core";
 import { Controller, useForm } from "react-hook-form";
 import useStyles from "./RegisterForm.styles";
 
@@ -54,12 +62,12 @@ export const RegisterForm: React.FC<Props> = (props) => {
       <Paper className={classes.root}>
         <Grid>
           <div className={classes.titlemain}>
-          <Typography className={classes.title}>Sign Up </Typography>         
-             <Box p={1}>
+            <Typography className={classes.title}>Sign Up </Typography>
+            <Box p={1}>
               {error && (
-                <Alert                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+                <Alert
                   className={classes.input}
-                  variant="outlined"
+                  variant="filled"
                   severity="error"
                 >
                   {error}
@@ -70,7 +78,6 @@ export const RegisterForm: React.FC<Props> = (props) => {
 
           <form className={classes.form} onSubmit={handleSubmit(submitHandler)}>
             <Box p={1} />
-           
 
             <Box p={1} />
 
@@ -176,8 +183,6 @@ export const RegisterForm: React.FC<Props> = (props) => {
             >
               submit
             </Button>
-
-            
           </form>
         </Grid>
       </Paper>

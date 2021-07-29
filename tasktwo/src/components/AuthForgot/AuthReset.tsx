@@ -58,7 +58,7 @@ export const AuthReset: React.FC<Props> = (props) => {
               {error && (
                 <Alert
                   className={classes.input}
-                  variant="outlined"
+                  variant="filled"
                   severity="error"
                 >
                   {error}
@@ -67,7 +67,7 @@ export const AuthReset: React.FC<Props> = (props) => {
  {message && (
                 <Alert
                   className={classes.input}
-                  variant="outlined"
+                  variant="filled"
                   severity="success"
                 >
                   {message}

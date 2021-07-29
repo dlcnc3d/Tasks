@@ -1,3 +1,4 @@
 export enum MarkerType {
-    Start, Finish
+  Start,
+  Finish,
 }

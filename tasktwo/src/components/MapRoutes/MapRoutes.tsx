@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
-import { MarkerData, RouteData } from "../../definitions/types";
+import { MarkerData } from "../../definitions/types";
 import { getRouteHelpers } from "../../core/helpers/route.helpers";
 import { DirectionsRenderer } from "react-google-maps";
-import { useState } from "react";
 import { useMapData } from "../../context/map.context";
 
 type Props = {
@@ -14,14 +13,12 @@ type Props = {
 export const MapRoutes: React.FC<Props> = (props) => {
   const { startPoint, finishPoint, enabled } = props;
 
-    const { routes, setRoutes } = useMapData();
-
+  const { routes, setRoutes } = useMapData();
 
   useEffect(() => {
     if (enabled && startPoint !== null && finishPoint !== null) {
       getRouteHelpers(startPoint, finishPoint).then((result) => {
-        setRoutes(result);       
-
+        setRoutes(result);
       });
     }
   }, [enabled, startPoint, finishPoint]);
@@ -30,7 +27,7 @@ export const MapRoutes: React.FC<Props> = (props) => {
     <div>
       {enabled && routes && (
         <DirectionsRenderer
-          directions={routes as google.maps.DirectionsResult}
+          directions={routes}
         />
       )}
     </div>

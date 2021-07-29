@@ -139,11 +139,11 @@ export default function NavMenu() {
 
           <Box mr={2}>
             {currentUser && (
-               <Tooltip title="Account setting">
-              <SettingsIcon
-                className={classes.buttonIcon}
-                onClick={handleClickUpdateUserData}
-              />
+              <Tooltip title="Account setting">
+                <SettingsIcon
+                  className={classes.buttonIcon}
+                  onClick={handleClickUpdateUserData}
+                />
               </Tooltip>
             )}
 

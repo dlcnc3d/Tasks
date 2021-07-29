@@ -6,7 +6,7 @@ const useStyles = makeStyles((theme: Theme) =>
       alignItems: "center",
       padding: theme.spacing(0),
       minheight: "600px",
-      maxWidth:"400px",
+      maxWidth: "400px",
 
       "& .MuiTextField-root": {
         margin: theme.spacing(3),

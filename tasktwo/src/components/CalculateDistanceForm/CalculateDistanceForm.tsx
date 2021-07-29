@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  Box,
-  Button,
-  FormHelperText,
-  Input,
-  Paper,
-  Tooltip,
-} from "@material-ui/core";
+import { Box, Button, FormHelperText, Paper, Tooltip } from "@material-ui/core";
 
 import LocationOnIcon from "@material-ui/icons/LocationOn";
 
@@ -16,11 +9,10 @@ import { MarkerData } from "../../definitions/types";
 import { MarkerType } from "../../definitions/enums";
 import useStyles from "./CalculateDistanceForm.styles";
 import { useAuthData } from "../../context/auth.context";
-import { getAddressByLatLngHelper } from "../../core/helpers/geocode.helpers";
-import classNames from "classnames";
 import { useEffect } from "react";
 import Alert from "@material-ui/lab/Alert";
 import { RouteDataResult } from "../RouteDataResult/RouteDataResult";
+import uniqid from 'uniqid';
 
 type Props = {
   selectHandler: (
@@ -31,8 +23,6 @@ type Props = {
 };
 
 export const CalculateDistanceForm: React.FC<Props> = (props) => {
-  //const { setFinishPoint, setStartPoint } = useMapData();
-  //const { startPoint, finishPoint } = useMapData();
   const { points, setPoints } = useMapData();
   const { routesEnabled, setRoutesEnabled } = useMapData();
   const { routes, setRoutes } = useMapData();
@@ -46,6 +36,7 @@ export const CalculateDistanceForm: React.FC<Props> = (props) => {
         if (position !== null) {
           props.selectHandler(
             {
+              id: uniqid(),
               lat: position.coords.latitude,
               lng: position.coords.longitude,
               time: Date.now(),
@@ -62,7 +53,7 @@ export const CalculateDistanceForm: React.FC<Props> = (props) => {
     setRoutesEnabled(true);
   };
 
-  const DelPointsHandler = () => {
+  const delPointsHandler = () => {
     setPoints([]);
     setRoutesEnabled(false);
     setRoutes(null);
@@ -87,7 +78,7 @@ export const CalculateDistanceForm: React.FC<Props> = (props) => {
                       MarkerType.Start,
                       MarkerType.Start
                     )
-                  : alert("You can't use autocoplite. Please log in");
+                  : alert("You can't use autocomplite. Please log in");
               }}
               address={
                 points[points.findIndex((x) => x.type === MarkerType.Start)]
@@ -109,20 +100,16 @@ export const CalculateDistanceForm: React.FC<Props> = (props) => {
           </Tooltip>
         </Box>
       )}
-      <FormHelperText id="StartPosition"
-      className={currentUser !== null
-        ? classes.ordinary
-        : classes.blinkElement      
-         }>
-        
+      <FormHelperText
+        id="StartPosition"
+        className={
+          currentUser !== null ? classes.ordinary : classes.blinkElement
+        }
+      >
         {currentUser !== null
           ? "Start Position"
           : "Start Position has been found by geolocation"}
       </FormHelperText>
-
-
-
-
 
       <Box p={1} />
 
@@ -144,7 +131,7 @@ export const CalculateDistanceForm: React.FC<Props> = (props) => {
           <Tooltip title="Click to delete all marker on map">
             <Button
               className={classes.buttonClick}
-              onClick={DelPointsHandler}
+              onClick={delPointsHandler}
               variant="outlined"
               color={routesEnabled ? "secondary" : "primary"}
               fullWidth
@@ -157,12 +144,10 @@ export const CalculateDistanceForm: React.FC<Props> = (props) => {
       )}
       <Box p={2} />
 
-      <RouteDataResult /> 
-
-
+      <RouteDataResult />
 
       {error && !currentUser && (
-        <Paper className={classes.errors}   >
+        <Paper className={classes.errors}>
           <div>
             <Box p={1}>
               <Alert

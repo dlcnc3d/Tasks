@@ -3,8 +3,11 @@ import React, { useRef, useState } from "react";
 import {
   Box,
   Button,
+  FormControlLabel,
   Grid,
   Paper,
+  Radio,
+  RadioGroup,
   Select,
   TextField,
   Typography,
@@ -17,7 +20,7 @@ import Alert from "@material-ui/lab/Alert";
 import { Link, useHistory } from "react-router-dom";
 
 type FormValues = {
-   email: string;
+  email: string;
   password: string;
   confirmPassword: string;
 };
@@ -35,7 +38,7 @@ export const UpdateUserData: React.FC<Props> = (props) => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
-  const {currentUser } = useAuthData();
+  const { currentUser } = useAuthData();
   const { updateEmail, updatePassword } = useAuthData();
 
   const history = useHistory();
@@ -51,20 +54,22 @@ export const UpdateUserData: React.FC<Props> = (props) => {
     setError("");
     setLoading(true);
     setMessage("");
-    if (email !== currentUser.email) {
+    if (email !== currentUser.email && !password) {
       promises.push(updateEmail(email));
+      setError("");
       setMessage("Email has been updated");
-
-      
-
-
     }
 
-    if (password) {
+    if (password && email === currentUser.email) {
       promises.push(updatePassword(password));
+      setError("");
       setMessage("Password has been updated");
-
     }
+
+    if (password && email !== currentUser.email) {
+      setError("login and password can't be changed together");
+    }
+
     Promise.all(promises)
       .then(() => {
         history.push("/");
@@ -75,7 +80,6 @@ export const UpdateUserData: React.FC<Props> = (props) => {
       .finally(() => {
         setLoading(false);
       });
-   
   };
 
   return (
@@ -90,22 +94,21 @@ export const UpdateUserData: React.FC<Props> = (props) => {
               {error && (
                 <Alert
                   className={classes.input}
-                  variant="outlined"
+                  variant="filled"
                   severity="error"
                 >
                   {error}
                 </Alert>
               )}
-{message && (
+              {message && !error && (
                 <Alert
                   className={classes.input}
-                  variant="outlined"
+                  variant="filled"
                   severity="success"
                 >
                   {message}
                 </Alert>
               )}
-
             </Box>
           </div>
 
@@ -115,13 +118,14 @@ export const UpdateUserData: React.FC<Props> = (props) => {
             <Controller
               name="email"
               control={control}
-              defaultValue={currentUser.email}
+              defaultValue={currentUser.email !== null ? currentUser.email : ""}
               render={({
                 field: { onChange, value },
                 fieldState: { error },
               }) => (
                 <TextField
                   className={classes.input}
+                  //disabled={true}
                   variant="outlined"
                   label="email"
                   type="email"
@@ -157,7 +161,7 @@ export const UpdateUserData: React.FC<Props> = (props) => {
                   id="password"
                 />
               )}
-              rules={{                
+              rules={{
                 minLength: {
                   value: 4,
                   message: "Password must have at least 4 characters",
@@ -187,7 +191,7 @@ export const UpdateUserData: React.FC<Props> = (props) => {
                   id="confirmPassword"
                 />
               )}
-              rules={{                
+              rules={{
                 minLength: {
                   value: 4,
                   message: "Password must have at least 4 characters",

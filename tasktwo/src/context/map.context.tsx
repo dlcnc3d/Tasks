@@ -3,7 +3,6 @@ import { useContext } from "react";
 import { MarkerData, RouteData } from "../definitions/types";
 
 type State = {
-  
   error: string;
 
   markerType: string;
@@ -14,7 +13,6 @@ type State = {
 
   authReset: boolean;
 
-  
   buttonColor: string;
 
   points: MarkerData[];
@@ -24,9 +22,8 @@ type State = {
   setRoutes: React.Dispatch<google.maps.DirectionsResult>;
 
   setRoutesEnabled: React.Dispatch<boolean>;
-  
-  setAuthReset: React.Dispatch<boolean>;
 
+  setAuthReset: React.Dispatch<boolean>;
 
   setButtonColor: React.Dispatch<string>;
 
@@ -49,11 +46,8 @@ export const MapProvider: React.FC = (props) => {
 
   ////-------------------
   useEffect(() => {
-        
-    console.log(points)
-      
+    console.log(points);
   }, [points]);
- 
 
   return (
     <MapContext.Provider
@@ -68,7 +62,6 @@ export const MapProvider: React.FC = (props) => {
         setError,
         setAuthReset,
         authReset,
-        
       }}
     >
       {children}

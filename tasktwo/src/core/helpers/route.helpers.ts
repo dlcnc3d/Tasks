@@ -11,7 +11,7 @@ export const getRouteHelpers = function (
       {
         origin: start,
         destination: end,
-        travelMode: google.maps.TravelMode.TRANSIT,        
+        travelMode: google.maps.TravelMode.TRANSIT,
       },
       (result, status) => {
         if (status === google.maps.DirectionsStatus.OK) {
