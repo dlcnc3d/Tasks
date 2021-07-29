@@ -57,8 +57,7 @@ const MapWrapper = compose<Props, Props>(
       defaultCenter={{ lat: 49.23, lng: 28.47 }}
       onClick={MapClickHandle}
       ref={ref}
-      //key={new Date().getTime()}
-    >
+          >
       {points.map((p) => (
         <Marker
           key={p.id}
