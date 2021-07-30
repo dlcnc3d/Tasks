@@ -1,11 +1,10 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 
 import {
   Box,
   Button,
   Grid,
-  Paper,
-  Select,
+  Paper,  
   TextField,
   Typography,
 } from "@material-ui/core";
@@ -14,7 +13,7 @@ import useStyles from "./LoginForm.styles";
 
 import { useAuthData } from "../../context/auth.context";
 import Alert from "@material-ui/lab/Alert";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useMapData } from "../../context/map.context";
 
 type FormValues = {
@@ -28,7 +27,7 @@ type Props = {
 
 export const LoginForm: React.FC<Props> = (props) => {
   const classes = useStyles();
-  const { register, watch, getValues, handleSubmit, control } =
+  const { handleSubmit, control } =
     useForm<FormValues>();
 
   const [error, setError] = useState("");
@@ -36,9 +35,9 @@ export const LoginForm: React.FC<Props> = (props) => {
   const history = useHistory();
 
   //---------------
-  const { logIn, currentUser } = useAuthData();
+  const { logIn} = useAuthData();
 
-  const { authReset, setAuthReset } = useMapData();
+  const { setAuthReset } = useMapData();
 
   const handleClickAuthReset = () => {
     setAuthReset(true);
@@ -50,8 +49,7 @@ export const LoginForm: React.FC<Props> = (props) => {
     try {
       setError("");
       setLoading(true);
-      await logIn(email, password);
-      console.log(email, password);
+      await logIn(email, password);      
       history.push("/");
       props.onClose();
     } catch {

@@ -15,7 +15,6 @@ const useStyles = makeStyles((theme: Theme) =>
     button: {
       width: "30%",
       variant: "contained",
-      //backgroundColor: "#596F87",
       backgroundColor: "#6e8399",
 
       size: "large",

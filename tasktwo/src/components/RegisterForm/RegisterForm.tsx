@@ -1,11 +1,10 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 
 import {
   Box,
   Button,
   Grid,
   Paper,
-  Select,
   TextField,
   Typography,
 } from "@material-ui/core";
@@ -14,7 +13,7 @@ import useStyles from "./RegisterForm.styles";
 
 import { useAuthData } from "../../context/auth.context";
 import Alert from "@material-ui/lab/Alert";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 type FormValues = {
   name: string;
@@ -29,16 +28,15 @@ type Props = {
 
 export const RegisterForm: React.FC<Props> = (props) => {
   const classes = useStyles();
-  const { register, watch, getValues, handleSubmit, control } =
-    useForm<FormValues>();
+  const { handleSubmit, control } = useForm<FormValues>();
 
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const { signUp, currentUser } = useAuthData();
+  const { signUp } = useAuthData();
   const history = useHistory();
 
   const submitHandler = async (data: FormValues) => {
-    const { confirmPassword, email, name, password } = data;
+    const { confirmPassword, email, password } = data;
 
     if (password !== confirmPassword) {
       return setError("Passwords do not match");
@@ -48,7 +46,6 @@ export const RegisterForm: React.FC<Props> = (props) => {
       setError("");
       setLoading(true);
       await signUp(email, password);
-      console.log(email, password);
       history.push("/");
       props.onClose();
     } catch {

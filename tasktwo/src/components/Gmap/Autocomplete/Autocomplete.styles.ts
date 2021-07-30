@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme: Theme) =>
       flex: 1,
       position: "relative",
       zIndex: 1,
-      paddingRight: "20px"
+      paddingRight: "20px",
     },
     rootActive: {
       zIndex: 2,
@@ -30,11 +30,9 @@ const useStyles = makeStyles((theme: Theme) =>
       cursor: "pointer",
     },
     input: {
-      
-      variant:"outlined",
+      variant: "outlined",
       width: "100%",
       height: "100%",
-
     },
   })
 );

@@ -68,10 +68,8 @@ const useStyles = makeStyles((theme: Theme) =>
       animationName: "$blinker",
       animationDuration: "1s",
       animationTimingFunction: "linear",
-      animationIterationCount: "infinite",      
+      animationIterationCount: "infinite",
       color: "#ff5e66",
-      variant: "h5",
-      component: "h5",
     },
     contentShift: {
       transition: theme.transitions.create("margin", {

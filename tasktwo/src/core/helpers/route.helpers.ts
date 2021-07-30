@@ -12,10 +12,12 @@ export const getRouteHelpers = function (
         origin: start,
         destination: end,
         travelMode: google.maps.TravelMode.TRANSIT,
+        transitOptions: {
+          routingPreference: google.maps.TransitRoutePreference.LESS_WALKING,
+        },
       },
       (result, status) => {
         if (status === google.maps.DirectionsStatus.OK) {
-          console.log(result);
           resolve(result);
         } else {
           reject(console.error(`error fetching directions ${result}`));

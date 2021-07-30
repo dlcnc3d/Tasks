@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useContext } from "react";
-import { MarkerData, RouteData } from "../definitions/types";
+import { MarkerData } from "../definitions/types";
 
 type State = {
   error: string;
@@ -44,7 +44,6 @@ export const MapProvider: React.FC = (props) => {
   const [routesEnabled, setRoutesEnabled] = React.useState(false);
   const { children } = props;
 
-  ////-------------------
   useEffect(() => {
     console.log(points);
   }, [points]);

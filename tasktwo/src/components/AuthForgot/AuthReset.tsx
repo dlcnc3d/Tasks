@@ -1,12 +1,17 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 
-import { Box, Button, Grid, Paper, Select, TextField, Typography } from "@material-ui/core";
+import {
+  Box,
+  Button,
+  Grid,
+  Paper,
+  TextField,
+  Typography,
+} from "@material-ui/core";
 import { Controller, useForm } from "react-hook-form";
 import useStyles from "./AuthReset.styles";
-
 import { useAuthData } from "../../context/auth.context";
 import Alert from "@material-ui/lab/Alert";
-import { Link } from "react-router-dom";
 
 type FormValues = {
   email: string;
@@ -19,29 +24,26 @@ type Props = {
 
 export const AuthReset: React.FC<Props> = (props) => {
   const classes = useStyles();
-  const { register, watch, getValues, handleSubmit, control } =
-    useForm<FormValues>();
+  const { handleSubmit, control } = useForm<FormValues>();
 
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
-  
-
-  //---------------
-  const { logIn, resetPassword } = useAuthData();
+  const { resetPassword } = useAuthData();
 
   const submitHandler = async (data: FormValues) => {
-    const { email, password } = data;
+    const { email } = data;
 
     try {
       setError("");
       setMessage("");
       setLoading(true);
-      await resetPassword(email);      
+      await resetPassword(email);
       setMessage("Please chech yor email for further instructions");
       //---
-      setTimeout(() => {props.onClose()}, 1500);
-      ;
+      setTimeout(() => {
+        props.onClose();
+      }, 1500);
     } catch {
       setError("Failed to reset password");
     }
@@ -52,8 +54,8 @@ export const AuthReset: React.FC<Props> = (props) => {
     <div>
       <Paper className={classes.root}>
         <Grid>
-          <div className={classes.titlemain}> 
-          <Typography className={classes.title}>Forgot Password </Typography>         
+          <div className={classes.titlemain}>
+            <Typography className={classes.title}>Forgot Password </Typography>
             <Box p={1}>
               {error && (
                 <Alert
@@ -64,7 +66,7 @@ export const AuthReset: React.FC<Props> = (props) => {
                   {error}
                 </Alert>
               )}
- {message && (
+              {message && (
                 <Alert
                   className={classes.input}
                   variant="filled"
@@ -73,7 +75,6 @@ export const AuthReset: React.FC<Props> = (props) => {
                   {message}
                 </Alert>
               )}
-
             </Box>
           </div>
 
@@ -104,8 +105,6 @@ export const AuthReset: React.FC<Props> = (props) => {
             />
             <Box p={1} />
 
-            
-
             <Box p={1} />
 
             <Button
@@ -126,8 +125,6 @@ export const AuthReset: React.FC<Props> = (props) => {
             >
               RESET PASSWORD
             </Button>
-
-            
           </form>
         </Grid>
       </Paper>

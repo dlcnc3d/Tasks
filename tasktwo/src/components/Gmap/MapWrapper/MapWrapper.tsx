@@ -1,40 +1,53 @@
 /*global google*/
-import React, { PropsWithChildren } from "react";
-import { compose, withProps } from "recompose";
+import React from "react";
 import {
-  withGoogleMap,
   GoogleMap,
+  useJsApiLoader,
   Marker,
   InfoWindow,
-} from "react-google-maps";
+} from "@react-google-maps/api";
+
 import { useMapData } from "../../../context/map.context";
 import { useAuthData } from "../../../context/auth.context";
 import { MarkerData } from "../../../definitions/types";
 import { MapRoutes } from "../../MapRoutes/MapRoutes";
 import { MarkerType } from "../../../definitions/enums";
-import uniqid from 'uniqid';
-import { useRef } from "react";
+import uniqid from "uniqid";
 
 type Props = {
   onMapClick: (data: MarkerData) => void;
   children?: React.ReactNode;
 };
 
-const MapWrapper = compose<Props, Props>(
-  withProps({
-    loadingElement: <div style={{ height: `100%` }} />,
-    containerElement: <div style={{ height: `100%` }} />,
-    mapElement: <div style={{ height: `100%` }} />,
-  }),
-  withGoogleMap
-)((props) => {
-  const { points, routesEnabled } = useMapData();
-  const { error, setError } = useMapData();
-  const { currentUser } = useAuthData();
-  const ref = useRef();
+const containerStyle = {
+  width: "100%",
+  height: "100%",
+};
 
-  console.log(ref);
-  
+const center = {
+  lat: 49.23,
+  lng: 28.47,
+};
+
+const MapWrapper = (props: Props) => {
+  const { isLoaded } = useJsApiLoader({
+    id: "google-map-script",
+    googleMapsApiKey: "",
+  });
+
+  const [map, setMap] = React.useState(null);
+
+  const onLoad = React.useCallback(function callback(map) {
+    setMap(map);
+  }, []);
+
+  const onUnmount = React.useCallback(function callback(map) {
+    setMap(null);
+  }, []);
+
+  const { points, routesEnabled } = useMapData();
+  const { setError } = useMapData();
+  const { currentUser } = useAuthData();
 
   const MapClickHandle = (e: any) => {
     if (currentUser !== null) {
@@ -51,26 +64,24 @@ const MapWrapper = compose<Props, Props>(
     }
   };
 
-  return (
+  return isLoaded ? (
     <GoogleMap
-      defaultZoom={14}
-      defaultCenter={{ lat: 49.23, lng: 28.47 }}
+      mapContainerStyle={containerStyle}
+      center={center}
+      zoom={15}
+      onLoad={onLoad}
+      onUnmount={onUnmount}
       onClick={MapClickHandle}
-      ref={ref}
-      //key={new Date().getTime()}
     >
       {points.map((p) => (
         <Marker
           key={p.id}
           position={{ lat: p.lat, lng: p.lng }}
           animation={google.maps.Animation.DROP}
-          // noRedraw={true}
+          label={MarkerType[p.type]}
         >
-          <InfoWindow>
-            <div>
-              <div>{MarkerType[p.type]}</div>
-              <div>{p.address}</div>
-            </div>
+          <InfoWindow position={{ lat: p.lat, lng: p.lng }}>
+            <div>{p.address}</div>
           </InfoWindow>
         </Marker>
       ))}
@@ -85,7 +96,9 @@ const MapWrapper = compose<Props, Props>(
         enabled={routesEnabled}
       ></MapRoutes>
     </GoogleMap>
+  ) : (
+    <></>
   );
-});
+};
 
 export default MapWrapper;

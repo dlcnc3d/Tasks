@@ -24,9 +24,8 @@ import SupervisorAccountIcon from "@material-ui/icons/SupervisorAccount";
 
 import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
-
 import useStyles from "./NavMenu.styles";
-import { Dialog, DialogContent, DialogTitle, Tooltip } from "@material-ui/core";
+import { Dialog, Tooltip } from "@material-ui/core";
 import { RegisterForm } from "../RegisterForm/RegisterForm";
 import { LoginForm } from "../LoginForm/LoginForm";
 import { useAuthData } from "../../context/auth.context";
@@ -34,18 +33,17 @@ import { useMapData } from "../../context/map.context";
 import { AuthReset } from "../AuthForgot/AuthReset";
 import { UpdateUserData } from "../UpdateUserData/UpdateUserData";
 import { useEffect } from "react";
-//import { getRouteDatahelper } from "../../core/helpers/routeData.helpers";
 
 export default function NavMenu() {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const { currentUser, logOut } = useAuthData();
-  const { routes, setRoutes } = useMapData();
+  const { setRoutes } = useMapData();
   const { authReset, setAuthReset } = useMapData();
 
-  const { routesEnabled, setRoutesEnabled } = useMapData();
-  const { points, setPoints } = useMapData();
+  const { setRoutesEnabled } = useMapData();
+  const { setPoints } = useMapData();
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -57,9 +55,6 @@ export default function NavMenu() {
 
   const [openSignUp, setOpenSignUp] = React.useState(false);
   const [openLogIn, setOpenLogIn] = React.useState(false);
-  ////
-  //const [authReset, setAuthReset] = React.useState(false);
-
   const [updateUserData, setUpdateUserData] = React.useState(false);
 
   const handleClickOpenSignUp = () => {
@@ -132,7 +127,7 @@ export default function NavMenu() {
             className={
               currentUser === null ? classes.userUnSign : classes.userSign
             }
-            variant="h5"
+            variant={currentUser === null ? "h5" : "h6"}
           >
             {currentUser === null ? "unregistered user" : currentUser.email}
           </Typography>
@@ -186,27 +181,28 @@ export default function NavMenu() {
               <LoginForm onClose={handleClose} />
             </Dialog>
           </Box>
+          {!currentUser && (
+            <Box mr={0}>
+              <Button variant="contained" onClick={handleClickOpenSignUp}>
+                Sign Up
+              </Button>
 
-          <Box mr={3}>
-            <Button variant="contained" onClick={handleClickOpenSignUp}>
-              Sign Up
-            </Button>
-            <Dialog
-              open={openSignUp}
-              onClose={handleClose}
-              aria-labelledby="form-dialog-title"
-            >
-              <RegisterForm onClose={handleClose} />
-            </Dialog>
-
-            <Dialog
-              open={openSignUp}
-              onClose={handleClose}
-              aria-labelledby="form-dialog-title"
-            >
-              <RegisterForm onClose={handleClose} />
-            </Dialog>
-          </Box>
+              <Dialog
+                open={openSignUp}
+                onClose={handleClose}
+                aria-labelledby="form-dialog-title"
+              >
+                <RegisterForm onClose={handleClose} />
+              </Dialog>
+              <Dialog
+                open={openSignUp}
+                onClose={handleClose}
+                aria-labelledby="form-dialog-title"
+              >
+                <RegisterForm onClose={handleClose} />
+              </Dialog>
+            </Box>
+          )}
         </Toolbar>
       </AppBar>
 
@@ -240,7 +236,6 @@ export default function NavMenu() {
             <ListItemIcon>
               <AccountBoxIcon />
             </ListItemIcon>
-
             <ListItemText
               primary={currentUser === null ? "Log in" : "Log Out"}
             />
@@ -260,14 +255,17 @@ export default function NavMenu() {
             </ListItem>
           )}
 
-          <ListItem button key={"Sign Up"} onClick={handleClickOpenSignUp}>
-            <ListItemIcon>
-              <SupervisorAccountIcon />
-            </ListItemIcon>
+          {!currentUser && (
+            <ListItem button key={"Sign Up"} onClick={handleClickOpenSignUp}>
+              <ListItemIcon>
+                <SupervisorAccountIcon />
+              </ListItemIcon>
 
-            <ListItemText primary={"Sign Up"} />
-          </ListItem>
+              <ListItemText primary={"Sign Up"} />
+            </ListItem>
+          )}
         </List>
+
         <Divider />
       </Drawer>
     </div>
