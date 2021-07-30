@@ -1,14 +1,5 @@
-import React, { useRef, useState } from "react";
-//import { getRouteDatahelper } from "../../core/helpers/routeData.helpers";
-import {
-  Box,
-  Button,
-  Grid,
-  Paper,
-  Select,
-  TextField,
-  Typography,
-} from "@material-ui/core";
+import React from "react";
+import { Box, Paper, Typography } from "@material-ui/core";
 
 import { useMapData } from "../../context/map.context";
 import { RouteData } from "../../definitions/types";
@@ -21,7 +12,7 @@ export const RouteDataResult = () => {
   const classes = useStyles();
   const { routes } = useMapData();
   const [routeData, setRouteData] = React.useState<RouteData>();
-  const { routesEnabled, setRoutesEnabled } = useMapData();
+  const { routesEnabled } = useMapData();
 
   useEffect(() => {
     if (

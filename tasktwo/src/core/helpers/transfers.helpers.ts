@@ -1,5 +1,3 @@
-import { MarkerData } from "../../definitions/types";
-
 export const getTransfers = (routes: google.maps.DirectionsResult): number => {
   var count = 0;
   for (let i = 0; i < routes.routes[0].legs[0].steps.length; i++)

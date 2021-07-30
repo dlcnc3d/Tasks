@@ -1,8 +1,6 @@
 import React from "react";
 import { Box, Button, FormHelperText, Paper, Tooltip } from "@material-ui/core";
-
 import LocationOnIcon from "@material-ui/icons/LocationOn";
-
 import { Autocomplete } from "../Gmap/Autocomplete/Autocomplete";
 import { useMapData } from "../../context/map.context";
 import { MarkerData } from "../../definitions/types";
@@ -12,7 +10,7 @@ import { useAuthData } from "../../context/auth.context";
 import { useEffect } from "react";
 import Alert from "@material-ui/lab/Alert";
 import { RouteDataResult } from "../RouteDataResult/RouteDataResult";
-import uniqid from 'uniqid';
+import uniqid from "uniqid";
 
 type Props = {
   selectHandler: (
@@ -24,28 +22,33 @@ type Props = {
 
 export const CalculateDistanceForm: React.FC<Props> = (props) => {
   const { points, setPoints } = useMapData();
-  const { routesEnabled, setRoutesEnabled } = useMapData();
+  const { setRoutesEnabled } = useMapData();
   const { routes, setRoutes } = useMapData();
   const { currentUser } = useAuthData();
-  const { error, setError } = useMapData();
+  const { error } = useMapData();
   const classes = useStyles();
 
   const getPositionClick = () => {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        if (position !== null) {
-          props.selectHandler(
-            {
-              id: uniqid(),
-              lat: position.coords.latitude,
-              lng: position.coords.longitude,
-              time: Date.now(),
-            },
-            MarkerType.Start,
-            MarkerType.Start
-          );
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          if (position !== null) {
+            props.selectHandler(
+              {
+                id: uniqid(),
+                lat: position.coords.latitude,
+                lng: position.coords.longitude,
+              },
+              MarkerType.Start,
+              MarkerType.Start
+            );
+          }
+        },
+        () => {},
+        {
+          enableHighAccuracy: true,
         }
-      });
+      );
     }
   };
 
@@ -81,8 +84,10 @@ export const CalculateDistanceForm: React.FC<Props> = (props) => {
                   : alert("You can't use autocomplite. Please log in");
               }}
               address={
-                points[points.findIndex((x) => x.type === MarkerType.Start)]
-                  ?.address
+                routes !== null
+                  ? points[points.findIndex((x) => x.type === MarkerType.Start)]
+                      ?.address
+                  : ""
               }
             />
           </Box>
@@ -118,7 +123,10 @@ export const CalculateDistanceForm: React.FC<Props> = (props) => {
           props.selectHandler(data, MarkerType.Finish, MarkerType.Finish)
         }
         address={
-          points[points.findIndex((x) => x.type === MarkerType.Finish)]?.address
+          routes !== null
+            ? points[points.findIndex((x) => x.type === MarkerType.Finish)]
+                ?.address
+            : ""
         }
       />
       <Box p={1} />
@@ -133,9 +141,8 @@ export const CalculateDistanceForm: React.FC<Props> = (props) => {
               className={classes.buttonClick}
               onClick={delPointsHandler}
               variant="outlined"
-              color={routesEnabled ? "secondary" : "primary"}
+              color={points.length > 0 ? "secondary" : "primary"}
               fullWidth
-              //size="small"
             >
               Delete points
             </Button>
@@ -150,11 +157,7 @@ export const CalculateDistanceForm: React.FC<Props> = (props) => {
         <Paper className={classes.errors}>
           <div>
             <Box p={1}>
-              <Alert
-                //className={classes.input}
-                variant="outlined"
-                severity="error"
-              >
+              <Alert variant="outlined" severity="error">
                 {error}
               </Alert>
             </Box>
@@ -164,5 +167,3 @@ export const CalculateDistanceForm: React.FC<Props> = (props) => {
     </>
   );
 };
-//getRoutesEnabled,
-//setRoutesEnabled,

@@ -1,5 +1,4 @@
 import React from "react";
-import Input from "@material-ui/core/Input";
 import { TextField, Tooltip } from "@material-ui/core";
 import PlacesAutocomplete, {
   geocodeByAddress,
@@ -8,7 +7,7 @@ import useStyles from "./Autocomplete.styles";
 import cls from "classnames";
 import { MarkerData } from "../../../definitions/types";
 import { useEffect } from "react";
-import uniqid from 'uniqid';
+import uniqid from "uniqid";
 
 type Props = {
   onSelect: (data: MarkerData) => void;
@@ -36,10 +35,6 @@ export const Autocomplete: React.FC<Props> = (props) => {
       lat: results[0].geometry.location.lat(),
       lng: results[0].geometry.location.lng(),
     };
-    //-----------------------------------------------------------
-    console.log(result);
-    console.log("------");
-    console.log(value);
 
     setAddress(value);
     setCoordinates(result);

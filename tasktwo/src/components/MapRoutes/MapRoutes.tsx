@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { MarkerData } from "../../definitions/types";
 import { getRouteHelpers } from "../../core/helpers/route.helpers";
-import { DirectionsRenderer } from "react-google-maps";
+import { DirectionsRenderer } from "@react-google-maps/api";
 import { useMapData } from "../../context/map.context";
 
 type Props = {
@@ -24,12 +24,6 @@ export const MapRoutes: React.FC<Props> = (props) => {
   }, [enabled, startPoint, finishPoint]);
 
   return (
-    <div>
-      {enabled && routes && (
-        <DirectionsRenderer
-          directions={routes}
-        />
-      )}
-    </div>
+    <div>{enabled && routes && <DirectionsRenderer directions={routes} />}</div>
   );
 };

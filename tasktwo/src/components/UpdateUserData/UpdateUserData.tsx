@@ -1,23 +1,17 @@
-import React, { useRef, useState } from "react";
-
+import React, { useState } from "react";
 import {
   Box,
   Button,
-  FormControlLabel,
   Grid,
   Paper,
-  Radio,
-  RadioGroup,
-  Select,
   TextField,
   Typography,
 } from "@material-ui/core";
 import { Controller, useForm } from "react-hook-form";
 import useStyles from "./UpdateUserData.styles";
-
 import { useAuthData } from "../../context/auth.context";
 import Alert from "@material-ui/lab/Alert";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 type FormValues = {
   email: string;
@@ -31,8 +25,7 @@ type Props = {
 
 export const UpdateUserData: React.FC<Props> = (props) => {
   const classes = useStyles();
-  const { register, watch, getValues, handleSubmit, control } =
-    useForm<FormValues>();
+  const { handleSubmit, control } = useForm<FormValues>();
 
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -125,7 +118,6 @@ export const UpdateUserData: React.FC<Props> = (props) => {
               }) => (
                 <TextField
                   className={classes.input}
-                  //disabled={true}
                   variant="outlined"
                   label="email"
                   type="email"
